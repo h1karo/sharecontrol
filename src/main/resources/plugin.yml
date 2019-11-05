@@ -1,0 +1,15 @@
+name: ShareControl
+main: ru.h1karo.sharecontrol.ShareControl
+version: '3.0'
+authors:
+  - h1karo
+softdepend: [Essentials, WorldEdit]
+description: Control mode of creativity.
+website: http://dev.bukkit.org/bukkit-plugins/sharecontrol/
+api-version: '1.14'
+commands:
+   sharecontrol:
+      description: Principal command of plugin
+      permission: sharecontrol.players.*
+      usage: /sharecontrol
+      aliases: [sc]
