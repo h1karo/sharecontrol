@@ -11,6 +11,7 @@
 
     <properties>
         <spigot.version>1.15.2-R0.1-SNAPSHOT</spigot.version>
+        <guice.version>4.2.3</guice.version>
     </properties>
 
     <repositories>
@@ -26,6 +27,11 @@
             <artifactId>spigot-api</artifactId>
             <version>${spigot.version}</version>
             <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.google.inject</groupId>
+            <artifactId>guice</artifactId>
+            <version>${guice.version}</version>
         </dependency>
     </dependencies>
 </project>
