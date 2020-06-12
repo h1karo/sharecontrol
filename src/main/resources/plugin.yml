@@ -10,6 +10,6 @@ api-version: '1.15'
 commands:
    sharecontrol:
       description: Principal command of plugin
-      permission: sharecontrol.players.*
+      permission: sharecontrol.commands.*
       usage: /sharecontrol
       aliases: [sc]
