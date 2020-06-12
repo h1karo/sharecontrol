@@ -12,6 +12,7 @@
     <properties>
         <spigot.version>1.15.2-R0.1-SNAPSHOT</spigot.version>
         <guice.version>4.2.3</guice.version>
+        <annotations.version>19.0.0</annotations.version>
     </properties>
 
     <repositories>
@@ -22,6 +23,12 @@
     </repositories>
 
     <dependencies>
+        <dependency>
+            <groupId>org.jetbrains</groupId>
+            <artifactId>annotations</artifactId>
+            <version>${annotations.version}</version>
+            <scope>provided</scope>
+        </dependency>
         <dependency>
             <groupId>org.spigotmc</groupId>
             <artifactId>spigot-api</artifactId>
