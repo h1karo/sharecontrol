@@ -1,5 +1,5 @@
 # ShareControl
-This is the official repository of ShareControl Minecraft server plugin. Repository have only 3.0+ plugin versions.
+This is the official repository of ShareControl Minecraft server plugin. The repository contains only 3.0+ the plugin versions.
 
 ShareControl supports these server cores:
 1. Spigot
