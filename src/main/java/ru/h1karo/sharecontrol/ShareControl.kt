@@ -14,25 +14,24 @@
  * You should have received a copy of the GNU General Public License
  * along with ShareControl. If not, see <https://www.gnu.org/licenses/>.
  *
- * @copyright Copyright (c) 2019 ShareControl
- * @author h1karo <h1karo@outlook.com>
+ * @copyright Copyright (c) 2020 ShareControl
+ * @author Oleg Kozlov <h1karo@outlook.com>
  * @license GNU General Public License v3.0
  * @link https://github.com/h1karo/sharecontrol
  */
 
-package ru.h1karo.sharecontrol;
+package ru.h1karo.sharecontrol
 
-import org.bukkit.event.Listener;
-import org.bukkit.plugin.java.JavaPlugin;
+import org.bukkit.event.Listener
+import org.bukkit.plugin.java.JavaPlugin
 
-public class ShareControl extends JavaPlugin implements Listener {
-    @Override
-    public void onEnable() {
+class ShareControl : JavaPlugin(), Listener {
+
+    override fun onEnable() {
 
     }
 
-    @Override
-    public void onDisable() {
+    override fun onDisable() {
 
     }
 }
