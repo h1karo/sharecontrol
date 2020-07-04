@@ -1,13 +1,22 @@
-name: Create release
+name: Build and create release by tag on demand
 
 on:
   push:
+    branches:
+      - release
     tags:
       - 'v*'
+  pull_request:
+    branches:
+      - release
+
+env:
+  ARTIFACT_NAME: ShareControl.jar
+  ARTIFACT_DIRECTORY: target
 
 jobs:
   build:
-    name: Create release
+    name: Build the package
     runs-on: ubuntu-latest
 
     steps:
@@ -32,8 +41,8 @@ jobs:
 
       - uses: actions/upload-artifact@v2
         with:
-          name: ShareControl.jar
-          path: target/ShareControl.jar
+          name: "${{ env.ARTIFACT_NAME }}"
+          path: "${{ env.ARTIFACT_DIRECTORY }}/${{ env.ARTIFACT_NAME }}"
 
   releasing:
     name: Create Release
@@ -43,6 +52,11 @@ jobs:
       - build
 
     steps:
+      - uses: actions/download-artifact@v2
+        with:
+          name: "${{ env.ARTIFACT_NAME }}"
+          path: "${{ env.ARTIFACT_DIRECTORY }}"
+
       - name: Create Release
         id: create_release
         uses: actions/create-release@v1
@@ -61,6 +75,6 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: target/ShareControl.jar
-          asset_name: ShareControl.jar
+          asset_path: "${{ env.ARTIFACT_DIRECTORY }}/${{ env.ARTIFACT_NAME }}"
+          asset_name: "${{ env.ARTIFACT_NAME }}"
           asset_content_type: application/java-archive
