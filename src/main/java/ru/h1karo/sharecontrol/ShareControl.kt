@@ -22,16 +22,25 @@
 
 package ru.h1karo.sharecontrol
 
+import com.google.inject.Guice
+import com.google.inject.Injector
 import org.bukkit.event.Listener
 import org.bukkit.plugin.java.JavaPlugin
+import ru.h1karo.sharecontrol.console.ConsoleSender
 
 class ShareControl : JavaPlugin(), Listener {
+    private val injector: Injector = Guice.createInjector()
+    private val sender = this.injector.getInstance(ConsoleSender::class.java)
 
     override fun onEnable() {
-
+        this.sender.sendLine(true)
+        this.sender.send("Plugin loading")
+        this.sender.sendLine(false)
     }
 
     override fun onDisable() {
-
+        this.sender.sendLine(true)
+        this.sender.send("Plugin unloading")
+        this.sender.sendLine(false)
     }
 }
