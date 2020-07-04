@@ -1,13 +1,22 @@
-name: Create release
+name: Build and create release by tag on demand
 
 on:
   push:
+    branches:
+      - release
     tags:
       - 'v*'
+  pull_request:
+    branches:
+      - release
+
+env:
+  ARTIFACT_NAME: ShareControl.jar
+  ARTIFACT_DIRECTORY: target
 
 jobs:
   build:
-    name: Create release
+    name: Build the package
     runs-on: ubuntu-latest
 
     steps:
@@ -32,25 +41,27 @@ jobs:
 
       - uses: actions/upload-artifact@v2
         with:
-          name: ShareControl.jar
-          path: target/ShareControl.jar
+          name: "${{ env.ARTIFACT_NAME }}"
+          path: "${{ env.ARTIFACT_DIRECTORY }}/${{ env.ARTIFACT_NAME }}"
 
+  releasing:
+    name: Create Release
+    runs-on: ubuntu-latest
+    if: ${{ startsWith(github.ref, 'refs/tags') }}
+    needs:
+      - build
+
+    steps:
       - name: Generate changelog
         uses: heinrichreimer/github-changelog-generator-action@v2.1.1
         with:
           token: ${{ secrets.GITHUB_TOKEN }}
           onlyLastTag: true
           stripGeneratorNotice: true
-          stripHeaders: true
 
-      - name: Commit files
-        env:
-          CI_USER: ${{ secrets.GITHUB_USER }}
-          CI_EMAIL: ${{ secrets.GITHUB_EMAIL }}
+      - name: Show changelog
         run: |
-          git config --local user.email "$CI_EMAIL"
-          git config --local user.name "$CI_USER"
-          git add CHANGELOG.md && git commit -m 'Updated CHANGELOG.md' && echo ::set-env name=push::1 || echo "No changes to CHANGELOG.md"
+          cat CHANGELOG.md
 
       - name: Create Release
         id: create_release
@@ -64,6 +75,11 @@ jobs:
           draft: false
           prerelease: false
 
+      - uses: actions/download-artifact@v2
+        with:
+          name: "${{ env.ARTIFACT_NAME }}"
+          path: "${{ env.ARTIFACT_DIRECTORY }}/${{ env.ARTIFACT_NAME }}"
+
       - name: Upload Release Asset
         id: upload-release-asset
         uses: actions/upload-release-asset@v1
@@ -71,6 +87,6 @@ jobs:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
         with:
           upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: target/ShareControl.jar
-          asset_name: ShareControl.jar
+          asset_path: "${{ env.ARTIFACT_DIRECTORY }}/${{ env.ARTIFACT_NAME }}"
+          asset_name: "${{ env.ARTIFACT_NAME }}"
           asset_content_type: application/java-archive
