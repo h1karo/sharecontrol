@@ -26,7 +26,6 @@ import com.google.inject.Guice
 import com.google.inject.Injector
 import org.bukkit.event.Listener
 import org.bukkit.plugin.java.JavaPlugin
-import ru.h1karo.sharecontrol.console.LoadingBlock
 import ru.h1karo.sharecontrol.module.ConfigurationModule
 import ru.h1karo.sharecontrol.module.PluginModule
 
@@ -34,15 +33,6 @@ class ShareControl : JavaPlugin(), Listener {
     private val injector: Injector = Guice.createInjector(PluginModule(this), ConfigurationModule())
     private val initializer: InitializerInterface = injector.getInstance(ChainInitializer::class.java)
 
-    override fun onEnable() {
-        val block = this.injector.getInstance(LoadingBlock::class.java)
-        initializer.initialize()
-        block.end()
-    }
-
-    override fun onDisable() {
-        val block = this.injector.getInstance(LoadingBlock::class.java)
-        initializer.terminate()
-        block.end()
-    }
+    override fun onEnable() = this.initializer.initialize()
+    override fun onDisable() = this.initializer.terminate()
 }

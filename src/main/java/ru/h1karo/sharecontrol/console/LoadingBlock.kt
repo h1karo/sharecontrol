@@ -31,7 +31,7 @@ class LoadingBlock @Inject constructor(
         private val sender: ConsoleSender,
         @Named("pluginName") private val pluginName: String
 ) : SenderInterface {
-    init {
+    fun start() {
         this.send(getLine(true))
     }
 
