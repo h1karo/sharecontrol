@@ -1,6 +1,10 @@
 # ShareControl
 This is the official repository of ShareControl Minecraft server plugin. The repository contains only 3.0+ the plugin versions.
 
+![Workflow Status](https://img.shields.io/github/workflow/status/h1karo/sharecontrol/Build%20package?style=for-the-badge)
+![License](https://img.shields.io/github/license/h1karo/sharecontrol?style=for-the-badge)
+![Release](https://img.shields.io/github/v/release/h1karo/sharecontrol?style=for-the-badge)
+
 ## Server cores support
 
 | Core name | Support versions |
