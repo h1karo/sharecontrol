@@ -22,10 +22,13 @@
 
 package ru.h1karo.sharecontrol
 
+import com.google.inject.Guice
+import com.google.inject.Injector
 import org.bukkit.event.Listener
 import org.bukkit.plugin.java.JavaPlugin
 
 class ShareControl : JavaPlugin(), Listener {
+    private val injector: Injector = Guice.createInjector()
 
     override fun onEnable() {
 
