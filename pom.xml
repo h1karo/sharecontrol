@@ -24,6 +24,13 @@
         </repository>
     </repositories>
 
+    <scm>
+        <connection>scm:git:https://github.com/h1karo/sharecontrol.git</connection>
+        <developerConnection>scm:git:https://github.com/h1karo/sharecontrol.git</developerConnection>
+        <tag>HEAD</tag>
+        <url>https://github.com/h1karo/sharecontrol.git</url>
+    </scm>
+
     <build>
         <plugins>
             <plugin>
