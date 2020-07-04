@@ -20,8 +20,13 @@
  * @link https://github.com/h1karo/sharecontrol
  */
 
-package ru.h1karo.sharecontrol
+package ru.h1karo.sharecontrol.module
 
-interface InitializerInterface {
-    fun initialize()
+import ru.h1karo.sharecontrol.configuration.ConfigurationInitializer
+
+class ConfigurationModule: InitializationModule() {
+    override fun configure() {
+        super.configure()
+        this.addBinding().to(ConfigurationInitializer::class.java)
+    }
 }

@@ -20,8 +20,21 @@
  * @link https://github.com/h1karo/sharecontrol
  */
 
-package ru.h1karo.sharecontrol
+package ru.h1karo.sharecontrol.module
 
-interface InitializerInterface {
-    fun initialize()
+import com.google.inject.AbstractModule
+import com.google.inject.binder.LinkedBindingBuilder
+import com.google.inject.multibindings.Multibinder
+import ru.h1karo.sharecontrol.InitializerInterface
+
+abstract class InitializationModule : AbstractModule() {
+    private lateinit var initializerBinder: Multibinder<InitializerInterface>
+
+    override fun configure() {
+        this.initializerBinder = Multibinder.newSetBinder(binder(), InitializerInterface::class.java)
+    }
+
+    protected fun addBinding(): LinkedBindingBuilder<InitializerInterface> {
+        return this.initializerBinder.addBinding()
+    }
 }

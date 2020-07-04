@@ -24,6 +24,8 @@ package ru.h1karo.sharecontrol
 
 import com.google.inject.Inject
 
-class ChainInitializer @Inject constructor(private val initializers: Set<InitializerInterface>) : InitializerInterface {
-    override fun init() = this.initializers.forEach { it.init() }
+class ChainInitializer @Inject constructor(
+        private val initializers: Set<@JvmSuppressWildcards InitializerInterface>
+) : InitializerInterface {
+    override fun initialize() = this.initializers.forEach { it.initialize() }
 }

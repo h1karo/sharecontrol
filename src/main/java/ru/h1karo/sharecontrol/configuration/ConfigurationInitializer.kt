@@ -20,8 +20,16 @@
  * @link https://github.com/h1karo/sharecontrol
  */
 
-package ru.h1karo.sharecontrol
+package ru.h1karo.sharecontrol.configuration
 
-interface InitializerInterface {
-    fun initialize()
+import com.google.inject.Inject
+import ru.h1karo.sharecontrol.InitializerInterface
+import ru.h1karo.sharecontrol.console.LoadingBlock
+
+class ConfigurationInitializer @Inject constructor(private val sender: LoadingBlock) : InitializerInterface {
+    override fun initialize() {
+        this.sender.send("Configuration initialization started.")
+
+        this.sender.send("Configuration initialized.")
+    }
 }
