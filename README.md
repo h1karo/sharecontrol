@@ -5,6 +5,10 @@ This is the official repository of ShareControl Minecraft server plugin. The rep
 ![License](https://img.shields.io/github/license/h1karo/sharecontrol?style=for-the-badge)
 ![Release](https://img.shields.io/github/v/release/h1karo/sharecontrol?style=for-the-badge)
 
+[![RuBukkit.org](https://img.shields.io/static/v1?label=RuBukkit&message=ShareControl&color=blue&style=for-the-badge)](http://rubukkit.org/threads/admn-sec-mech-sharecontrol-v2-6-4-kontrol-tvorcheskogo-rezhima-1-7-1-11.106125/)
+[![BukkitDev](https://img.shields.io/static/v1?label=BukkitDev&message=ShareControl&color=blue&style=for-the-badge)](https://dev.bukkit.org/projects/sharecontrol)
+[![SpigotMC](https://img.shields.io/static/v1?label=SpigotMC&message=ShareControl&color=orange&style=for-the-badge)](https://www.spigotmc.org/resources/sharecontrol.9225/)
+
 ## Server cores support
 
 | Core name | Support versions |
