@@ -20,22 +20,27 @@
  * @link https://github.com/h1karo/sharecontrol
  */
 
-package ru.h1karo.sharecontrol
+package ru.h1karo.sharecontrol.module
 
-import com.google.inject.Guice
-import com.google.inject.Injector
-import org.bukkit.event.Listener
-import org.bukkit.plugin.java.JavaPlugin
-import ru.h1karo.sharecontrol.module.PluginModule
+import com.google.inject.AbstractModule
+import com.google.inject.Provides
+import com.google.inject.name.Named
+import ru.h1karo.sharecontrol.ShareControl
 
-class ShareControl : JavaPlugin(), Listener {
-    private val injector: Injector = Guice.createInjector(PluginModule(this))
-
-    override fun onEnable() {
-
+class PluginModule(private val plugin: ShareControl) : AbstractModule() {
+    override fun configure() {
+        this.bind(ShareControl::class.java) to plugin
     }
 
-    override fun onDisable() {
+    @Provides
+    @Named("pluginName")
+    fun getPluginName(): String {
+        return plugin.name
+    }
 
+    @Provides
+    @Named("pluginVersion")
+    fun getPluginVersion(): String {
+        return plugin.description.version
     }
 }
