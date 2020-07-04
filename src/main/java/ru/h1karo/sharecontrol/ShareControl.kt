@@ -36,11 +36,13 @@ class ShareControl : JavaPlugin(), Listener {
 
     override fun onEnable() {
         val block = this.injector.getInstance(LoadingBlock::class.java)
-        initializer.init()
+        initializer.initialize()
         block.end()
     }
 
     override fun onDisable() {
-
+        val block = this.injector.getInstance(LoadingBlock::class.java)
+        initializer.terminate()
+        block.end()
     }
 }

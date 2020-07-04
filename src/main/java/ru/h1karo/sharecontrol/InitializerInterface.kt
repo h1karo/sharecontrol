@@ -24,4 +24,5 @@ package ru.h1karo.sharecontrol
 
 interface InitializerInterface {
     fun initialize()
+    fun terminate()
 }

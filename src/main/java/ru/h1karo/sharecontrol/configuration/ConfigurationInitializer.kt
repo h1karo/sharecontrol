@@ -32,4 +32,8 @@ class ConfigurationInitializer @Inject constructor(private val sender: LoadingBl
 
         this.sender.send("Configuration initialized.")
     }
+
+    override fun terminate() {
+        TODO("Not yet implemented")
+    }
 }

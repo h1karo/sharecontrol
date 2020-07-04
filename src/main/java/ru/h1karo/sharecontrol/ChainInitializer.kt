@@ -28,4 +28,5 @@ class ChainInitializer @Inject constructor(
         private val initializers: Set<@JvmSuppressWildcards InitializerInterface>
 ) : InitializerInterface {
     override fun initialize() = this.initializers.forEach { it.initialize() }
+    override fun terminate() = this.initializers.forEach { it.terminate() }
 }
