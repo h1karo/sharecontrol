@@ -22,25 +22,8 @@
 
 package ru.h1karo.sharecontrol
 
-import com.google.inject.Guice
-import com.google.inject.Injector
-import org.bukkit.event.Listener
-import org.bukkit.plugin.java.JavaPlugin
-import ru.h1karo.sharecontrol.console.LoadingBlock
-import ru.h1karo.sharecontrol.module.ConfigurationModule
-import ru.h1karo.sharecontrol.module.PluginModule
+import com.google.inject.Inject
 
-class ShareControl : JavaPlugin(), Listener {
-    private val injector: Injector = Guice.createInjector(PluginModule(this), ConfigurationModule())
-    private val initializer: InitializerInterface = injector.getInstance(ChainInitializer::class.java)
-
-    override fun onEnable() {
-        val block = this.injector.getInstance(LoadingBlock::class.java)
-        initializer.init()
-        block.end()
-    }
-
-    override fun onDisable() {
-
-    }
+class ChainInitializer @Inject constructor(private val initializers: Set<InitializerInterface>) : InitializerInterface {
+    override fun init() = this.initializers.forEach { it.init() }
 }
