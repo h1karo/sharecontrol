@@ -29,7 +29,7 @@ import ru.h1karo.sharecontrol.SenderInterface
 
 class LoadingBlock @Inject constructor(
         private val sender: ConsoleSender,
-        @Named("pluginName") private val pluginName: String
+        @Named("name") private val pluginName: String
 ) : SenderInterface {
     fun start() {
         this.send(getLine(true))

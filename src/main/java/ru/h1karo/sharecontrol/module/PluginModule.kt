@@ -33,13 +33,13 @@ class PluginModule(private val plugin: ShareControl) : AbstractModule() {
     }
 
     @Provides
-    @Named("pluginName")
+    @Named("name")
     fun getPluginName(): String {
         return plugin.name
     }
 
     @Provides
-    @Named("pluginVersion")
+    @Named("version")
     fun getPluginVersion(): String {
         return plugin.description.version
     }
