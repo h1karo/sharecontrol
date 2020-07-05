@@ -37,31 +37,10 @@ abstract class AbstractConfiguration(folder: File, path: String) {
     fun <T> get(parameter: ParameterInterface<T>): ParameterValueInterface<T> {
         val value = this.config.get(parameter.getPath())
         if (value === null) {
-            return parameter.getDefault();
+            return parameter.getDefault()
         }
 
         return parameter.fromString(value as String?)
-    }
-
-    fun get(path: String, default: Any? = null): Any? {
-        return this.config.get(path, default)
-    }
-
-    fun getString(path: String, default: String? = null): String? {
-        return this.config.getString(path, default)
-    }
-
-    inline fun <reified T : Enum<T>> getEnum(path: String, default: T): T? {
-        val value: String? = this.getString(path)
-        if (value === null) {
-            return null;
-        }
-
-        return try {
-            enumValueOf<T>(value)
-        } catch (exception: IllegalArgumentException) {
-            default
-        }
     }
 
     @Throws(IOException::class)
