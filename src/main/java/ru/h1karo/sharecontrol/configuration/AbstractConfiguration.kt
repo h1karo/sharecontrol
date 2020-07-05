@@ -37,7 +37,7 @@ abstract class AbstractConfiguration(folder: File, path: String) {
         val headerSet = this.getHeader()
         if (headerSet !== null) {
             val header = headerSet.joinToString(System.lineSeparator())
-            this.config.options().header(header)
+            this.config.options().header(header + System.lineSeparator())
         }
 
         this.getEntries().forEach { this.initializeEntry(it) }
