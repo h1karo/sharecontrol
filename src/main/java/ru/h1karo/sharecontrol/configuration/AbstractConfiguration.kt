@@ -32,7 +32,21 @@ abstract class AbstractConfiguration(folder: File, path: String) {
     private var file: File = File(folder, path)
     private var config: YamlConfiguration = YamlConfiguration.loadConfiguration(file)
 
-    abstract fun initialize()
+    fun initialize(): AbstractConfiguration {
+        this.getParameters().forEach { this.initializeParameter(it) }
+        this.save()
+        return this
+    }
+
+    private fun <T> initializeParameter(parameter: ParameterInterface<T>) {
+        if (this.config.contains(parameter.getPath())) {
+            return
+        }
+
+        this.config.set(parameter.getPath(), parameter.getDefault().getValue())
+    }
+
+    abstract fun getParameters(): Set<ParameterInterface<*>>
 
     fun <T> get(parameter: ParameterInterface<T>): ParameterValueInterface<T> {
         val value = this.config.get(parameter.getPath())
