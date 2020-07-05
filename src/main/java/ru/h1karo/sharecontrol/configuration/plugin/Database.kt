@@ -27,7 +27,7 @@ import ru.h1karo.sharecontrol.configuration.entry.ParameterValueInterface
 
 object Database : ParameterInterface<String> {
     override fun getPath(): String = "general.database.type"
-    override fun getDescription(): Set<String> = setOf("The database type")
+    override fun getDescription(): List<String> = listOf("The database type")
     override fun getDefault(): Type = Type.SQLite
     override fun fromString(value: String?): Type {
         return if (value === null) {

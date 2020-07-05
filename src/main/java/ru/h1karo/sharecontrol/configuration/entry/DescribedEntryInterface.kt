@@ -23,5 +23,5 @@
 package ru.h1karo.sharecontrol.configuration.entry
 
 interface DescribedEntryInterface : EntryInterface {
-    fun getDescription(): Set<String>
+    fun getDescription(): List<String>
 }

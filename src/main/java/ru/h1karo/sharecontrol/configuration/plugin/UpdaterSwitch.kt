@@ -27,7 +27,7 @@ import ru.h1karo.sharecontrol.configuration.entry.ParameterInterface
 
 object UpdaterSwitch : ParameterInterface<Boolean> {
     override fun getPath(): String = "general.updater.enabled"
-    override fun getDescription(): Set<String> = setOf("Activates the plugin update checker.")
+    override fun getDescription(): List<String> = listOf("Activates the plugin update checker.")
     override fun getDefault(): BooleanValue = BooleanValue(true)
     override fun fromString(value: String?): BooleanValue {
         return if (value === null) {

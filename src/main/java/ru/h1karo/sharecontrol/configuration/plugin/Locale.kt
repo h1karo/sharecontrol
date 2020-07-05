@@ -27,7 +27,7 @@ import ru.h1karo.sharecontrol.configuration.entry.ParameterValueInterface
 
 object Locale : ParameterInterface<String> {
     override fun getPath(): String = "general.locale"
-    override fun getDescription(): Set<String> = setOf("The language of plugin messages.")
+    override fun getDescription(): List<String> = listOf("The language of plugin messages.")
     override fun getDefault(): Type = Type.ENGLISH
     override fun fromString(value: String?): Type {
         return if (value === null) {
