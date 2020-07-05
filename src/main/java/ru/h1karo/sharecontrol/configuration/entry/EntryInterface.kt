@@ -20,8 +20,8 @@
  * @link https://github.com/h1karo/sharecontrol
  */
 
-package ru.h1karo.sharecontrol.configuration.parameter
+package ru.h1karo.sharecontrol.configuration.entry
 
-interface ParameterValueInterface<T> {
-    fun getValue(): T
+interface EntryInterface {
+    fun getPath(): String
 }

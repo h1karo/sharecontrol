@@ -20,11 +20,9 @@
  * @link https://github.com/h1karo/sharecontrol
  */
 
-package ru.h1karo.sharecontrol.configuration.parameter
+package ru.h1karo.sharecontrol.configuration.entry
 
-interface ParameterInterface<T> {
-    fun getPath(): String
-    fun getDescription(): Set<String>
-    fun getDefault(): ParameterValueInterface<T>
-    fun fromString(value: String?): ParameterValueInterface<T>
+class InlineEntry(private val path: String, private val description: Set<String>) : DescribedEntryInterface {
+    override fun getPath(): String = this.path
+    override fun getDescription(): Set<String> = this.description
 }

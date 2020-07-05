@@ -20,8 +20,8 @@
  * @link https://github.com/h1karo/sharecontrol
  */
 
-package ru.h1karo.sharecontrol.configuration.parameter
+package ru.h1karo.sharecontrol.configuration.entry
 
-class BooleanValue(private val value: Boolean) : ParameterValueInterface<Boolean> {
-    override fun getValue(): Boolean = value
+interface DescribedEntryInterface : EntryInterface {
+    fun getDescription(): Set<String>
 }

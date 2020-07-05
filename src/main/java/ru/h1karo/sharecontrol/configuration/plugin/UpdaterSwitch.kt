@@ -22,8 +22,8 @@
 
 package ru.h1karo.sharecontrol.configuration.plugin
 
-import ru.h1karo.sharecontrol.configuration.parameter.BooleanValue
-import ru.h1karo.sharecontrol.configuration.parameter.ParameterInterface
+import ru.h1karo.sharecontrol.configuration.entry.BooleanValue
+import ru.h1karo.sharecontrol.configuration.entry.ParameterInterface
 
 object UpdaterSwitch : ParameterInterface<Boolean> {
     override fun getPath(): String = "general.updater.enabled"
@@ -31,7 +31,7 @@ object UpdaterSwitch : ParameterInterface<Boolean> {
     override fun getDefault(): BooleanValue = BooleanValue(true)
     override fun fromString(value: String?): BooleanValue {
         return if (value === null) {
-            this.getDefault();
+            this.getDefault()
         } else {
             BooleanValue(value.toBoolean())
         }

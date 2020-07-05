@@ -22,8 +22,8 @@
 
 package ru.h1karo.sharecontrol.configuration.plugin
 
-import ru.h1karo.sharecontrol.configuration.parameter.ParameterInterface
-import ru.h1karo.sharecontrol.configuration.parameter.ParameterValueInterface
+import ru.h1karo.sharecontrol.configuration.entry.ParameterInterface
+import ru.h1karo.sharecontrol.configuration.entry.ParameterValueInterface
 
 object Database : ParameterInterface<String> {
     override fun getPath(): String = "general.database.type"
@@ -31,7 +31,7 @@ object Database : ParameterInterface<String> {
     override fun getDefault(): Type = Type.SQLite
     override fun fromString(value: String?): Type {
         return if (value === null) {
-            this.getDefault();
+            this.getDefault()
         } else {
             Type.valueOf(value)
         }

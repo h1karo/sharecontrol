@@ -25,7 +25,7 @@ package ru.h1karo.sharecontrol.configuration.plugin
 import com.google.inject.Inject
 import com.google.inject.name.Named
 import ru.h1karo.sharecontrol.configuration.AbstractConfiguration
-import ru.h1karo.sharecontrol.configuration.parameter.ParameterInterface
+import ru.h1karo.sharecontrol.configuration.entry.ParameterInterface
 import java.io.File
 
 class PluginConfiguration @Inject constructor(
@@ -43,5 +43,5 @@ class PluginConfiguration @Inject constructor(
             "Thanks for using my plugin!"
     )
 
-    override fun getParameters(): Set<ParameterInterface<*>> = setOf(Locale, Database, UpdaterSwitch)
+    override fun getEntries(): Set<ParameterInterface<*>> = setOf(Locale, Database, UpdaterSwitch)
 }

@@ -23,8 +23,9 @@
 package ru.h1karo.sharecontrol.configuration
 
 import org.bukkit.configuration.file.YamlConfiguration
-import ru.h1karo.sharecontrol.configuration.parameter.ParameterInterface
-import ru.h1karo.sharecontrol.configuration.parameter.ParameterValueInterface
+import ru.h1karo.sharecontrol.configuration.entry.EntryInterface
+import ru.h1karo.sharecontrol.configuration.entry.ParameterInterface
+import ru.h1karo.sharecontrol.configuration.entry.ParameterValueInterface
 import java.io.File
 import java.io.IOException
 
@@ -39,20 +40,20 @@ abstract class AbstractConfiguration(folder: File, path: String) {
             this.config.options().header(header)
         }
 
-        this.getParameters().forEach { this.initializeParameter(it) }
+        this.getEntries().forEach { this.initializeEntry(it) }
         this.save()
         return this
     }
 
-    private fun <T> initializeParameter(parameter: ParameterInterface<T>) {
-        if (this.config.contains(parameter.getPath())) {
-            return
-        }
+    private fun initializeEntry(entry: EntryInterface) {
+        val has = this.config.contains(entry.getPath())
 
-        this.config.set(parameter.getPath(), parameter.getDefault().getValue())
+        if (!has && entry is ParameterInterface<*>) {
+            this.config.set(entry.getPath(), entry.getDefault().getValue())
+        }
     }
 
-    abstract fun getParameters(): Set<ParameterInterface<*>>
+    abstract fun getEntries(): Set<EntryInterface>
 
     open fun getHeader(): List<String>? = null
 
