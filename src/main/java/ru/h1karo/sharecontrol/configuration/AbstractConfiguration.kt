@@ -23,12 +23,25 @@
 package ru.h1karo.sharecontrol.configuration
 
 import org.bukkit.configuration.file.YamlConfiguration
+import ru.h1karo.sharecontrol.configuration.parameter.ParameterInterface
+import ru.h1karo.sharecontrol.configuration.parameter.ParameterValueInterface
 import java.io.File
 import java.io.IOException
 
 abstract class AbstractConfiguration(folder: File, path: String) {
     private var file: File = File(folder, path)
     private var config: YamlConfiguration = YamlConfiguration.loadConfiguration(file)
+
+    abstract fun initialize()
+
+    fun <T> get(parameter: ParameterInterface<T>): ParameterValueInterface<T> {
+        val value = this.config.get(parameter.getPath())
+        if (value === null) {
+            return parameter.getDefault();
+        }
+
+        return parameter.fromString(value as String?)
+    }
 
     fun get(path: String, default: Any? = null): Any? {
         return this.config.get(path, default)
