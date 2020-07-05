@@ -33,6 +33,12 @@ abstract class AbstractConfiguration(folder: File, path: String) {
     private var config: YamlConfiguration = YamlConfiguration.loadConfiguration(file)
 
     fun initialize(): AbstractConfiguration {
+        val headerSet = this.getHeader()
+        if (headerSet !== null) {
+            val header = headerSet.joinToString(System.lineSeparator())
+            this.config.options().header(header)
+        }
+
         this.getParameters().forEach { this.initializeParameter(it) }
         this.save()
         return this
@@ -47,6 +53,8 @@ abstract class AbstractConfiguration(folder: File, path: String) {
     }
 
     abstract fun getParameters(): Set<ParameterInterface<*>>
+
+    open fun getHeader(): List<String>? = null
 
     fun <T> get(parameter: ParameterInterface<T>): ParameterValueInterface<T> {
         val value = this.config.get(parameter.getPath())
