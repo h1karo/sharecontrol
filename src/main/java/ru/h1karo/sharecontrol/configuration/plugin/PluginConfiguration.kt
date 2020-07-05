@@ -20,22 +20,16 @@
  * @link https://github.com/h1karo/sharecontrol
  */
 
-package ru.h1karo.sharecontrol.configuration
+package ru.h1karo.sharecontrol.configuration.plugin
 
 import com.google.inject.Inject
-import ru.h1karo.sharecontrol.InitializerInterface
-import ru.h1karo.sharecontrol.configuration.plugin.PluginConfiguration
-import ru.h1karo.sharecontrol.console.LoadingBlock
+import com.google.inject.name.Named
+import ru.h1karo.sharecontrol.configuration.AbstractConfiguration
+import ru.h1karo.sharecontrol.configuration.parameter.ParameterInterface
+import java.io.File
 
-class ConfigurationInitializer @Inject constructor(
-        private val pluginConfiguration: PluginConfiguration,
-        private val sender: LoadingBlock
-) : InitializerInterface {
-    override fun initialize() {
-        this.sender.send("Configuration initialization started...")
-        this.pluginConfiguration.initialize()
-        this.sender.send("Configuration initialization completed.")
-    }
-
-    override fun terminate() {}
+class PluginConfiguration @Inject constructor(
+        @Named("directory") folder: File
+) : AbstractConfiguration(folder, "config.yaml") {
+    override fun getParameters(): Set<ParameterInterface<*>> = setOf(Locale, Database, UpdaterSwitch)
 }

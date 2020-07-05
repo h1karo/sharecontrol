@@ -23,5 +23,5 @@ This is the official repository of ShareControl Minecraft server plugin. The rep
    You can download the latest version directly from [Github](https://github.com/h1karo/sharecontrol/releases/latest/download/ShareControl.jar).
 2. Move downloaded file into plugins directory of your server (`/plugins/` by default).
 3. Start up (or fully restart) server.
-4. Configure the plugin via `/plugins/ShareControl/config.yml` file (see section [Configuration](#configuration)).
+4. Configure the plugin via `/plugins/ShareControl/config.yaml` file (see section [Configuration](#configuration)).
 5. Run `/sc reload` in console or game.

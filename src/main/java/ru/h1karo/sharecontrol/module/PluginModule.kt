@@ -26,6 +26,7 @@ import com.google.inject.AbstractModule
 import com.google.inject.Provides
 import com.google.inject.name.Named
 import ru.h1karo.sharecontrol.ShareControl
+import java.io.File
 
 class PluginModule(private val plugin: ShareControl) : AbstractModule() {
     override fun configure() {
@@ -42,5 +43,11 @@ class PluginModule(private val plugin: ShareControl) : AbstractModule() {
     @Named("version")
     fun getPluginVersion(): String {
         return plugin.description.version
+    }
+
+    @Provides
+    @Named("directory")
+    fun getPluginDirectory(): File {
+        return plugin.dataFolder
     }
 }
