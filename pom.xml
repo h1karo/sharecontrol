@@ -22,6 +22,10 @@
             <id>spigotmc-repo</id>
             <url>https://hub.spigotmc.org/nexus/content/repositories/snapshots/</url>
         </repository>
+        <repository>
+            <id>spring-plugins-repo</id>
+            <url>https://repo.spring.io/plugins-release/</url>
+        </repository>
     </repositories>
 
     <scm>
@@ -176,6 +180,11 @@
             <artifactId>kotlin-test-junit</artifactId>
             <version>${kotlin.version}</version>
             <scope>test</scope>
+        </dependency>
+        <dependency>
+            <groupId>net.swiftzer.semver</groupId>
+            <artifactId>semver</artifactId>
+            <version>1.1.1</version>
         </dependency>
     </dependencies>
 </project>
