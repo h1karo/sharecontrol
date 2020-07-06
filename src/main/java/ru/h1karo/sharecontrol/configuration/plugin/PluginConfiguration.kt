@@ -46,6 +46,7 @@ class PluginConfiguration @Inject constructor(
     override fun getEntries(): Set<EntryInterface> = setOf(
             Locale,
             Database,
-            Updater
+            Updater,
+            ChatPrefix
     )
 }
