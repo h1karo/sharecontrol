@@ -26,8 +26,6 @@ import com.google.inject.Inject
 import com.google.inject.name.Named
 import ru.h1karo.sharecontrol.configuration.AbstractConfiguration
 import ru.h1karo.sharecontrol.configuration.entry.EntryInterface
-import ru.h1karo.sharecontrol.configuration.entry.InlineEntry
-import ru.h1karo.sharecontrol.configuration.entry.ParameterInterface
 import java.io.File
 
 class PluginConfiguration @Inject constructor(
@@ -48,6 +46,6 @@ class PluginConfiguration @Inject constructor(
     override fun getEntries(): Set<EntryInterface> = setOf(
             Locale,
             Database,
-            UpdaterSwitch
+            Updater
     )
 }
