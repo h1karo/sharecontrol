@@ -27,13 +27,16 @@ import ru.h1karo.sharecontrol.configuration.entry.EntryInterface
 import ru.h1karo.sharecontrol.configuration.entry.ParameterInterface
 import ru.h1karo.sharecontrol.configuration.entry.ParameterValueInterface
 import java.io.File
-import java.io.IOException
+import java.io.FileWriter
 
 abstract class AbstractConfiguration(folder: File, path: String) {
-    private var file: File = File(folder, path)
-    private var config: YamlConfiguration = YamlConfiguration.loadConfiguration(file)
+    private val file: File = File(folder, path)
+    private lateinit var config: YamlConfiguration
+    private val commenter: YamlCommenter = YamlCommenter()
 
     fun initialize(): AbstractConfiguration {
+        this.config = YamlConfiguration.loadConfiguration(file)
+
         val headerSet = this.getHeader()
         if (headerSet !== null) {
             val header = headerSet.joinToString(System.lineSeparator())
@@ -66,6 +69,8 @@ abstract class AbstractConfiguration(folder: File, path: String) {
         return parameter.fromString(value as String?)
     }
 
-    @Throws(IOException::class)
-    fun save() = config.save(file)
+    private fun save() {
+        val content = commenter.include(this.config.saveToString(), this.getEntries())
+        FileWriter(this.file).use { it.write(content) }
+    }
 }
