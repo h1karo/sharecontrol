@@ -22,31 +22,18 @@
 
 package ru.h1karo.sharecontrol.configuration.plugin
 
+import ru.h1karo.sharecontrol.configuration.entry.BooleanValue
 import ru.h1karo.sharecontrol.configuration.entry.ParameterInterface
-import ru.h1karo.sharecontrol.configuration.entry.ParameterValueInterface
 
-object Locale : ParameterInterface<String> {
-    override fun getPath(): String = "general.locale"
-    override fun getDescription(): List<String> = listOf(
-            "The language of the plugin messages.",
-            "Available out-of-the-box: en, ru.",
-            "You can add your language by creating a file in the `locales` directory with the appropriate name.",
-            "Default: en"
-    )
-
-    override fun getDefault(): Type = Type.ENGLISH
-    override fun fromString(value: String?): Type {
+object Updater : ParameterInterface<Boolean> {
+    override fun getPath(): String = "general.updater.enabled"
+    override fun getDescription(): List<String> = listOf("Activates the plugin update checker.")
+    override fun getDefault(): BooleanValue = BooleanValue(true)
+    override fun fromString(value: String?): BooleanValue {
         return if (value === null) {
             this.getDefault()
         } else {
-            Type.valueOf(value)
+            BooleanValue(value.toBoolean())
         }
-    }
-
-    enum class Type(private val value: String) : ParameterValueInterface<String> {
-        ENGLISH("en"),
-        RUSSIAN("ru");
-
-        override fun getValue(): String = value
     }
 }

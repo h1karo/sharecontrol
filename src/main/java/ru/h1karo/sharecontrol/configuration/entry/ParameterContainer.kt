@@ -20,20 +20,12 @@
  * @link https://github.com/h1karo/sharecontrol
  */
 
-package ru.h1karo.sharecontrol.configuration.plugin
+package ru.h1karo.sharecontrol.configuration.entry
 
-import ru.h1karo.sharecontrol.configuration.entry.BooleanValue
-import ru.h1karo.sharecontrol.configuration.entry.ParameterInterface
+import com.google.inject.Inject
+import ru.h1karo.sharecontrol.configuration.plugin.PluginConfiguration
 
-object UpdaterSwitch : ParameterInterface<Boolean> {
-    override fun getPath(): String = "general.updater.enabled"
-    override fun getDescription(): List<String> = listOf("Activates the plugin update checker.")
-    override fun getDefault(): BooleanValue = BooleanValue(true)
-    override fun fromString(value: String?): BooleanValue {
-        return if (value === null) {
-            this.getDefault()
-        } else {
-            BooleanValue(value.toBoolean())
-        }
-    }
+class ParameterContainer @Inject constructor(private val configuration: PluginConfiguration) {
+    fun get(parameter: ParameterInterface<*>): ParameterValueInterface<*>? =
+            this.configuration.get(parameter)
 }
