@@ -67,7 +67,7 @@ class YamlCommenter {
                 val node = line.substring(0, line.indexOf(':')).trim()
                 val whitespaceCount = line.indexOf(node)
 
-                if (currentPath.size != whitespaceCount / 2) {
+                while (currentPath.size != whitespaceCount / 2 && currentPath.size > 0) {
                     currentPath.removeAt(currentPath.size - 1)
                 }
 
