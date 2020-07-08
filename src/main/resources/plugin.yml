@@ -6,7 +6,6 @@ authors:
 softdepend: [Essentials, WorldEdit]
 description: Control mode of creativity.
 website: http://dev.bukkit.org/bukkit-plugins/sharecontrol/
-api-version: '1.15'
 commands:
    sharecontrol:
       description: Principal command of plugin
