@@ -30,7 +30,7 @@ import java.io.File
 
 class PluginModule(private val plugin: ShareControl) : AbstractModule() {
     override fun configure() {
-        this.bind(ShareControl::class.java) to plugin
+        this.bind(ShareControl::class.java).toInstance(this.plugin)
     }
 
     @Provides
