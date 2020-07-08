@@ -20,26 +20,14 @@
  * @link https://github.com/h1karo/sharecontrol
  */
 
-package ru.h1karo.sharecontrol.configuration.plugin
+package ru.h1karo.sharecontrol.i18n
 
-import ru.h1karo.sharecontrol.configuration.entry.ParameterInterface
-import ru.h1karo.sharecontrol.i18n.Locale
+import ru.h1karo.sharecontrol.configuration.entry.ParameterValueInterface
 
-object Locale : ParameterInterface<String> {
-    override fun getPath(): String = "general.locale"
-    override fun getDescription(): List<String> = listOf(
-            "The language of the plugin messages.",
-            "Available out-of-the-box: en, ru.",
-            "You can add your language by creating a file in the `messages` directory with the appropriate name.",
-            "Default: en"
-    )
+enum class Locale(private val abbr: String) : ParameterValueInterface<String> {
+    ENGLISH("en"),
+    RUSSIAN("ru");
 
-    override fun getDefault(): Locale = Locale.ENGLISH
-    override fun fromString(value: String?): Locale {
-        return if (value === null) {
-            this.getDefault()
-        } else {
-            Locale.valueOf(value)
-        }
-    }
+    fun getAbbr(): String = abbr
+    override fun getValue(): String = this.getAbbr()
 }
