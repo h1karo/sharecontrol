@@ -23,11 +23,13 @@
 package ru.h1karo.sharecontrol.configuration.plugin
 
 import com.google.inject.Inject
+import com.google.inject.Singleton
 import com.google.inject.name.Named
 import ru.h1karo.sharecontrol.yaml.YamlFile
 import ru.h1karo.sharecontrol.configuration.entry.EntryInterface
 import java.io.File
 
+@Singleton
 class PluginConfiguration @Inject constructor(
         @Named("directory") folder: File
 ) : YamlFile(folder, "config.yaml") {

@@ -24,11 +24,13 @@ package ru.h1karo.sharecontrol
 
 import com.google.inject.Guice
 import com.google.inject.Injector
+import com.google.inject.Singleton
 import org.bukkit.event.Listener
 import org.bukkit.plugin.java.JavaPlugin
 import ru.h1karo.sharecontrol.module.InitializationModule
 import ru.h1karo.sharecontrol.module.PluginModule
 
+@Singleton
 class ShareControl : JavaPlugin(), Listener {
     private val injector: Injector = Guice.createInjector(PluginModule(this), InitializationModule())
     private val initializer: InitializerInterface = injector.getInstance(ChainInitializer::class.java)
