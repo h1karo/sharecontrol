@@ -20,21 +20,25 @@
  * @link https://github.com/h1karo/sharecontrol
  */
 
-package ru.h1karo.sharecontrol.module
+package ru.h1karo.sharecontrol.versioning
 
-import com.google.inject.AbstractModule
-import com.google.inject.multibindings.Multibinder
+import com.google.inject.Inject
+import com.google.inject.name.Named
 import ru.h1karo.sharecontrol.InitializerInterface
-import ru.h1karo.sharecontrol.configuration.ConfigurationInitializer
-import ru.h1karo.sharecontrol.versioning.CompatibilityInitializer
-import kotlin.reflect.KClass
+import ru.h1karo.sharecontrol.console.LoadingBlock
 
-class InitializationModule : AbstractModule() {
-    private val initializers: Set<KClass<out InitializerInterface>>
-        get() = setOf(CompatibilityInitializer::class, ConfigurationInitializer::class)
-
-    override fun configure() {
-        val initializerBinder = Multibinder.newSetBinder(binder(), InitializerInterface::class.java)
-        this.initializers.forEach { initializerBinder.addBinding().to(it.java) }
+class CompatibilityInitializer @Inject constructor(
+    @Named("version") private val version: String,
+    private val validator: CompatibilityValidator,
+    private val sender: LoadingBlock
+) : InitializerInterface {
+    override fun initialize() {
+        if (!validator.validate(version)) {
+            sender.send("&cThe server kernel version may not be compatible with the plugin.")
+            sender.send("&cThis means that the author of the plugin does not support this version of the kernel at the moment and therefore does not provide a guarantee for the plugins to work with your kernel.")
+            sender.send("&cUse the plugin at your own risk.")
+        }
     }
+
+    override fun terminate() {}
 }

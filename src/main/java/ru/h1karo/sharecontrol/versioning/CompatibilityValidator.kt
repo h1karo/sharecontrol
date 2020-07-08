@@ -20,46 +20,27 @@
  * @link https://github.com/h1karo/sharecontrol
  */
 
-package ru.h1karo.sharecontrol.module
+package ru.h1karo.sharecontrol.versioning
 
-import com.google.inject.AbstractModule
-import com.google.inject.Provides
+import com.google.inject.Inject
 import com.google.inject.name.Named
-import ru.h1karo.sharecontrol.ShareControl
-import java.io.File
+import net.swiftzer.semver.SemVer
 
-class PluginModule(private val plugin: ShareControl) : AbstractModule() {
-    override fun configure() {
-        this.bind(ShareControl::class.java) to plugin
+class CompatibilityValidator @Inject constructor(
+        @Named("bukkitVersion") private val bukkitVersion: String
+) {
+    fun validate(version: String): Boolean {
+        val coreVersion = SemVer.parse(this.bukkitVersion)
+        val (start, end) = this.getSupportInterval(version)
+        return coreVersion in start..end
     }
 
-    @Provides
-    @Named("name")
-    fun getPluginName(): String {
-        return plugin.name
-    }
-
-    @Provides
-    @Named("version")
-    fun getPluginVersion(): String {
-        return plugin.description.version
-    }
-
-    @Provides
-    @Named("directory")
-    fun getPluginDirectory(): File {
-        return plugin.dataFolder
-    }
-
-    @Provides
-    @Named("serverVersion")
-    fun getServerVersion(): String {
-        return plugin.server.version
-    }
-
-    @Provides
-    @Named("bukkitVersion")
-    fun getBukkitVersion(): String {
-        return plugin.server.bukkitVersion
+    @Suppress("UNUSED_PARAMETER")
+    private fun getSupportInterval(version: String): List<SemVer> {
+        // todo remove hard code with version support provider
+        return listOf(
+            SemVer(1, 15),
+            SemVer(1, 15, 2)
+        )
     }
 }
