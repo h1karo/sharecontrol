@@ -6,7 +6,7 @@
 
     <groupId>ru.h1karo</groupId>
     <artifactId>ShareControl</artifactId>
-    <version>3.0.0</version>
+    <version>3.0.0-alpha</version>
 
     <properties>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
