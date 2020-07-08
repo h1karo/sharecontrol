@@ -29,10 +29,20 @@ import ru.h1karo.sharecontrol.configuration.entry.ParameterValueInterface
 import java.io.File
 import java.io.FileWriter
 
-abstract class YamlFile(folder: File, path: String) {
-    private val file: File = File(folder, path)
+abstract class YamlFile {
+    private val file: File
     private lateinit var config: YamlConfiguration
-    private val commenter: YamlCommenter = YamlCommenter()
+    private val commenter: YamlCommenter
+
+    constructor(folder: File, path: String) {
+        this.file = File(folder, path)
+        this.commenter = YamlCommenter()
+    }
+
+    constructor(file: File) {
+        this.file = file
+        this.commenter = YamlCommenter()
+    }
 
     fun initialize(): YamlFile {
         this.config = YamlConfiguration.loadConfiguration(file)
