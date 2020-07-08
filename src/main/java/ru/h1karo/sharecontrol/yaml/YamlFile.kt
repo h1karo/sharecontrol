@@ -31,7 +31,7 @@ import java.io.FileWriter
 
 abstract class YamlFile {
     private val file: File
-    private lateinit var config: YamlConfiguration
+    private val config: YamlConfiguration = YamlConfiguration()
     private val commenter: YamlCommenter
 
     constructor(folder: File, path: String) {
@@ -45,7 +45,7 @@ abstract class YamlFile {
     }
 
     fun initialize(): YamlFile {
-        this.config = YamlConfiguration.loadConfiguration(file)
+        this.config.load(file)
 
         val headerSet = this.getHeader()
         if (headerSet !== null) {
