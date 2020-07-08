@@ -20,7 +20,7 @@
  * @link https://github.com/h1karo/sharecontrol
  */
 
-package ru.h1karo.sharecontrol.configuration
+package ru.h1karo.sharecontrol.yaml
 
 import org.bukkit.configuration.file.YamlConfiguration
 import ru.h1karo.sharecontrol.configuration.entry.EntryInterface
@@ -29,12 +29,12 @@ import ru.h1karo.sharecontrol.configuration.entry.ParameterValueInterface
 import java.io.File
 import java.io.FileWriter
 
-abstract class AbstractConfiguration(folder: File, path: String) {
+abstract class YamlFile(folder: File, path: String) {
     private val file: File = File(folder, path)
     private lateinit var config: YamlConfiguration
     private val commenter: YamlCommenter = YamlCommenter()
 
-    fun initialize(): AbstractConfiguration {
+    fun initialize(): YamlFile {
         this.config = YamlConfiguration.loadConfiguration(file)
 
         val headerSet = this.getHeader()

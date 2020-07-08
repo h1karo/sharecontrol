@@ -20,7 +20,7 @@
  * @link https://github.com/h1karo/sharecontrol
  */
 
-package ru.h1karo.sharecontrol.configuration
+package ru.h1karo.sharecontrol.yaml
 
 import ru.h1karo.sharecontrol.configuration.entry.DescribedEntryInterface
 import ru.h1karo.sharecontrol.configuration.entry.EntryInterface

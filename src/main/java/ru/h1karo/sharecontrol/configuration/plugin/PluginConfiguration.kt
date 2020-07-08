@@ -24,13 +24,13 @@ package ru.h1karo.sharecontrol.configuration.plugin
 
 import com.google.inject.Inject
 import com.google.inject.name.Named
-import ru.h1karo.sharecontrol.configuration.AbstractConfiguration
+import ru.h1karo.sharecontrol.yaml.YamlFile
 import ru.h1karo.sharecontrol.configuration.entry.EntryInterface
 import java.io.File
 
 class PluginConfiguration @Inject constructor(
         @Named("directory") folder: File
-) : AbstractConfiguration(folder, "config.yaml") {
+) : YamlFile(folder, "config.yaml") {
     override fun getHeader(): List<String> = listOf(
             "+-----------------------------------------------+ #",
             "+       ShareControl's configuration file       + #",
