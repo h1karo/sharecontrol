@@ -23,7 +23,9 @@
     </licenses>
 
     <properties>
-        <project.version.full>${project.version}+${project.build}</project.version.full>
+        <!--suppress UnresolvedMavenProperty -->
+        <project.version.build>${git.commit.id.describe-short}</project.version.build>
+        <project.version.full>${project.version}+${project.version.build}</project.version.full>
 
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
@@ -144,22 +146,29 @@
                 </executions>
             </plugin>
             <plugin>
-                <groupId>org.codehaus.mojo</groupId>
-                <artifactId>buildnumber-maven-plugin</artifactId>
-                <version>1.4</version>
+                <groupId>pl.project13.maven</groupId>
+                <artifactId>git-commit-id-plugin</artifactId>
+                <version>4.0.0</version>
                 <executions>
                     <execution>
-                        <phase>validate</phase>
+                        <id>get-the-git-infos</id>
                         <goals>
-                            <goal>create</goal>
+                            <goal>revision</goal>
                         </goals>
+                        <phase>validate</phase>
                     </execution>
                 </executions>
                 <configuration>
-                    <buildNumberPropertyName>project.build</buildNumberPropertyName>
-                    <shortRevisionLength>6</shortRevisionLength>
-                    <doCheck>false</doCheck>
-                    <doUpdate>false</doUpdate>
+                    <dotGitDirectory>${project.basedir}/.git</dotGitDirectory>
+                    <prefix>git</prefix>
+                    <verbose>false</verbose>
+                    <generateGitPropertiesFile>true</generateGitPropertiesFile>
+                    <generateGitPropertiesFilename>${project.build.outputDirectory}/git.properties</generateGitPropertiesFilename>
+                    <format>json</format>
+                    <gitDescribe>
+                        <skip>false</skip>
+                        <always>false</always>
+                    </gitDescribe>
                 </configuration>
             </plugin>
         </plugins>
