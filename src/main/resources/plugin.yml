@@ -1,6 +1,6 @@
 name: ShareControl
 main: ru.h1karo.sharecontrol.ShareControl
-version: '${project.version}-${project.build}'
+version: '${project.version.full}'
 authors:
   - h1karo
 softdepend: [Essentials, WorldEdit]
