@@ -9,7 +9,12 @@ This is the official repository of ShareControl Minecraft server plugin. The rep
 [![BukkitDev](https://img.shields.io/static/v1?label=BukkitDev&message=ShareControl&color=blue&style=for-the-badge)](https://dev.bukkit.org/projects/sharecontrol)
 [![SpigotMC](https://img.shields.io/static/v1?label=SpigotMC&message=ShareControl&color=orange&style=for-the-badge)](https://www.spigotmc.org/resources/sharecontrol.9225/)
 
-## Server cores support
+## Requirements
+
+1. Java 8+
+2. Compatible core (see [below](#server-cores-support-table))
+
+### Server cores support table
 
 | Core name | Support versions |
 | :--- | :---: |
@@ -25,3 +30,9 @@ This is the official repository of ShareControl Minecraft server plugin. The rep
 3. Start up (or fully restart) server.
 4. Configure the plugin via `/plugins/ShareControl/config.yaml` file (see section [Configuration](#configuration)).
 5. Run `/sc reload` in console or game.
+
+## Compiling
+
+We use [Maven](https://maven.apache.org/) to compile the plugin. Maven provides all required dependencies.
+
+Install them and run `mvn package`. In the `target` directory, you will get the compiled executable jar-file `ShareControl.jar`.
