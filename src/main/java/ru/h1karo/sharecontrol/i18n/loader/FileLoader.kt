@@ -43,4 +43,8 @@ abstract class FileLoader : MapLoader() {
     }
 
     abstract fun loadFrom(file: File): Map<String, Any>
+
+    override fun supports(resource: Any): Boolean {
+        return resource is String
+    }
 }

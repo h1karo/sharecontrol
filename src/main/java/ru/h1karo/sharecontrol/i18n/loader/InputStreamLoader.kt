@@ -38,4 +38,8 @@ abstract class InputStreamLoader : MapLoader() {
     }
 
     abstract fun loadFrom(reader: Reader): Map<String, Any>
+
+    override fun supports(resource: Any): Boolean {
+        return resource is InputStream
+    }
 }

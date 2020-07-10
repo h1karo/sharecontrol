@@ -34,4 +34,8 @@ open class MapLoader : LoaderInterface {
 
         return MessageCatalogue(locale, resource as Map<String, String>)
     }
+
+    override fun supports(resource: Any): Boolean {
+        return resource is Map<*, *>
+    }
 }

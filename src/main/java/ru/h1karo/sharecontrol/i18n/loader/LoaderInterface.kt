@@ -27,4 +27,5 @@ import ru.h1karo.sharecontrol.i18n.MessageCatalogue
 
 interface LoaderInterface {
     fun load(resource: Any, locale: Locale): MessageCatalogue
+    fun supports(resource: Any): Boolean
 }
