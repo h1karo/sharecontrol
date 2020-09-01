@@ -20,19 +20,6 @@
  * @link https://github.com/h1karo/sharecontrol
  */
 
-package ru.h1karo.sharecontrol.i18n
+package ru.h1karo.sharecontrol.i18n.exception
 
-import ru.h1karo.sharecontrol.i18n.exception.InvalidCatalogueException
-
-data class MessageCatalogue(val locale: Locale, val messages: Map<String, String> = emptyMap()) {
-    fun addCatalogue(catalogue: MessageCatalogue): MessageCatalogue {
-        if (this.locale !== catalogue.locale) {
-            throw InvalidCatalogueException("The catalogues cannot be merged because their locales are different.")
-        }
-
-        val m = this.messages.toMutableMap()
-        m.putAll(catalogue.messages)
-
-        return MessageCatalogue(this.locale, m.toMap())
-    }
-}
+class InvalidCatalogueException(message: String) : RuntimeException(message)
