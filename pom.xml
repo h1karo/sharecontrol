@@ -33,7 +33,7 @@
         <spigot.version>1.15.2-R0.1-SNAPSHOT</spigot.version>
         <guice.version>4.2.3</guice.version>
         <kotlin.version>1.4.0</kotlin.version>
-        <annotations.version>20.0.0</annotations.version>
+        <annotations.version>20.1.0</annotations.version>
 
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
