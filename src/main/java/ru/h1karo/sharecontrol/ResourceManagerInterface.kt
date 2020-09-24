@@ -20,18 +20,12 @@
  * @link https://github.com/h1karo/sharecontrol
  */
 
-package ru.h1karo.sharecontrol.resource
+package ru.h1karo.sharecontrol
 
-import ru.h1karo.sharecontrol.ShareControl
 import java.io.InputStream
-import javax.inject.Inject
 
-class ResourceManager @Inject constructor(private val plugin: ShareControl) {
-    fun getResource(filename: String): InputStream? {
-        return plugin.getResource(filename)
-    }
+interface ResourceManagerInterface {
+    fun getResource(filename: String): InputStream?
 
-    fun saveResource(resourcePath: String, replace: Boolean) {
-        plugin.saveResource(resourcePath, replace)
-    }
+    fun saveResource(resourcePath: String, replace: Boolean)
 }

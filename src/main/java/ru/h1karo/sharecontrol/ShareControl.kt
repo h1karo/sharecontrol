@@ -31,7 +31,7 @@ import ru.h1karo.sharecontrol.module.InitializationModule
 import ru.h1karo.sharecontrol.module.PluginModule
 
 @Singleton
-class ShareControl : JavaPlugin(), Listener {
+class ShareControl : JavaPlugin(), Listener, ResourceManagerInterface {
     private val injector: Injector = Guice.createInjector(PluginModule(this), InitializationModule())
     private val initializer: InitializerInterface = injector.getInstance(ChainInitializer::class.java)
 
