@@ -36,11 +36,16 @@ class Translator @Inject constructor(
         private val loader: LoaderInterface
 ) : TranslatorInterface {
     private val catalogues: MutableMap<Locale, MessageCatalogue> = mutableMapOf()
-    private val resources: MutableMap<Locale, Set<Resource>> = mutableMapOf()
+    private val resources: MutableMap<Locale, MutableSet<Resource>> = mutableMapOf()
 
     override fun trans(id: String, parameters: Set<String>, locale: Locale?): String {
         val message = getMessage(id, locale)
         return this.formatter.format(message, parameters)
+    }
+
+    fun addResource(resource: Resource) {
+        this.resources.getOrPut(resource.locale, { mutableSetOf() }).add(resource)
+        this.catalogues.remove(resource.locale)
     }
 
     private fun getMessage(id: String, locale: Locale? = null): String {
