@@ -27,11 +27,12 @@ import com.google.inject.Singleton
 import com.google.inject.name.Named
 import ru.h1karo.sharecontrol.yaml.YamlFile
 import ru.h1karo.sharecontrol.configuration.entry.EntryInterface
+import ru.h1karo.sharecontrol.module.PluginModule
 import java.io.File
 
 @Singleton
 class PluginConfiguration @Inject constructor(
-        @Named("directory") folder: File
+        @Named(PluginModule.DIRECTORY) folder: File
 ) : YamlFile(folder, "config.yaml") {
     override fun getHeader(): List<String> = listOf(
             "+-----------------------------------------------+ #",

@@ -36,32 +36,40 @@ class PluginModule(private val plugin: ShareControl) : AbstractModule() {
     }
 
     @Provides
-    @Named("name")
+    @Named(NAME)
     fun getPluginName(): String {
         return plugin.name
     }
 
     @Provides
-    @Named("version")
+    @Named(VERSION)
     fun getPluginVersion(): String {
         return plugin.description.version
     }
 
     @Provides
-    @Named("directory")
+    @Named(DIRECTORY)
     fun getPluginDirectory(): File {
         return plugin.dataFolder
     }
 
     @Provides
-    @Named("serverVersion")
+    @Named(SERVER_VERSION)
     fun getServerVersion(): String {
         return plugin.server.version
     }
 
     @Provides
-    @Named("bukkitVersion")
+    @Named(BUKKIT_VERSION)
     fun getBukkitVersion(): String {
         return plugin.server.bukkitVersion
+    }
+
+    companion object {
+        const val NAME = "name"
+        const val VERSION = "version"
+        const val DIRECTORY = "directory"
+        const val SERVER_VERSION = "serverVersion"
+        const val BUKKIT_VERSION = "bukkitVersion"
     }
 }

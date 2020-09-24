@@ -26,11 +26,12 @@ import com.google.inject.Inject
 import com.google.inject.name.Named
 import ru.h1karo.sharecontrol.InitializerInterface
 import ru.h1karo.sharecontrol.console.LoadingConsoleSender
+import ru.h1karo.sharecontrol.module.PluginModule
 
 class CompatibilityInitializer @Inject constructor(
-    @Named("version") private val version: String,
-    private val validator: CompatibilityValidator,
-    private val sender: LoadingConsoleSender
+        @Named(PluginModule.VERSION) private val version: String,
+        private val validator: CompatibilityValidator,
+        private val sender: LoadingConsoleSender
 ) : InitializerInterface {
     override fun initialize() {
         if (!validator.validate(version)) {

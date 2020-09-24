@@ -49,7 +49,7 @@ class I18nModule : AbstractModule() {
     @Provides
     @Named(MESSAGES_DIRECTORY)
     fun getMessagesDirectory(injector: Injector): File {
-        val pluginDirectory = injector.getInstance(Key.get(File::class.java, Names.named("directory")))
+        val pluginDirectory = injector.getInstance(Key.get(File::class.java, Names.named(PluginModule.DIRECTORY)))
         return File(pluginDirectory, MESSAGES_DIRECTORY_NAME)
     }
 

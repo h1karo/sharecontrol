@@ -26,10 +26,11 @@ import com.google.inject.Inject
 import com.google.inject.name.Named
 import org.apache.commons.lang.StringUtils
 import ru.h1karo.sharecontrol.SenderInterface
+import ru.h1karo.sharecontrol.module.PluginModule
 
 class LoadingConsoleSender @Inject constructor(
         private val sender: ConsoleSender,
-        @Named("name") private val pluginName: String
+        @Named(PluginModule.NAME) private val pluginName: String
 ) : SenderInterface {
     private var state: State = State.NOT_STARTED
 
