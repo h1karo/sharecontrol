@@ -23,5 +23,11 @@
 package ru.h1karo.sharecontrol.module
 
 import com.google.inject.AbstractModule
+import ru.h1karo.sharecontrol.i18n.loader.Loader
+import ru.h1karo.sharecontrol.i18n.loader.LoaderInterface
 
-class I18nModule : AbstractModule()
+class I18nModule : AbstractModule() {
+    override fun configure() {
+        this.bind(LoaderInterface::class.java).to(Loader::class.java)
+    }
+}
