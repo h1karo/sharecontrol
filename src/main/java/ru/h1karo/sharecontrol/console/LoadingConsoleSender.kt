@@ -45,7 +45,7 @@ class LoadingConsoleSender @Inject constructor(
 
     override fun send(message: String): LoadingConsoleSender {
         if (this.state != State.STARTED) {
-            throw RuntimeException("YYou cannot send messages when the loading has not started.")
+            throw RuntimeException("You cannot send messages when the loading has not started.")
         }
 
         this.sender.send(message)
