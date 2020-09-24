@@ -20,8 +20,17 @@
  * @link https://github.com/h1karo/sharecontrol
  */
 
-package ru.h1karo.sharecontrol.i18n.exception
+package ru.h1karo.sharecontrol.file.reader
 
-import java.lang.RuntimeException
+import org.bukkit.configuration.file.YamlConfiguration
+import java.io.Reader
 
-class NotFoundLoaderException(resource: Any) : RuntimeException("Loader for resource %d not found.".format(resource.toString()))
+class YamlStreamReader : InputStreamReader() {
+    override fun loadFrom(reader: Reader): Map<String, Any> {
+        return YamlConfiguration
+                .loadConfiguration(reader)
+                .getValues(true)
+    }
+
+    override fun supports(resource: Any): Boolean = resource is String && resource.endsWith("yaml")
+}
