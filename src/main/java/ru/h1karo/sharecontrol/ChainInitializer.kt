@@ -23,21 +23,21 @@
 package ru.h1karo.sharecontrol
 
 import com.google.inject.Inject
-import ru.h1karo.sharecontrol.console.LoadingBlock
+import ru.h1karo.sharecontrol.console.LoadingConsoleSender
 
 class ChainInitializer @Inject constructor(
         private val initializers: Set<@JvmSuppressWildcards InitializerInterface>,
-        private val block: LoadingBlock
+        private val sender: LoadingConsoleSender
 ) : InitializerInterface {
     override fun initialize() {
-        this.block.start()
+        this.sender.start()
         this.initializers.forEach { it.initialize() }
-        this.block.end()
+        this.sender.end()
     }
 
     override fun terminate() {
-        this.block.start()
+        this.sender.start()
         this.initializers.forEach { it.terminate() }
-        this.block.end()
+        this.sender.end()
     }
 }

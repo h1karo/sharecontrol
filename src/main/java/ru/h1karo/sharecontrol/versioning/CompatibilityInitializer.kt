@@ -25,12 +25,12 @@ package ru.h1karo.sharecontrol.versioning
 import com.google.inject.Inject
 import com.google.inject.name.Named
 import ru.h1karo.sharecontrol.InitializerInterface
-import ru.h1karo.sharecontrol.console.LoadingBlock
+import ru.h1karo.sharecontrol.console.LoadingConsoleSender
 
 class CompatibilityInitializer @Inject constructor(
     @Named("version") private val version: String,
     private val validator: CompatibilityValidator,
-    private val sender: LoadingBlock
+    private val sender: LoadingConsoleSender
 ) : InitializerInterface {
     override fun initialize() {
         if (!validator.validate(version)) {
