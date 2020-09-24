@@ -20,12 +20,17 @@
  * @link https://github.com/h1karo/sharecontrol
  */
 
-package ru.h1karo.sharecontrol
+package ru.h1karo.sharecontrol.resource
 
-import java.io.InputStream
+import java.io.File
 
-interface ResourceManagerInterface {
-    fun getResource(filename: String): InputStream?
+class ResourceManager : ResourceManagerInterface {
+    override fun getResource(filename: String): File? {
+        val url = this.javaClass.classLoader.getResource(filename)
+        if (url === null) {
+            return null
+        }
 
-    fun saveResource(resourcePath: String, replace: Boolean)
+        return File(url.path)
+    }
 }

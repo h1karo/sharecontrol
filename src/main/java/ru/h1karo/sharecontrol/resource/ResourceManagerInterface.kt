@@ -20,22 +20,10 @@
  * @link https://github.com/h1karo/sharecontrol
  */
 
-package ru.h1karo.sharecontrol
+package ru.h1karo.sharecontrol.resource
 
-import com.google.inject.Guice
-import com.google.inject.Injector
-import com.google.inject.Singleton
-import org.bukkit.event.Listener
-import org.bukkit.plugin.java.JavaPlugin
-import ru.h1karo.sharecontrol.module.I18nModule
-import ru.h1karo.sharecontrol.module.InitializationModule
-import ru.h1karo.sharecontrol.module.PluginModule
+import java.io.File
 
-@Singleton
-class ShareControl : JavaPlugin(), Listener {
-    private val injector: Injector = Guice.createInjector(PluginModule(this), InitializationModule(), I18nModule())
-    private val initializer: InitializerInterface = injector.getInstance(ChainInitializer::class.java)
-
-    override fun onEnable() = this.initializer.initialize()
-    override fun onDisable() = this.initializer.terminate()
+interface ResourceManagerInterface {
+    fun getResource(filename: String): File?
 }
