@@ -25,12 +25,14 @@ package ru.h1karo.sharecontrol.module
 import com.google.inject.AbstractModule
 import com.google.inject.Provides
 import com.google.inject.name.Named
+import ru.h1karo.sharecontrol.ResourceManagerInterface
 import ru.h1karo.sharecontrol.ShareControl
 import java.io.File
 
 class PluginModule(private val plugin: ShareControl) : AbstractModule() {
     override fun configure() {
         this.bind(ShareControl::class.java).toInstance(this.plugin)
+        this.bind(ResourceManagerInterface::class.java).toInstance(this.plugin)
     }
 
     @Provides
