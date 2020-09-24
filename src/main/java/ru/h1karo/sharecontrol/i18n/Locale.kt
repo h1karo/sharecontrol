@@ -24,10 +24,8 @@ package ru.h1karo.sharecontrol.i18n
 
 import ru.h1karo.sharecontrol.configuration.entry.ParameterValueInterface
 
-enum class Locale(private val abbr: String) : ParameterValueInterface<String> {
-    ENGLISH("en"),
-    RUSSIAN("ru");
+class Locale(val abbr: String) : ParameterValueInterface<String> {
+    lateinit var name: String
 
-    fun getAbbr(): String = abbr
-    override fun getValue(): String = this.getAbbr()
+    override fun getValue(): String = this.abbr
 }

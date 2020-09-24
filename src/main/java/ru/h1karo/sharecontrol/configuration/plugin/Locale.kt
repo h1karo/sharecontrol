@@ -34,12 +34,12 @@ object Locale : ParameterInterface<String> {
             "Default: en"
     )
 
-    override fun getDefault(): Locale = Locale.ENGLISH
+    override fun getDefault(): Locale = Locale("en")
     override fun fromString(value: String?): Locale {
         return if (value === null) {
             this.getDefault()
         } else {
-            Locale.valueOf(value)
+            Locale(value)
         }
     }
 }
