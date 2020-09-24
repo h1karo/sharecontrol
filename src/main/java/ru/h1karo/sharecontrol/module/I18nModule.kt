@@ -23,11 +23,22 @@
 package ru.h1karo.sharecontrol.module
 
 import com.google.inject.AbstractModule
+import com.google.inject.Injector
+import com.google.inject.Provides
+import ru.h1karo.sharecontrol.configuration.entry.ParameterContainer
+import ru.h1karo.sharecontrol.i18n.Locale
 import ru.h1karo.sharecontrol.i18n.loader.Loader
 import ru.h1karo.sharecontrol.i18n.loader.LoaderInterface
+import ru.h1karo.sharecontrol.configuration.plugin.Locale as LocaleParameter
 
 class I18nModule : AbstractModule() {
     override fun configure() {
         this.bind(LoaderInterface::class.java).to(Loader::class.java)
+    }
+
+    @Provides
+    fun getLocale(injector: Injector): Locale {
+        val parameterContainer = injector.getInstance(ParameterContainer::class.java)
+        return parameterContainer.get(LocaleParameter) as Locale
     }
 }
