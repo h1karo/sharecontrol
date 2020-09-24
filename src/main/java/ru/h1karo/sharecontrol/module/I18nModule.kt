@@ -24,11 +24,15 @@ package ru.h1karo.sharecontrol.module
 
 import com.google.inject.AbstractModule
 import com.google.inject.Injector
+import com.google.inject.Key
 import com.google.inject.Provides
+import com.google.inject.name.Named
+import com.google.inject.name.Names
 import ru.h1karo.sharecontrol.configuration.entry.ParameterContainer
 import ru.h1karo.sharecontrol.i18n.Locale
 import ru.h1karo.sharecontrol.i18n.loader.Loader
 import ru.h1karo.sharecontrol.i18n.loader.LoaderInterface
+import java.io.File
 import ru.h1karo.sharecontrol.configuration.plugin.Locale as LocaleParameter
 
 class I18nModule : AbstractModule() {
@@ -40,5 +44,18 @@ class I18nModule : AbstractModule() {
     fun getLocale(injector: Injector): Locale {
         val parameterContainer = injector.getInstance(ParameterContainer::class.java)
         return parameterContainer.get(LocaleParameter) as Locale
+    }
+
+    @Provides
+    @Named(MESSAGES_DIRECTORY)
+    fun getMessagesDirectory(injector: Injector): File {
+        val pluginDirectory = injector.getInstance(Key.get(File::class.java, Names.named("directory")))
+        return File(pluginDirectory, MESSAGES_DIRECTORY_NAME)
+    }
+
+    companion object {
+        const val MESSAGES_DIRECTORY = "messagesDirectory"
+
+        private const val MESSAGES_DIRECTORY_NAME = "messages"
     }
 }
