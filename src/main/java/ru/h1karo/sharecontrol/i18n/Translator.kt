@@ -47,6 +47,11 @@ class Translator @Inject constructor(
         return this.locale
     }
 
+    override fun clear() {
+        this.catalogues.clear()
+        this.resources.clear()
+    }
+
     fun addResource(resource: Resource) {
         this.resources.getOrPut(resource.locale, { mutableSetOf() }).add(resource)
         this.catalogues.remove(resource.locale)
