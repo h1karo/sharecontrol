@@ -43,6 +43,10 @@ class Translator @Inject constructor(
         return this.formatter.format(message, parameters)
     }
 
+    override fun getLocale(): Locale {
+        return this.locale
+    }
+
     fun addResource(resource: Resource) {
         this.resources.getOrPut(resource.locale, { mutableSetOf() }).add(resource)
         this.catalogues.remove(resource.locale)

@@ -24,4 +24,6 @@ package ru.h1karo.sharecontrol.i18n
 
 interface TranslatorInterface {
     fun trans(id: String, parameters: Set<String>, locale: Locale? = null): String
+
+    fun getLocale(): Locale
 }
