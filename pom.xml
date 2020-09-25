@@ -34,6 +34,11 @@
         <guice.version>4.2.3</guice.version>
         <kotlin.version>1.4.10</kotlin.version>
         <annotations.version>20.1.0</annotations.version>
+        <compiler.version>3.8.1</compiler.version>
+        <shade.version>3.2.4</shade.version>
+        <git-commit.version>4.0.2</git-commit.version>
+        <semver.version>1.1.1</semver.version>
+        <reflections.version>0.9.12</reflections.version>
 
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
@@ -95,7 +100,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-compiler-plugin</artifactId>
-                <version>3.8.1</version>
+                <version>${compiler.version}</version>
                 <executions>
                     <execution>
                         <id>default-compile</id>
@@ -124,7 +129,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-shade-plugin</artifactId>
-                <version>3.2.4</version>
+                <version>${shade.version}</version>
                 <executions>
                     <execution>
                         <phase>package</phase>
@@ -151,7 +156,7 @@
             <plugin>
                 <groupId>pl.project13.maven</groupId>
                 <artifactId>git-commit-id-plugin</artifactId>
-                <version>4.0.2</version>
+                <version>${git-commit.version}</version>
                 <executions>
                     <execution>
                         <id>get-the-git-infos</id>
@@ -203,12 +208,12 @@
         <dependency>
             <groupId>net.swiftzer.semver</groupId>
             <artifactId>semver</artifactId>
-            <version>1.1.1</version>
+            <version>${semver.version}</version>
         </dependency>
         <dependency>
             <groupId>org.reflections</groupId>
             <artifactId>reflections</artifactId>
-            <version>0.9.12</version>
+            <version>${reflections.version}</version>
         </dependency>
     </dependencies>
 </project>
