@@ -26,7 +26,7 @@ import java.io.File
 import java.io.FileNotFoundException
 
 abstract class FileReader : ReaderInterface {
-    override fun load(resource: Any): Map<String, Any> {
+    override fun load(resource: Any, format: String): Map<String, Any> {
         if (resource !is String) {
             throw IllegalArgumentException("%s can load only from the file paths.".format(this::class.java))
         }
@@ -41,5 +41,5 @@ abstract class FileReader : ReaderInterface {
 
     abstract fun loadFrom(file: File): Map<String, Any>
 
-    override fun supports(resource: Any): Boolean = resource is String
+    override fun supports(resource: Any, format: String): Boolean = resource is String
 }

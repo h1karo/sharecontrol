@@ -22,4 +22,4 @@
 
 package ru.h1karo.sharecontrol.i18n
 
-data class Resource(val locale: Locale, val resource: String)
+data class Resource(val locale: Locale, val resource: String, val format: String)

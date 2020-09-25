@@ -32,5 +32,7 @@ class YamlStreamReader : InputStreamReader() {
                 .getValues(true)
     }
 
-    override fun supports(resource: Any): Boolean = resource is String && resource.endsWith("yaml")
+    override fun supports(resource: Any, format: String): Boolean {
+        return super.supports(resource, format) && listOf("yaml", "yml").contains(format)
+    }
 }

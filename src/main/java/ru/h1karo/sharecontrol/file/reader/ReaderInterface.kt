@@ -23,6 +23,6 @@
 package ru.h1karo.sharecontrol.file.reader
 
 interface ReaderInterface {
-    fun load(resource: Any): Map<String, Any>
-    fun supports(resource: Any): Boolean
+    fun load(resource: Any, format: String): Map<String, Any>
+    fun supports(resource: Any, format: String): Boolean
 }

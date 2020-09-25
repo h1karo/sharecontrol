@@ -51,6 +51,6 @@ class ResourceFinder @Inject constructor(
             return emptySet()
         }
 
-        return files.map { Resource(locale, it.absolutePath) }.toSet()
+        return files.map { Resource(locale, it.absolutePath, it.extension) }.toSet()
     }
 }

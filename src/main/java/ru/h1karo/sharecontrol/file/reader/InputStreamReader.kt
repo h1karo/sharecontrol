@@ -27,7 +27,7 @@ import java.io.InputStreamReader
 import java.io.Reader
 
 abstract class InputStreamReader : ReaderInterface {
-    override fun load(resource: Any): Map<String, Any> {
+    override fun load(resource: Any, format: String): Map<String, Any> {
         if (resource !is InputStream) {
             throw IllegalArgumentException("%s can load messages only from input stream.".format(this::class.java))
         }
@@ -38,5 +38,5 @@ abstract class InputStreamReader : ReaderInterface {
 
     abstract fun loadFrom(reader: Reader): Map<String, Any>
 
-    override fun supports(resource: Any): Boolean = resource is InputStream
+    override fun supports(resource: Any, format: String): Boolean = resource is InputStream
 }
