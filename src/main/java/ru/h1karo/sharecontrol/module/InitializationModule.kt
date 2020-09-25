@@ -24,17 +24,16 @@ package ru.h1karo.sharecontrol.module
 
 import com.google.inject.AbstractModule
 import com.google.inject.multibindings.Multibinder
+import org.reflections.Reflections
 import ru.h1karo.sharecontrol.InitializerInterface
-import ru.h1karo.sharecontrol.configuration.ConfigurationInitializer
-import ru.h1karo.sharecontrol.versioning.CompatibilityInitializer
-import kotlin.reflect.KClass
+import ru.h1karo.sharecontrol.ShareControl
 
 class InitializationModule : AbstractModule() {
-    private val initializers: Set<KClass<out InitializerInterface>>
-        get() = setOf(CompatibilityInitializer::class, ConfigurationInitializer::class)
-
     override fun configure() {
+        val reflections = Reflections(ShareControl::class.java.`package`.name)
+        val initializers = reflections.getSubTypesOf(InitializerInterface::class.java)
+
         val initializerBinder = Multibinder.newSetBinder(binder(), InitializerInterface::class.java)
-        this.initializers.forEach { initializerBinder.addBinding().to(it.java) }
+        initializers.forEach { initializerBinder.addBinding().to(it) }
     }
 }
