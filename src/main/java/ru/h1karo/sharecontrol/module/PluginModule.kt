@@ -27,18 +27,25 @@ import com.google.inject.name.Named
 import ru.h1karo.sharecontrol.ShareControl
 import ru.h1karo.sharecontrol.file.reader.DelegatingReader
 import ru.h1karo.sharecontrol.file.reader.Reader
+import ru.h1karo.sharecontrol.file.writer.DelegatingWriter
+import ru.h1karo.sharecontrol.file.writer.Writer
 import java.io.File
 
 class PluginModule(private val plugin: ShareControl) : AbstractModule() {
     override fun configure() {
         this.bind(ShareControl::class.java).toInstance(this.plugin)
-
         this.bindReaders()
+        this.bindWriters()
     }
 
     private fun bindReaders() {
         this.bindSet(Reader::class.java, setOf(DelegatingReader::class.java))
         this.bind(Reader::class.java).to(DelegatingReader::class.java)
+    }
+
+    private fun bindWriters() {
+        this.bindSet(Writer::class.java, setOf(DelegatingWriter::class.java))
+        this.bind(Writer::class.java).to(DelegatingWriter::class.java)
     }
 
     @Provides
