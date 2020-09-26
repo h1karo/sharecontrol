@@ -28,18 +28,18 @@ import ru.h1karo.sharecontrol.file.exception.NotFoundReaderException
 
 @Singleton
 class Reader @Inject constructor(private val readers: Set<ReaderInterface>) : ReaderInterface {
-    override fun load(resource: Any, format: String): Map<String, Any> {
-        val loader = this.getReader(resource, format)
-        return loader.load(resource, format)
+    override fun read(resource: Any, format: String): Map<String, Any> {
+        val reader = this.getReader(resource, format)
+        return reader.read(resource, format)
     }
 
     private fun getReader(resource: Any, format: String): ReaderInterface {
-        val loader = this.readers.find { it.supports(resource, format) }
-        if (loader === null) {
+        val reader = this.readers.find { it.supports(resource, format) }
+        if (reader === null) {
             throw NotFoundReaderException(resource, format)
         }
 
-        return loader
+        return reader
     }
 
     override fun supports(resource: Any, format: String): Boolean {

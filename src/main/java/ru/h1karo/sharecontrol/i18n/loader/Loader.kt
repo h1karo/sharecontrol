@@ -33,7 +33,7 @@ class Loader @Inject constructor(
         private val reader: ReaderInterface
 ) : LoaderInterface {
     override fun load(resource: Resource): MessageCatalogue {
-        val messages = this.reader.load(resource.resource, resource.format).mapValues { it.value.toString() }
+        val messages = this.reader.read(resource.resource, resource.format).mapValues { it.value.toString() }
         return MessageCatalogue(resource.locale, messages)
     }
 }
