@@ -23,11 +23,13 @@
 package ru.h1karo.sharecontrol.console
 
 import com.google.inject.Inject
+import com.google.inject.Singleton
 import com.google.inject.name.Named
 import org.apache.commons.lang.StringUtils
 import ru.h1karo.sharecontrol.Sender
 import ru.h1karo.sharecontrol.module.PluginModule
 
+@Singleton
 class LoadingConsoleSender @Inject constructor(
         private val sender: ConsoleSender,
         @Named(PluginModule.NAME) private val pluginName: String
