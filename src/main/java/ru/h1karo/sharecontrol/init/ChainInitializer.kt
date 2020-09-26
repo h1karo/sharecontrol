@@ -30,14 +30,18 @@ class ChainInitializer @Inject constructor(
         private val sender: LoadingConsoleSender
 ) : AbstractInitializer() {
     override fun initialize() {
+        val initializers = this.initializers.sorted()
+
         this.sender.start()
-        this.initializers.forEach { it.initialize() }
+        initializers.forEach { it.initialize() }
         this.sender.end()
     }
 
     override fun terminate() {
+        val initializers = this.initializers.sorted().reversed()
+
         this.sender.start()
-        this.initializers.forEach { it.terminate() }
+        initializers.forEach { it.terminate() }
         this.sender.end()
     }
 }
