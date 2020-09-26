@@ -33,7 +33,7 @@ class I18nInitializer @Inject constructor(
         private val syncer: ResourceSyncer,
         private val finder: ResourceFinder,
         private val translator: Translator
-) : Initializer {
+) : AbstractInitializer() {
     override fun initialize() {
         val locale = this.translator.getLocale()
         this.sender.send("&7Locale detected: " + locale.abbr)

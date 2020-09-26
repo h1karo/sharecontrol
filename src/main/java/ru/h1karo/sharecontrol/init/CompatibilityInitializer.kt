@@ -32,7 +32,7 @@ class CompatibilityInitializer @Inject constructor(
         @Named(PluginModule.VERSION) private val version: String,
         private val validator: CompatibilityValidator,
         private val sender: LoadingConsoleSender
-) : Initializer {
+) : AbstractInitializer() {
     override fun initialize() {
         if (!validator.validate(version)) {
             sender.send("&cThe server kernel version may not be compatible with the plugin.")

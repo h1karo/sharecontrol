@@ -28,7 +28,7 @@ import ru.h1karo.sharecontrol.console.LoadingConsoleSender
 class ChainInitializer @Inject constructor(
         private val initializers: Set<@JvmSuppressWildcards Initializer>,
         private val sender: LoadingConsoleSender
-) : Initializer {
+) : AbstractInitializer() {
     override fun initialize() {
         this.sender.start()
         this.initializers.forEach { it.initialize() }

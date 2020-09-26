@@ -30,7 +30,7 @@ import ru.h1karo.sharecontrol.console.LoadingConsoleSender
 class ConfigurationInitializer @Inject constructor(
         private val pluginConfiguration: PluginConfiguration,
         private val sender: LoadingConsoleSender
-) : Initializer {
+) : AbstractInitializer() {
     override fun initialize() {
         this.sender.send("Configuration initialization started...")
         this.pluginConfiguration.initialize()

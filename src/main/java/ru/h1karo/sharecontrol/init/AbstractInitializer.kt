@@ -22,8 +22,10 @@
 
 package ru.h1karo.sharecontrol.init
 
-interface Initializer : Comparable<Initializer> {
-    fun initialize()
-    fun terminate()
-    fun getPriority(): Int
+abstract class AbstractInitializer : Initializer {
+    override fun getPriority(): Int = 1
+
+    final override fun compareTo(other: Initializer): Int {
+        return other.getPriority() - this.getPriority()
+    }
 }
