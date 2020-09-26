@@ -31,6 +31,7 @@ import ru.h1karo.sharecontrol.ShareControl
 import ru.h1karo.sharecontrol.file.reader.DelegatingReader
 import ru.h1karo.sharecontrol.file.reader.Reader
 import java.io.File
+import java.lang.reflect.Modifier
 
 class PluginModule(private val plugin: ShareControl) : AbstractModule() {
     override fun configure() {
@@ -42,6 +43,7 @@ class PluginModule(private val plugin: ShareControl) : AbstractModule() {
     private fun bindReaders() {
         val reflections = Reflections(ShareControl::class.java.`package`.name)
         val readers = reflections.getSubTypesOf(Reader::class.java)
+        readers.removeIf { Modifier.isInterface(it.modifiers) || Modifier.isAbstract(it.modifiers) }
         readers.remove(DelegatingReader::class.java)
 
         val binder = Multibinder.newSetBinder(binder(), Reader::class.java)

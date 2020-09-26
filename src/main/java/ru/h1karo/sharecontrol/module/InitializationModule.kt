@@ -28,11 +28,13 @@ import org.reflections.Reflections
 import ru.h1karo.sharecontrol.ChainInitializer
 import ru.h1karo.sharecontrol.Initializer
 import ru.h1karo.sharecontrol.ShareControl
+import java.lang.reflect.Modifier
 
 class InitializationModule : AbstractModule() {
     override fun configure() {
         val reflections = Reflections(ShareControl::class.java.`package`.name)
         val initializers = reflections.getSubTypesOf(Initializer::class.java)
+        initializers.removeIf { Modifier.isInterface(it.modifiers) || Modifier.isAbstract(it.modifiers) }
         initializers.remove(ChainInitializer::class.java)
 
         val initializerBinder = Multibinder.newSetBinder(binder(), Initializer::class.java)
