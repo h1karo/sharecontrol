@@ -23,25 +23,48 @@
 package ru.h1karo.sharecontrol.init
 
 import com.google.inject.Inject
+import org.bukkit.Bukkit
+import org.bukkit.plugin.Plugin
 import ru.h1karo.sharecontrol.console.LoadingConsoleSender
+import java.lang.Exception
 
 class ChainInitializer @Inject constructor(
         private val initializers: Set<@JvmSuppressWildcards Initializer>,
-        private val sender: LoadingConsoleSender
+        private val sender: LoadingConsoleSender,
+        private val plugin: Plugin
 ) : AbstractInitializer() {
     override fun initialize() {
-        val initializers = this.initializers.sorted()
+        try {
+            val initializers = this.initializers.sorted()
 
-        this.sender.start()
-        initializers.forEach { it.initialize() }
-        this.sender.end()
+            this.sender.start()
+            initializers.forEach { it.initialize() }
+        } catch (e: Exception) {
+            this.handleException(e)
+        } finally {
+            this.sender.end()
+        }
     }
 
     override fun terminate() {
-        val initializers = this.initializers.sorted().reversed()
+        try {
+            val initializers = this.initializers.sorted().reversed()
 
-        this.sender.start()
-        initializers.forEach { it.terminate() }
-        this.sender.end()
+            this.sender.start()
+            initializers.forEach { it.terminate() }
+        } catch (e: Exception) {
+            this.handleException(e)
+        } finally {
+            this.sender.end()
+        }
+    }
+
+    private fun handleException(e: Exception) {
+        this.sender.send("&cException caught: " + e.message)
+        this.sender.send("&cMore information can be found into logs.")
+        this.sender.send("&cPlease provide all logs to developer to fix the bug.")
+
+        // @TODO logging
+        e.printStackTrace()
     }
 }
