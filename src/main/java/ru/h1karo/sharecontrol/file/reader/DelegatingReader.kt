@@ -20,11 +20,29 @@
  * @link https://github.com/h1karo/sharecontrol
  */
 
-package ru.h1karo.sharecontrol.i18n.loader
+package ru.h1karo.sharecontrol.file.reader
 
-import ru.h1karo.sharecontrol.i18n.MessageCatalogue
-import ru.h1karo.sharecontrol.i18n.Resource
+import com.google.inject.Inject
+import com.google.inject.Singleton
+import ru.h1karo.sharecontrol.file.exception.NotFoundReaderException
 
-interface LoaderInterface {
-    fun load(resource: Resource): MessageCatalogue
+@Singleton
+class DelegatingReader @Inject constructor(private val readers: Set<Reader>) : Reader {
+    override fun read(resource: Any, format: String): Map<String, Any> {
+        val reader = this.getReader(resource, format)
+        return reader.read(resource, format)
+    }
+
+    private fun getReader(resource: Any, format: String): Reader {
+        val reader = this.readers.find { it.supports(resource, format) }
+        if (reader === null) {
+            throw NotFoundReaderException(resource, format)
+        }
+
+        return reader
+    }
+
+    override fun supports(resource: Any, format: String): Boolean {
+        return this.readers.any { it.supports(resource, format) }
+    }
 }

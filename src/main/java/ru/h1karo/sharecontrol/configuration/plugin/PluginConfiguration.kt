@@ -26,7 +26,7 @@ import com.google.inject.Inject
 import com.google.inject.Singleton
 import com.google.inject.name.Named
 import ru.h1karo.sharecontrol.yaml.YamlFile
-import ru.h1karo.sharecontrol.configuration.entry.EntryInterface
+import ru.h1karo.sharecontrol.configuration.entry.Entry
 import ru.h1karo.sharecontrol.module.PluginModule
 import java.io.File
 
@@ -46,7 +46,7 @@ class PluginConfiguration @Inject constructor(
             "Thanks for using my plugin!"
     )
 
-    override fun getEntries(): Set<EntryInterface> = setOf(
+    override fun getEntries(): Set<Entry> = setOf(
             Locale,
             Database,
             Updater,

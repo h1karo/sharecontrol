@@ -22,27 +22,7 @@
 
 package ru.h1karo.sharecontrol.file.reader
 
-import com.google.inject.Inject
-import com.google.inject.Singleton
-import ru.h1karo.sharecontrol.file.exception.NotFoundReaderException
-
-@Singleton
-class Reader @Inject constructor(private val readers: Set<ReaderInterface>) : ReaderInterface {
-    override fun read(resource: Any, format: String): Map<String, Any> {
-        val reader = this.getReader(resource, format)
-        return reader.read(resource, format)
-    }
-
-    private fun getReader(resource: Any, format: String): ReaderInterface {
-        val reader = this.readers.find { it.supports(resource, format) }
-        if (reader === null) {
-            throw NotFoundReaderException(resource, format)
-        }
-
-        return reader
-    }
-
-    override fun supports(resource: Any, format: String): Boolean {
-        return this.readers.any { it.supports(resource, format) }
-    }
+interface Reader {
+    fun read(resource: Any, format: String): Map<String, Any>
+    fun supports(resource: Any, format: String): Boolean
 }

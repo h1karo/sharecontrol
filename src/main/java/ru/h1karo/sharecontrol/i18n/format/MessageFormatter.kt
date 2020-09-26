@@ -20,9 +20,8 @@
  * @link https://github.com/h1karo/sharecontrol
  */
 
-package ru.h1karo.sharecontrol.file.reader
+package ru.h1karo.sharecontrol.i18n.format
 
-interface ReaderInterface {
-    fun read(resource: Any, format: String): Map<String, Any>
-    fun supports(resource: Any, format: String): Boolean
+interface MessageFormatter {
+    fun format(message: String, parameters: Set<String>): String
 }

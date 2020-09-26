@@ -22,7 +22,27 @@
 
 package ru.h1karo.sharecontrol.file.writer
 
-interface WriterInterface {
-    fun write(resource: Any, data: Map<String, Any>, format: String): Boolean
-    fun supports(resource: Any, format: String): Boolean
+import com.google.inject.Inject
+import com.google.inject.Singleton
+import ru.h1karo.sharecontrol.file.exception.NotFoundWriterException
+
+@Singleton
+class DelegatingWriter @Inject constructor(private val writers: Set<Writer>) : Writer {
+    override fun write(resource: Any, data: Map<String, Any>, format: String): Boolean {
+        val writer = this.getWriter(resource, format)
+        return writer.write(resource, data, format)
+    }
+
+    private fun getWriter(resource: Any, format: String): Writer {
+        val writer = this.writers.find { it.supports(resource, format) }
+        if (writer === null) {
+            throw NotFoundWriterException(resource, format)
+        }
+
+        return writer
+    }
+
+    override fun supports(resource: Any, format: String): Boolean {
+        return this.writers.any { it.supports(resource, format) }
+    }
 }

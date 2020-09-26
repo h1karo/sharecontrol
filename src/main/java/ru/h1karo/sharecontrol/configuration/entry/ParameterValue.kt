@@ -20,9 +20,8 @@
  * @link https://github.com/h1karo/sharecontrol
  */
 
-package ru.h1karo.sharecontrol
+package ru.h1karo.sharecontrol.configuration.entry
 
-interface InitializerInterface {
-    fun initialize()
-    fun terminate()
+interface ParameterValue<T> {
+    fun getValue(): T
 }

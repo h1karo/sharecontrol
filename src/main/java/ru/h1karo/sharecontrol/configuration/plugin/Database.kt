@@ -23,7 +23,7 @@
 package ru.h1karo.sharecontrol.configuration.plugin
 
 import ru.h1karo.sharecontrol.configuration.entry.ParameterInterface
-import ru.h1karo.sharecontrol.configuration.entry.ParameterValueInterface
+import ru.h1karo.sharecontrol.configuration.entry.ParameterValue
 
 object Database : ParameterInterface<String> {
     override fun getPath(): String = "general.database.type"
@@ -37,7 +37,7 @@ object Database : ParameterInterface<String> {
         }
     }
 
-    enum class Type(private val value: String) : ParameterValueInterface<String> {
+    enum class Type(private val value: String) : ParameterValue<String> {
         MySQL("mysql"),
         SQLite("sqlite");
 

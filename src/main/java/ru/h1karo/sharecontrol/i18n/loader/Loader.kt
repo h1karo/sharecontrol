@@ -22,18 +22,9 @@
 
 package ru.h1karo.sharecontrol.i18n.loader
 
-import com.google.inject.Inject
-import com.google.inject.Singleton
-import ru.h1karo.sharecontrol.file.reader.ReaderInterface
 import ru.h1karo.sharecontrol.i18n.MessageCatalogue
 import ru.h1karo.sharecontrol.i18n.Resource
 
-@Singleton
-class Loader @Inject constructor(
-        private val reader: ReaderInterface
-) : LoaderInterface {
-    override fun load(resource: Resource): MessageCatalogue {
-        val messages = this.reader.read(resource.resource, resource.format).mapValues { it.value.toString() }
-        return MessageCatalogue(resource.locale, messages)
-    }
+interface Loader {
+    fun load(resource: Resource): MessageCatalogue
 }

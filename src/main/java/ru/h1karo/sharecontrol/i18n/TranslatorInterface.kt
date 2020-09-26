@@ -22,9 +22,9 @@
 
 package ru.h1karo.sharecontrol.i18n
 
-import ru.h1karo.sharecontrol.ResetInterface
+import ru.h1karo.sharecontrol.Resettable
 
-interface TranslatorInterface : ResetInterface {
+interface TranslatorInterface : Resettable {
     fun trans(id: String, parameters: Set<String>, locale: Locale? = null): String
 
     fun getLocale(): Locale

@@ -24,7 +24,7 @@ package ru.h1karo.sharecontrol.versioning
 
 import com.google.inject.Inject
 import com.google.inject.name.Named
-import ru.h1karo.sharecontrol.InitializerInterface
+import ru.h1karo.sharecontrol.Initializer
 import ru.h1karo.sharecontrol.console.LoadingConsoleSender
 import ru.h1karo.sharecontrol.module.PluginModule
 
@@ -32,7 +32,7 @@ class CompatibilityInitializer @Inject constructor(
         @Named(PluginModule.VERSION) private val version: String,
         private val validator: CompatibilityValidator,
         private val sender: LoadingConsoleSender
-) : InitializerInterface {
+) : Initializer {
     override fun initialize() {
         if (!validator.validate(version)) {
             sender.send("&cThe server kernel version may not be compatible with the plugin.")

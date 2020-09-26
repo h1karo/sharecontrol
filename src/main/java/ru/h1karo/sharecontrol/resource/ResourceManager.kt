@@ -24,8 +24,8 @@ package ru.h1karo.sharecontrol.resource
 
 import java.io.File
 
-class ResourceManager : ResourceManagerInterface {
-    override fun getResource(filename: String): File? {
+class ResourceManager {
+    fun getResource(filename: String): File? {
         val url = this.javaClass.classLoader.getResource(filename)
         if (url === null) {
             return null

@@ -26,14 +26,14 @@ import com.google.inject.Inject
 import com.google.inject.Singleton
 import ru.h1karo.sharecontrol.i18n.exception.CatalogueNotFoundException
 import ru.h1karo.sharecontrol.i18n.exception.MessageNotFoundException
-import ru.h1karo.sharecontrol.i18n.format.MessageFormatterInterface
-import ru.h1karo.sharecontrol.i18n.loader.LoaderInterface
+import ru.h1karo.sharecontrol.i18n.format.MessageFormatter
+import ru.h1karo.sharecontrol.i18n.loader.Loader
 
 @Singleton
 class Translator @Inject constructor(
         private val locale: Locale,
-        private val formatter: MessageFormatterInterface,
-        private val loader: LoaderInterface
+        private val formatter: MessageFormatter,
+        private val loader: Loader
 ) : TranslatorInterface {
     private val catalogues: MutableMap<Locale, MessageCatalogue> = mutableMapOf()
     private val resources: MutableMap<Locale, MutableSet<Resource>> = mutableMapOf()

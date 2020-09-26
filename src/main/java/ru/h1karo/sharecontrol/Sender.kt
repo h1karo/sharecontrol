@@ -20,8 +20,8 @@
  * @link https://github.com/h1karo/sharecontrol
  */
 
-package ru.h1karo.sharecontrol.configuration.entry
+package ru.h1karo.sharecontrol
 
-interface ParameterValueInterface<T> {
-    fun getValue(): T
+interface Sender {
+    fun send(message: String): Sender
 }

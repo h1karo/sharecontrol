@@ -20,8 +20,18 @@
  * @link https://github.com/h1karo/sharecontrol
  */
 
-package ru.h1karo.sharecontrol
+package ru.h1karo.sharecontrol.i18n.loader
 
-interface SenderInterface {
-    fun send(message: String): SenderInterface
+import com.google.inject.Inject
+import com.google.inject.Singleton
+import ru.h1karo.sharecontrol.file.reader.Reader
+import ru.h1karo.sharecontrol.i18n.MessageCatalogue
+import ru.h1karo.sharecontrol.i18n.Resource
+
+@Singleton
+class DelegatingLoader @Inject constructor(private val reader: Reader) : Loader {
+    override fun load(resource: Resource): MessageCatalogue {
+        val messages = this.reader.read(resource.resource, resource.format).mapValues { it.value.toString() }
+        return MessageCatalogue(resource.locale, messages)
+    }
 }

@@ -23,7 +23,7 @@
 package ru.h1karo.sharecontrol.i18n
 
 import com.google.inject.Inject
-import ru.h1karo.sharecontrol.InitializerInterface
+import ru.h1karo.sharecontrol.Initializer
 import ru.h1karo.sharecontrol.console.LoadingConsoleSender
 import ru.h1karo.sharecontrol.i18n.init.ResourceFinder
 import ru.h1karo.sharecontrol.i18n.init.ResourceSyncer
@@ -33,7 +33,7 @@ class I18nInitializer @Inject constructor(
         private val syncer: ResourceSyncer,
         private val finder: ResourceFinder,
         private val translator: Translator
-) : InitializerInterface {
+) : Initializer {
     override fun initialize() {
         val locale = this.translator.getLocale()
         this.sender.send("&7Locale detected: " + locale.abbr)

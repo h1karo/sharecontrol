@@ -28,28 +28,25 @@ import com.google.inject.multibindings.Multibinder
 import com.google.inject.name.Named
 import org.reflections.Reflections
 import ru.h1karo.sharecontrol.ShareControl
+import ru.h1karo.sharecontrol.file.reader.DelegatingReader
 import ru.h1karo.sharecontrol.file.reader.Reader
-import ru.h1karo.sharecontrol.file.reader.ReaderInterface
-import ru.h1karo.sharecontrol.resource.ResourceManager
-import ru.h1karo.sharecontrol.resource.ResourceManagerInterface
 import java.io.File
 
 class PluginModule(private val plugin: ShareControl) : AbstractModule() {
     override fun configure() {
         this.bind(ShareControl::class.java).toInstance(this.plugin)
-        this.bind(ResourceManagerInterface::class.java).to(ResourceManager::class.java)
 
         this.bindReaders()
     }
 
     private fun bindReaders() {
         val reflections = Reflections(ShareControl::class.java.`package`.name)
-        val readers = reflections.getSubTypesOf(ReaderInterface::class.java)
+        val readers = reflections.getSubTypesOf(Reader::class.java)
 
-        val binder = Multibinder.newSetBinder(binder(), ReaderInterface::class.java)
+        val binder = Multibinder.newSetBinder(binder(), Reader::class.java)
         readers.forEach { binder.addBinding().to(it) }
 
-        this.bind(ReaderInterface::class.java).to(Reader::class.java)
+        this.bind(Reader::class.java).to(DelegatingReader::class.java)
     }
 
     @Provides

@@ -20,8 +20,8 @@
  * @link https://github.com/h1karo/sharecontrol
  */
 
-package ru.h1karo.sharecontrol.i18n.format
+package ru.h1karo.sharecontrol.configuration.entry
 
-interface MessageFormatterInterface {
-    fun format(message: String, parameters: Set<String>): String
+interface DescribedEntry : Entry {
+    fun getDescription(): List<String>
 }

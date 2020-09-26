@@ -25,18 +25,18 @@ package ru.h1karo.sharecontrol.i18n.init
 import com.google.common.collect.Maps
 import com.google.inject.Inject
 import com.google.inject.name.Named
-import ru.h1karo.sharecontrol.file.reader.ReaderInterface
-import ru.h1karo.sharecontrol.file.writer.WriterInterface
+import ru.h1karo.sharecontrol.file.reader.Reader
+import ru.h1karo.sharecontrol.file.writer.Writer
 import ru.h1karo.sharecontrol.module.I18nModule
-import ru.h1karo.sharecontrol.resource.ResourceManagerInterface
+import ru.h1karo.sharecontrol.resource.ResourceManager
 import java.io.File
 
 class ResourceSyncer @Inject constructor(
         @Named(I18nModule.MESSAGES_DIRECTORY)
         private val directory: File,
-        private val resourceManager: ResourceManagerInterface,
-        private val reader: ReaderInterface,
-        private val writer: WriterInterface,
+        private val resourceManager: ResourceManager,
+        private val reader: Reader,
+        private val writer: Writer,
 ) {
     fun sync() {
         val messagesDirectory = resourceManager.getResource(directory.name)

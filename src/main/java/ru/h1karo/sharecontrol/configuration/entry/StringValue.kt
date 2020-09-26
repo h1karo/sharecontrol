@@ -22,6 +22,6 @@
 
 package ru.h1karo.sharecontrol.configuration.entry
 
-class StringValue(private val value: String) : ParameterValueInterface<String> {
+class StringValue(private val value: String) : ParameterValue<String> {
     override fun getValue(): String = value
 }

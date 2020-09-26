@@ -26,7 +26,7 @@ import java.io.InputStream
 import java.io.InputStreamReader
 import java.io.Reader
 
-abstract class InputStreamReader : ReaderInterface {
+abstract class InputStreamReader : ru.h1karo.sharecontrol.file.reader.Reader {
     override fun read(resource: Any, format: String): Map<String, Any> {
         if (resource !is InputStream) {
             throw IllegalArgumentException("%s can load messages only from input stream.".format(this::class.java))

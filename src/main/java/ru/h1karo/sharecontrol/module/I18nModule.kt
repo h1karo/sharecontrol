@@ -30,14 +30,14 @@ import com.google.inject.name.Named
 import com.google.inject.name.Names
 import ru.h1karo.sharecontrol.configuration.entry.ParameterContainer
 import ru.h1karo.sharecontrol.i18n.Locale
+import ru.h1karo.sharecontrol.i18n.loader.DelegatingLoader
 import ru.h1karo.sharecontrol.i18n.loader.Loader
-import ru.h1karo.sharecontrol.i18n.loader.LoaderInterface
 import java.io.File
 import ru.h1karo.sharecontrol.configuration.plugin.Locale as LocaleParameter
 
 class I18nModule : AbstractModule() {
     override fun configure() {
-        this.bind(LoaderInterface::class.java).to(Loader::class.java)
+        this.bind(Loader::class.java).to(DelegatingLoader::class.java)
     }
 
     @Provides

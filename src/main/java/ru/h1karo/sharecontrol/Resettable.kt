@@ -20,10 +20,11 @@
  * @link https://github.com/h1karo/sharecontrol
  */
 
-package ru.h1karo.sharecontrol.resource
+package ru.h1karo.sharecontrol
 
-import java.io.File
-
-interface ResourceManagerInterface {
-    fun getResource(filename: String): File?
+interface Resettable {
+    /**
+     * Clears runtime data.
+     */
+    fun clear()
 }

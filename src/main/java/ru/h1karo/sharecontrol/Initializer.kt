@@ -22,9 +22,7 @@
 
 package ru.h1karo.sharecontrol
 
-interface ResetInterface {
-    /**
-     * Clears runtime data.
-     */
-    fun clear()
+interface Initializer {
+    fun initialize()
+    fun terminate()
 }

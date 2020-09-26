@@ -22,6 +22,6 @@
 
 package ru.h1karo.sharecontrol.configuration.entry
 
-interface EntryInterface {
+interface Entry {
     fun getPath(): String
 }

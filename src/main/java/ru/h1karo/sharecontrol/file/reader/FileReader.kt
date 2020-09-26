@@ -25,7 +25,7 @@ package ru.h1karo.sharecontrol.file.reader
 import java.io.File
 import java.io.FileNotFoundException
 
-abstract class FileReader : ReaderInterface {
+abstract class FileReader : Reader {
     override fun read(resource: Any, format: String): Map<String, Any> {
         if (resource !is String) {
             throw IllegalArgumentException("%s can load only from the file paths.".format(this::class.java))

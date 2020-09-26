@@ -22,6 +22,6 @@
 
 package ru.h1karo.sharecontrol.configuration.entry
 
-class BooleanValue(private val value: Boolean) : ParameterValueInterface<Boolean> {
+class BooleanValue(private val value: Boolean) : ParameterValue<Boolean> {
     override fun getValue(): Boolean = value
 }
