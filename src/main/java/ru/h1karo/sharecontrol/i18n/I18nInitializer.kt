@@ -43,6 +43,7 @@ class I18nInitializer @Inject constructor(
 
         this.translator.clear()
         this.finder.find().forEach { this.translator.addResource(it) }
+        locale.name = this.translator.trans("name")
 
         this.sender.send("&7Messages loading complete.")
     }
