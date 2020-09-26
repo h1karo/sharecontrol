@@ -24,7 +24,7 @@ package ru.h1karo.sharecontrol.i18n
 
 import ru.h1karo.sharecontrol.configuration.entry.ParameterValue
 
-class Locale(val abbr: String) : ParameterValue<String> {
+data class Locale(val abbr: String) : ParameterValue<String> {
     lateinit var name: String
 
     override fun getValue(): String = this.abbr
