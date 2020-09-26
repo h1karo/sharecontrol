@@ -22,16 +22,12 @@
 
 package ru.h1karo.sharecontrol.module
 
-import com.google.inject.AbstractModule
 import com.google.inject.Provides
-import com.google.inject.multibindings.Multibinder
 import com.google.inject.name.Named
-import org.reflections.Reflections
 import ru.h1karo.sharecontrol.ShareControl
 import ru.h1karo.sharecontrol.file.reader.DelegatingReader
 import ru.h1karo.sharecontrol.file.reader.Reader
 import java.io.File
-import java.lang.reflect.Modifier
 
 class PluginModule(private val plugin: ShareControl) : AbstractModule() {
     override fun configure() {
@@ -41,14 +37,7 @@ class PluginModule(private val plugin: ShareControl) : AbstractModule() {
     }
 
     private fun bindReaders() {
-        val reflections = Reflections(ShareControl::class.java.`package`.name)
-        val readers = reflections.getSubTypesOf(Reader::class.java)
-        readers.removeIf { Modifier.isInterface(it.modifiers) || Modifier.isAbstract(it.modifiers) }
-        readers.remove(DelegatingReader::class.java)
-
-        val binder = Multibinder.newSetBinder(binder(), Reader::class.java)
-        readers.forEach { binder.addBinding().to(it) }
-
+        this.bindSet(Reader::class.java, setOf(DelegatingReader::class.java))
         this.bind(Reader::class.java).to(DelegatingReader::class.java)
     }
 

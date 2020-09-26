@@ -22,11 +22,21 @@
 
 package ru.h1karo.sharecontrol.module
 
-import ru.h1karo.sharecontrol.ChainInitializer
-import ru.h1karo.sharecontrol.Initializer
+import com.google.inject.AbstractModule
+import com.google.inject.multibindings.Multibinder
+import org.reflections.Reflections
+import ru.h1karo.sharecontrol.ShareControl
+import java.lang.reflect.Modifier
 
-class InitializationModule : AbstractModule() {
-    override fun configure() {
-        this.bindSet(Initializer::class.java, setOf(ChainInitializer::class.java))
+abstract class AbstractModule : AbstractModule() {
+    protected fun <T> bindSet(type: Class<T>, exclude: Set<Class<out T>> = setOf()) {
+        val reflections = Reflections(ShareControl::class.java.`package`.name)
+        val services = reflections.getSubTypesOf(type)
+
+        services.removeIf { Modifier.isInterface(it.modifiers) || Modifier.isAbstract(it.modifiers) }
+        exclude.forEach { services.remove(it) }
+
+        val binder = Multibinder.newSetBinder(binder(), type)
+        services.forEach { binder.addBinding().to(it) }
     }
 }
