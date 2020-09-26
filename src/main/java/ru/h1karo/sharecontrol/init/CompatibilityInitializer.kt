@@ -42,4 +42,6 @@ class CompatibilityInitializer @Inject constructor(
     }
 
     override fun terminate() {}
+
+    override fun getPriority(): Int = 200
 }
