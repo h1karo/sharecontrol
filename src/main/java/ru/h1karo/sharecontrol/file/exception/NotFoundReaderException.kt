@@ -22,6 +22,6 @@
 
 package ru.h1karo.sharecontrol.file.exception
 
-import java.lang.RuntimeException
-
-class NotFoundReaderException(resource: Any) : RuntimeException("Reader for resource %d not found.".format(resource.toString()))
+class NotFoundReaderException(resource: Any, format: String) : RuntimeException(
+        "Reader for resource %s in %s not found.".format(resource.toString(), format)
+)

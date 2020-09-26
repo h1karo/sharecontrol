@@ -36,7 +36,7 @@ class Reader @Inject constructor(private val readers: Set<ReaderInterface>) : Re
     private fun getReader(resource: Any, format: String): ReaderInterface {
         val loader = this.readers.find { it.supports(resource, format) }
         if (loader === null) {
-            throw NotFoundReaderException(resource)
+            throw NotFoundReaderException(resource, format)
         }
 
         return loader
