@@ -27,7 +27,7 @@ import com.google.inject.Singleton
 import ru.h1karo.sharecontrol.file.exception.NotFoundWriterException
 
 @Singleton
-class DelegatingWriter @Inject constructor(private val writers: Set<Writer>) : Writer {
+class DelegatingWriter @Inject constructor(private val writers: Set<@JvmSuppressWildcards Writer>) : Writer {
     override fun write(resource: Any, data: Map<String, Any>, format: String): Boolean {
         val writer = this.getWriter(resource, format)
         return writer.write(resource, data, format)

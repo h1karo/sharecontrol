@@ -27,7 +27,7 @@ import com.google.inject.Singleton
 import ru.h1karo.sharecontrol.file.exception.NotFoundReaderException
 
 @Singleton
-class DelegatingReader @Inject constructor(private val readers: Set<Reader>) : Reader {
+class DelegatingReader @Inject constructor(private val readers: Set<@JvmSuppressWildcards Reader>) : Reader {
     override fun read(resource: Any, format: String): Map<String, Any> {
         val reader = this.getReader(resource, format)
         return reader.read(resource, format)
