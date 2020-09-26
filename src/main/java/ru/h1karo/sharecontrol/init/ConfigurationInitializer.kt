@@ -20,10 +20,10 @@
  * @link https://github.com/h1karo/sharecontrol
  */
 
-package ru.h1karo.sharecontrol.configuration
+package ru.h1karo.sharecontrol.init
 
 import com.google.inject.Inject
-import ru.h1karo.sharecontrol.Initializer
+import ru.h1karo.sharecontrol.init.Initializer
 import ru.h1karo.sharecontrol.configuration.plugin.PluginConfiguration
 import ru.h1karo.sharecontrol.console.LoadingConsoleSender
 

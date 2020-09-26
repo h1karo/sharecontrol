@@ -20,7 +20,7 @@
  * @link https://github.com/h1karo/sharecontrol
  */
 
-package ru.h1karo.sharecontrol
+package ru.h1karo.sharecontrol.init
 
 interface Initializer {
     fun initialize()

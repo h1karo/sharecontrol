@@ -22,8 +22,8 @@
 
 package ru.h1karo.sharecontrol.module
 
-import ru.h1karo.sharecontrol.ChainInitializer
-import ru.h1karo.sharecontrol.Initializer
+import ru.h1karo.sharecontrol.init.ChainInitializer
+import ru.h1karo.sharecontrol.init.Initializer
 
 class InitializationModule : AbstractModule() {
     override fun configure() {

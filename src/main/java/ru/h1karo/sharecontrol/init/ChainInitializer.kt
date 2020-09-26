@@ -20,7 +20,7 @@
  * @link https://github.com/h1karo/sharecontrol
  */
 
-package ru.h1karo.sharecontrol
+package ru.h1karo.sharecontrol.init
 
 import com.google.inject.Inject
 import ru.h1karo.sharecontrol.console.LoadingConsoleSender

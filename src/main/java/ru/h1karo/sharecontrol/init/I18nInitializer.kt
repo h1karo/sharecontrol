@@ -20,11 +20,11 @@
  * @link https://github.com/h1karo/sharecontrol
  */
 
-package ru.h1karo.sharecontrol.i18n
+package ru.h1karo.sharecontrol.init
 
 import com.google.inject.Inject
-import ru.h1karo.sharecontrol.Initializer
 import ru.h1karo.sharecontrol.console.LoadingConsoleSender
+import ru.h1karo.sharecontrol.i18n.Translator
 import ru.h1karo.sharecontrol.i18n.init.ResourceFinder
 import ru.h1karo.sharecontrol.i18n.init.ResourceSyncer
 
