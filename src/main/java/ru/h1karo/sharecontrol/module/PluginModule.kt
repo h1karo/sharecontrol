@@ -42,6 +42,7 @@ class PluginModule(private val plugin: ShareControl) : AbstractModule() {
     private fun bindReaders() {
         val reflections = Reflections(ShareControl::class.java.`package`.name)
         val readers = reflections.getSubTypesOf(Reader::class.java)
+        readers.remove(DelegatingReader::class.java)
 
         val binder = Multibinder.newSetBinder(binder(), Reader::class.java)
         readers.forEach { binder.addBinding().to(it) }
