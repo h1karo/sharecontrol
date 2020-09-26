@@ -45,6 +45,10 @@ abstract class YamlFile {
     }
 
     fun initialize(): YamlFile {
+        if (!this.file.exists()) {
+            this.file.createNewFile()
+        }
+
         this.config.load(file)
 
         val headerSet = this.getHeader()
@@ -55,6 +59,7 @@ abstract class YamlFile {
 
         this.getEntries().forEach { this.initializeEntry(it) }
         this.save()
+
         return this
     }
 
