@@ -28,5 +28,6 @@ import ru.h1karo.sharecontrol.init.Initializer
 class InitializationModule : AbstractModule() {
     override fun configure() {
         this.bindSet(Initializer::class.java, setOf(ChainInitializer::class.java))
+        this.bind(Initializer::class.java).to(ChainInitializer::class.java)
     }
 }

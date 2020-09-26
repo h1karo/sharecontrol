@@ -36,7 +36,7 @@ import ru.h1karo.sharecontrol.module.PluginModule
 @Singleton
 class ShareControl : JavaPlugin(), Listener {
     private val injector: Injector = Guice.createInjector(PluginModule(this), InitializationModule(), I18nModule())
-    private val initializer: Initializer = injector.getInstance(ChainInitializer::class.java)
+    private val initializer: Initializer = injector.getInstance(Initializer::class.java)
 
     override fun onEnable() = this.initializer.initialize()
     override fun onDisable() = this.initializer.terminate()
