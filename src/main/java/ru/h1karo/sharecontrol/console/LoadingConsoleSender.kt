@@ -39,8 +39,8 @@ class LoadingConsoleSender @Inject constructor(
             throw RuntimeException("You cannot start the loading twice.")
         }
 
-        this.send(getLine(true))
         this.state = State.STARTED
+        this.send(getLine(true))
     }
 
     override fun send(message: String): LoadingConsoleSender {
@@ -57,8 +57,8 @@ class LoadingConsoleSender @Inject constructor(
             throw RuntimeException("You cannot finish the loading twice.")
         }
 
-        this.state = State.FINISHED
         this.sender.send(getLine())
+        this.state = State.FINISHED
     }
 
     private fun getLine(withPluginName: Boolean = false): String {
