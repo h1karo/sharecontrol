@@ -23,10 +23,10 @@
 package ru.h1karo.sharecontrol.init
 
 import com.google.inject.Inject
-import ru.h1karo.sharecontrol.console.ConsoleStyle
+import ru.h1karo.sharecontrol.console.BlockStyle
 
 class ChainInitializer @Inject constructor(
-    console: ConsoleStyle,
+    console: BlockStyle,
     private val initializers: Set<@JvmSuppressWildcards Initializer>
 ) : AbstractInitializer(console) {
     override fun initialize() {

@@ -29,12 +29,30 @@ import ru.h1karo.sharecontrol.messenger.Messenger
 import ru.h1karo.sharecontrol.module.PluginModule
 
 @Singleton
-open class ConsoleStyle @Inject constructor(private val messenger: Messenger) : Messenger {
-    fun success(recipient: Any, message: String) = this.send(recipient, "&2✓&8 $message")
+class BlockStyle @Inject constructor(
+    messenger: Messenger,
+    @Named(PluginModule.NAME) private val pluginName: String,
+    @Named(PluginModule.VERSION) private val pluginVersion: String
+) : ConsoleStyle(messenger) {
+    fun sendLine(recipient: Any) = this.send(recipient, this.getLine())
 
-    fun error(recipient: Any, message: String) = this.send(recipient, "&4✗&c $message")
+    fun sendTitledLine(recipient: Any) = this.send(recipient, this.getTitledLine())
 
-    fun warning(recipient: Any, message: String) = this.send(recipient, "&6!&e $message")
+    private fun getPluginTitle(): String = listOf(this.pluginName, this.pluginVersion).joinToString(" ")
 
-    override fun send(recipient: Any, message: String) = this.messenger.send(recipient, message)
+    private fun getLine(): String {
+        return "&8" + LINE_CHAR.repeat(LINE_LENGTH)
+    }
+
+    private fun getTitledLine(): String {
+        val title = getPluginTitle()
+        val lineLength = LINE_LENGTH - title.length - 2
+        val semiLine = LINE_CHAR.repeat(lineLength / 2)
+        return "&8$semiLine &9$title &8$semiLine"
+    }
+
+    companion object {
+        private const val LINE_CHAR = "-"
+        private const val LINE_LENGTH = 64
+    }
 }

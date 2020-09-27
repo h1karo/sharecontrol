@@ -24,10 +24,10 @@ package ru.h1karo.sharecontrol.init
 
 import com.google.inject.Inject
 import ru.h1karo.sharecontrol.configuration.plugin.PluginConfiguration
-import ru.h1karo.sharecontrol.console.ConsoleStyle
+import ru.h1karo.sharecontrol.console.BlockStyle
 
 class ConfigurationInitializer @Inject constructor(
-    console: ConsoleStyle,
+    console: BlockStyle,
     private val pluginConfiguration: PluginConfiguration
 ) : AbstractInitializer(console) {
     override fun initialize() {

@@ -23,9 +23,9 @@
 package ru.h1karo.sharecontrol.init
 
 import org.bukkit.Bukkit
-import ru.h1karo.sharecontrol.console.ConsoleStyle
+import ru.h1karo.sharecontrol.console.BlockStyle
 
-abstract class AbstractInitializer(protected val console: ConsoleStyle) : Initializer {
+abstract class AbstractInitializer(protected val console: BlockStyle) : Initializer {
     private val recipient = Bukkit.getConsoleSender()
 
     protected fun send(message: String) = this.console.send(recipient, message)

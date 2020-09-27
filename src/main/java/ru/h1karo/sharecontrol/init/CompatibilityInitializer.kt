@@ -24,12 +24,12 @@ package ru.h1karo.sharecontrol.init
 
 import com.google.inject.Inject
 import com.google.inject.name.Named
-import ru.h1karo.sharecontrol.console.ConsoleStyle
+import ru.h1karo.sharecontrol.console.BlockStyle
 import ru.h1karo.sharecontrol.module.PluginModule
 import ru.h1karo.sharecontrol.versioning.CompatibilityValidator
 
 class CompatibilityInitializer @Inject constructor(
-    console: ConsoleStyle,
+    console: BlockStyle,
     @Named(PluginModule.VERSION) private val version: String,
     private val validator: CompatibilityValidator
 ) : AbstractInitializer(console) {
