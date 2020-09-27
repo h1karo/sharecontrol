@@ -35,16 +35,15 @@ class I18nInitializer @Inject constructor(
         private val translator: Translator
 ) : AbstractInitializer() {
     override fun initialize() {
-        val locale = this.translator.getLocale()
-        this.sender.send("&7Locale detected: " + locale.abbr)
         this.sender.send("&7Loading messages...")
 
         this.syncer.sync()
-
         this.translator.clear()
         this.finder.find().forEach { this.translator.addResource(it) }
-        locale.name = this.translator.trans("name")
 
+        val locale = this.translator.getLocale()
+        locale.name = this.translator.trans("name")
+        this.sender.send("&7Locale detected: %s (%s)".format(locale.name, locale.abbr))
         this.sender.send("&7Messages loading complete.")
     }
 
