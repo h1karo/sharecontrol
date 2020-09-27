@@ -55,7 +55,11 @@ class ResourceSyncer @Inject constructor(
                 target.createNewFile()
             }
 
-            this.syncMessages(original, target)
+            val originalMessages = this.reader.read(original, original.extension)
+            val targetMessages = this.reader.read(target, target.extension).toMutableMap()
+
+            val synced = this.syncMessages(originalMessages, targetMessages)
+            this.writer.write(target, synced, target.extension)
         }
     }
 
@@ -70,24 +74,23 @@ class ResourceSyncer @Inject constructor(
         return resources.filter { it.startsWith(directory.name) }
     }
 
-    private fun syncMessages(original: File, target: File) {
-        val originalMessages = this.reader.read(original, original.extension)
-        val targetMessages = this.reader.read(target, target.extension).toMutableMap()
-        val diff = Maps.difference(originalMessages, targetMessages)
+    private fun syncMessages(original: Map<String, Any>, target: Map<String, Any>): Map<String, Any> {
+        val synced = target.toMutableMap()
+        val diff = Maps.difference(original, target)
 
         if (diff.areEqual()) {
-            return
+            return target
         }
 
         for (value in diff.entriesOnlyOnLeft()) {
-            targetMessages[value.key] = value.value
+            synced[value.key] = value.value
         }
 
         for (value in diff.entriesOnlyOnRight()) {
-            targetMessages.remove(value.key)
+            synced.remove(value.key)
         }
 
-        this.writer.write(target, targetMessages, target.extension)
+        return synced.toMap()
     }
 
     companion object {
