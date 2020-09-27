@@ -25,6 +25,8 @@ package ru.h1karo.sharecontrol.i18n.init
 import com.google.common.collect.Maps
 import com.google.inject.Inject
 import com.google.inject.name.Named
+import org.reflections.Reflections
+import org.reflections.scanners.ResourcesScanner
 import ru.h1karo.sharecontrol.file.reader.Reader
 import ru.h1karo.sharecontrol.file.writer.Writer
 import ru.h1karo.sharecontrol.module.I18nModule
@@ -39,24 +41,33 @@ class ResourceSyncer @Inject constructor(
         private val writer: Writer,
 ) {
     fun sync() {
-        val messagesDirectory = resourceManager.getResource(directory.name)
-        if (messagesDirectory === null) {
-            return
+        if (!this.directory.exists()) {
+            this.directory.mkdirs()
         }
 
-        val files = messagesDirectory.listFiles()
-        if (files === null) {
-            return
-        }
+        val messageDirectory = this.resourceManager.getResource(this.directory.name)
+        val filenames = this.findResources()
+        for (filename in filenames) {
+            val original = File(messageDirectory?.parent, filename)
 
-        for (it in files) {
-            val target = File(this.directory, it.name)
+            val target = File(this.directory, original.name)
             if (!target.exists()) {
                 target.createNewFile()
             }
 
-            this.syncMessages(it, target)
+            this.syncMessages(original, target)
         }
+    }
+
+    private fun findResources(): List<String> {
+        val reflections = Reflections(ResourcesScanner())
+        val resources = reflections.getResources { filename ->
+            MESSAGES_FORMATS.any { format ->
+                filename.endsWith(format)
+            }
+        }
+
+        return resources.filter { it.startsWith(directory.name) }
     }
 
     private fun syncMessages(original: File, target: File) {
@@ -77,5 +88,9 @@ class ResourceSyncer @Inject constructor(
         }
 
         this.writer.write(target, targetMessages, target.extension)
+    }
+
+    companion object {
+        private val MESSAGES_FORMATS = setOf("yaml", "yml", "json")
     }
 }
