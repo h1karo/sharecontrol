@@ -187,6 +187,7 @@
                     <gitDescribe>
                         <skip>false</skip>
                         <always>false</always>
+                        <dirty>-dev</dirty>
                     </gitDescribe>
                 </configuration>
             </plugin>
