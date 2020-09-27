@@ -23,15 +23,14 @@
 package ru.h1karo.sharecontrol.init
 
 import com.google.inject.Inject
-import org.bukkit.Bukkit
 import org.bukkit.plugin.Plugin
 import ru.h1karo.sharecontrol.console.LoadingConsoleSender
 import java.lang.Exception
 
 class ChainInitializer @Inject constructor(
-        private val initializers: Set<@JvmSuppressWildcards Initializer>,
-        private val sender: LoadingConsoleSender,
-        private val plugin: Plugin
+    private val initializers: Set<@JvmSuppressWildcards Initializer>,
+    private val sender: LoadingConsoleSender,
+    private val plugin: Plugin
 ) : AbstractInitializer() {
     override fun initialize() {
         try {

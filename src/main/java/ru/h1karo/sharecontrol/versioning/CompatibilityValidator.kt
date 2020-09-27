@@ -28,7 +28,7 @@ import net.swiftzer.semver.SemVer
 import ru.h1karo.sharecontrol.module.PluginModule
 
 class CompatibilityValidator @Inject constructor(
-        @Named(PluginModule.BUKKIT_VERSION) private val bukkitVersion: String
+    @Named(PluginModule.BUKKIT_VERSION) private val bukkitVersion: String
 ) {
     fun validate(version: String): Boolean {
         val coreVersion = SemVer.parse(this.bukkitVersion)

@@ -31,8 +31,8 @@ import ru.h1karo.sharecontrol.module.I18nModule
 import java.io.File
 
 class ResourceFinder @Inject constructor(
-        @Named(I18nModule.MESSAGES_DIRECTORY)
-        private val directory: File
+    @Named(I18nModule.MESSAGES_DIRECTORY)
+    private val directory: File
 ) {
     fun find(): Set<Resource> {
         val files = this.directory.listFiles()

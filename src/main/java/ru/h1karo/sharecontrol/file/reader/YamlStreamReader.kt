@@ -32,8 +32,8 @@ class YamlStreamReader : Reader {
         }
 
         return YamlConfiguration
-                .loadConfiguration(resource)
-                .getValues(true)
+            .loadConfiguration(resource)
+            .getValues(true)
     }
 
     override fun supports(resource: Any, format: String): Boolean {

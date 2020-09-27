@@ -23,13 +23,12 @@
 package ru.h1karo.sharecontrol.init
 
 import com.google.inject.Inject
-import ru.h1karo.sharecontrol.init.Initializer
 import ru.h1karo.sharecontrol.configuration.plugin.PluginConfiguration
 import ru.h1karo.sharecontrol.console.LoadingConsoleSender
 
 class ConfigurationInitializer @Inject constructor(
-        private val pluginConfiguration: PluginConfiguration,
-        private val sender: LoadingConsoleSender
+    private val pluginConfiguration: PluginConfiguration,
+    private val sender: LoadingConsoleSender
 ) : AbstractInitializer() {
     override fun initialize() {
         this.sender.send("Configuration initialization started...")

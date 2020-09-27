@@ -31,8 +31,8 @@ import ru.h1karo.sharecontrol.i18n.loader.Loader
 
 @Singleton
 class Translator @Inject constructor(
-        private val formatter: MessageFormatter,
-        private val loader: Loader
+    private val formatter: MessageFormatter,
+    private val loader: Loader
 ) : TranslatorInterface {
     private val catalogues: MutableMap<Locale, MessageCatalogue> = mutableMapOf()
     private val resources: MutableMap<Locale, MutableSet<Resource>> = mutableMapOf()
@@ -88,8 +88,8 @@ class Translator @Inject constructor(
         }
 
         val catalogue = resources.fold(
-                MessageCatalogue(locale),
-                { acc, resource -> acc.addCatalogue(this.loader.load(resource)) }
+            MessageCatalogue(locale),
+            { acc, resource -> acc.addCatalogue(this.loader.load(resource)) }
         )
         this.catalogues[locale] = catalogue
 

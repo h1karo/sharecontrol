@@ -29,9 +29,9 @@ import ru.h1karo.sharecontrol.module.PluginModule
 import ru.h1karo.sharecontrol.versioning.CompatibilityValidator
 
 class CompatibilityInitializer @Inject constructor(
-        @Named(PluginModule.VERSION) private val version: String,
-        private val validator: CompatibilityValidator,
-        private val sender: LoadingConsoleSender
+    @Named(PluginModule.VERSION) private val version: String,
+    private val validator: CompatibilityValidator,
+    private val sender: LoadingConsoleSender
 ) : AbstractInitializer() {
     override fun initialize() {
         if (!validator.validate(version)) {

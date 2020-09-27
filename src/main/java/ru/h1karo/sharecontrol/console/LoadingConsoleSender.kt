@@ -31,8 +31,8 @@ import ru.h1karo.sharecontrol.module.PluginModule
 
 @Singleton
 class LoadingConsoleSender @Inject constructor(
-        private val sender: ConsoleSender,
-        @Named(PluginModule.NAME) private val pluginName: String
+    private val sender: ConsoleSender,
+    @Named(PluginModule.NAME) private val pluginName: String
 ) : Sender {
     private var state: State = State.NOT_STARTED
 
