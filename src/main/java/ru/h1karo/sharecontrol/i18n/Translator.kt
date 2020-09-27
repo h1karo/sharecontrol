@@ -53,8 +53,16 @@ class Translator @Inject constructor(
     }
 
     fun addResource(resource: Resource) {
-        this.resources.getOrPut(resource.locale, { mutableSetOf() }).add(resource)
-        this.catalogues.remove(resource.locale)
+        val locale = resource.locale
+
+        this.resources.getOrPut(locale, { mutableSetOf() }).add(resource)
+        this.catalogues.remove(locale)
+
+        this.initializeLocale(locale)
+    }
+
+    fun initializeLocale(locale: Locale) {
+        locale.name = this.trans("name", emptySet(), locale)
     }
 
     private fun getMessage(id: String, locale: Locale? = null): String {

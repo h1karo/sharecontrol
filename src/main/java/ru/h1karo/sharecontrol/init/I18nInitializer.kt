@@ -42,7 +42,8 @@ class I18nInitializer @Inject constructor(
         this.finder.find().forEach { this.translator.addResource(it) }
 
         val locale = this.translator.getLocale()
-        locale.name = this.translator.trans("name")
+        this.translator.initializeLocale(locale)
+
         this.sender.send("&7Locale detected: %s (%s)".format(locale.name, locale.abbr))
         this.sender.send("&7Messages loading complete.")
     }
