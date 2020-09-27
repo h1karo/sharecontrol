@@ -35,23 +35,19 @@ class ResourceFinder @Inject constructor(
         private val directory: File
 ) {
     fun find(): Set<Resource> {
-        val directories = this.directory.listFiles()
-
-        if (directories === null) {
-            return emptySet()
-        }
-
-        return directories.flatMap { findLocaleResources(it) }.toSet()
-    }
-
-    private fun findLocaleResources(it: File): Set<Resource> {
-        val locale = Locale(FilenameUtils.getBaseName(it.name))
-        val files = it.listFiles()
+        val files = this.directory.listFiles()
 
         if (files === null) {
             return emptySet()
         }
 
-        return files.map { Resource(locale, it.absolutePath, it.extension) }.toSet()
+        return files.map { this.findLocaleResources(it) }.toSet()
+    }
+
+    private fun findLocaleResources(file: File): Resource {
+        val abbr = FilenameUtils.getBaseName(file.name)
+        val locale = Locale(abbr)
+
+        return Resource(locale, file.absolutePath, file.extension)
     }
 }
