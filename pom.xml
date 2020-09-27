@@ -194,15 +194,6 @@
                 <groupId>com.github.gantsign.maven</groupId>
                 <artifactId>ktlint-maven-plugin</artifactId>
                 <version>${ktlint-plugin.version}</version>
-                <executions>
-                    <execution>
-                        <id>ktlint</id>
-                        <goals>
-                            <goal>format</goal>
-                            <goal>check</goal>
-                        </goals>
-                    </execution>
-                </executions>
             </plugin>
         </plugins>
     </build>
