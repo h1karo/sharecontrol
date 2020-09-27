@@ -36,6 +36,9 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-maven-
 
+      - name: Run the ktlint
+        run: mvn -B ktlint:check --file pom.xml
+
       - name: Build with Maven
         run: mvn -B package --file pom.xml
 
