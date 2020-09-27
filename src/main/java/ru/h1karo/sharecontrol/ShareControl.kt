@@ -37,9 +37,9 @@ import ru.h1karo.sharecontrol.module.PluginModule
 class ShareControl : JavaPlugin(), Listener {
     private val injector: Injector = Guice.createInjector(
         PluginModule(this),
-        MessengerModule(),
         InitializationModule(),
-        I18nModule()
+        I18nModule(),
+        MessengerModule()
     )
     private val initializer: Initializer = injector.getInstance(Initializer::class.java)
 
