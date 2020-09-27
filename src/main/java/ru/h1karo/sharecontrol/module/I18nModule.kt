@@ -30,6 +30,8 @@ import com.google.inject.name.Named
 import com.google.inject.name.Names
 import ru.h1karo.sharecontrol.configuration.entry.ParameterContainer
 import ru.h1karo.sharecontrol.i18n.Locale
+import ru.h1karo.sharecontrol.i18n.Translator
+import ru.h1karo.sharecontrol.i18n.TranslatorInterface
 import ru.h1karo.sharecontrol.i18n.format.IcuMessageFormatter
 import ru.h1karo.sharecontrol.i18n.format.MessageFormatter
 import ru.h1karo.sharecontrol.i18n.loader.DelegatingLoader
@@ -41,6 +43,7 @@ class I18nModule : AbstractModule() {
     override fun configure() {
         this.bind(Loader::class.java).to(DelegatingLoader::class.java)
         this.bind(MessageFormatter::class.java).to(IcuMessageFormatter::class.java)
+        this.bind(TranslatorInterface::class.java).to(Translator::class.java)
     }
 
     @Provides
