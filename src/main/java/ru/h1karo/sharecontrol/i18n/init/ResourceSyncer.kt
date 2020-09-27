@@ -25,6 +25,7 @@ package ru.h1karo.sharecontrol.i18n.init
 import com.google.common.collect.Maps
 import com.google.inject.Inject
 import com.google.inject.name.Named
+import org.apache.commons.io.FilenameUtils
 import org.reflections.Reflections
 import org.reflections.scanners.ResourcesScanner
 import ru.h1karo.sharecontrol.file.reader.Reader
@@ -45,22 +46,7 @@ class ResourceSyncer @Inject constructor(
             this.directory.mkdirs()
         }
 
-        val messageDirectory = this.resourceManager.getResource(this.directory.name)
-        val filenames = this.findResources()
-        for (filename in filenames) {
-            val original = File(messageDirectory?.parent, filename)
-
-            val target = File(this.directory, original.name)
-            if (!target.exists()) {
-                target.createNewFile()
-            }
-
-            val originalMessages = this.reader.read(original, original.extension)
-            val targetMessages = this.reader.read(target, target.extension).toMutableMap()
-
-            val synced = this.syncMessages(originalMessages, targetMessages)
-            this.writer.write(target, synced, target.extension)
-        }
+        this.findResources().forEach { syncResource(it) }
     }
 
     private fun findResources(): List<String> {
@@ -72,6 +58,27 @@ class ResourceSyncer @Inject constructor(
         }
 
         return resources.filter { it.startsWith(directory.name) }
+    }
+
+    private fun syncResource(path: String) {
+        val resource = this.resourceManager.getResource(path)
+        if (resource === null) {
+            return
+        }
+
+        val name = FilenameUtils.getName(path)
+        val extension = FilenameUtils.getExtension(path)
+
+        val target = File(this.directory, name)
+        if (!target.exists()) {
+            target.createNewFile()
+        }
+
+        val resourceMessages = this.reader.read(resource, extension)
+        val targetMessages = this.reader.read(target, target.extension).toMutableMap()
+
+        val synced = this.syncMessages(resourceMessages, targetMessages)
+        this.writer.write(target, synced, target.extension)
     }
 
     private fun syncMessages(original: Map<String, Any>, target: Map<String, Any>): Map<String, Any> {

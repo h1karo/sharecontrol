@@ -22,15 +22,10 @@
 
 package ru.h1karo.sharecontrol.resource
 
-import java.io.File
+import com.google.inject.Inject
+import org.bukkit.plugin.Plugin
+import java.io.InputStream
 
-class ResourceManager {
-    fun getResource(filename: String): File? {
-        val url = this.javaClass.classLoader.getResource(filename)
-        if (url === null) {
-            return null
-        }
-
-        return File(url.path)
-    }
+class ResourceManager @Inject constructor(private val plugin: Plugin) {
+    fun getResource(filename: String): InputStream? = this.plugin.getResource(filename)
 }
