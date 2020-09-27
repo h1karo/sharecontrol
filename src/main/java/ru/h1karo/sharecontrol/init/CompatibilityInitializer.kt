@@ -35,8 +35,11 @@ class CompatibilityInitializer @Inject constructor(
 ) : AbstractInitializer(console) {
     override fun initialize() {
         if (!validator.validate(version)) {
-            this.warning("The server kernel version may not be compatible with the plugin.")
-            this.warning("This means that the author of the plugin does not support this version of the kernel at the moment and therefore does not provide a guarantee for the plugins to work with your kernel.")
+            this.warning("The server version may not be compatible with the plugin.")
+            this.warning("This means that the author of the plugin does not support")
+            this.warning(" this version of the kernel at the moment and therefore")
+            this.warning(" does not provide a guarantee for the plugins to work with")
+            this.warning(" your kernel.")
             this.warning("Use the plugin at your own risk.")
         }
     }
