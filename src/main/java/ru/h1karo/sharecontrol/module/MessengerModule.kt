@@ -13,26 +13,19 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with ShareControl. If not, see <https://www.gnu.org/licenses/>.
- *  
+ *
  * @copyright Copyright (c) 2020 ShareControl
  * @author Oleg Kozlov <h1karo@outlook.com>
  * @license GNU General Public License v3.0
  * @link https://github.com/h1karo/sharecontrol
  */
 
-package ru.h1karo.sharecontrol.messenger
+package ru.h1karo.sharecontrol.module
 
-import com.google.inject.Inject
 import ru.h1karo.sharecontrol.messenger.transport.Transport
 
-class DelegatingMessenger @Inject constructor(
-    private val transports: Set<@JvmSuppressWildcards Transport>
-) : Messenger {
-    override fun send(recipient: Any, message: String) {
-        this.getTransport(recipient, message).send(recipient, message)
-    }
-
-    private fun getTransport(recipient: Any, message: String): Transport {
-        return this.transports.first { it.supports(recipient, message) }
+class MessengerModule : AbstractModule() {
+    override fun configure() {
+        this.bindSet(Transport::class.java)
     }
 }
