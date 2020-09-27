@@ -25,47 +25,28 @@ package ru.h1karo.sharecontrol.console
 import com.google.inject.Inject
 import com.google.inject.Singleton
 import com.google.inject.name.Named
-import ru.h1karo.sharecontrol.Sender
+import ru.h1karo.sharecontrol.messenger.Messenger
 import ru.h1karo.sharecontrol.module.PluginModule
 
 @Singleton
-class LoadingConsoleSender @Inject constructor(
-    private val sender: ConsoleSender,
+class ConsoleStyle @Inject constructor(
+    private val messenger: Messenger,
     @Named(PluginModule.NAME)
     private val pluginName: String,
     @Named(PluginModule.VERSION)
     private val pluginVersion: String
-) : Sender {
-    private var state: State = State.NOT_STARTED
+) : Messenger {
+    fun success(recipient: Any, message: String) = this.send(recipient, "&2✓&8 $message")
 
-    fun start() {
-        if (this.state == State.STARTED) {
-            throw RuntimeException("You cannot start the loading twice.")
-        }
+    fun error(recipient: Any, message: String) = this.send(recipient, "&4✗&c $message")
 
-        this.state = State.STARTED
-        this.send(this.getTitledLine())
-    }
+    fun warning(recipient: Any, message: String) = this.send(recipient, "&6!&e $message")
 
-    fun success(message: String): LoadingConsoleSender = this.send("&2✓&7 $message")
+    fun sendLine(recipient: Any) = this.send(recipient, this.getLine())
 
-    override fun send(message: String): LoadingConsoleSender {
-        if (this.state != State.STARTED) {
-            throw RuntimeException("You cannot send messages when the loading has not started.")
-        }
+    fun sendTitledLine(recipient: Any) = this.send(recipient, this.getTitledLine())
 
-        this.sender.send(message)
-        return this
-    }
-
-    fun end() {
-        if (this.state == State.FINISHED) {
-            throw RuntimeException("You cannot finish the loading twice.")
-        }
-
-        this.sender.send(this.getLine())
-        this.state = State.FINISHED
-    }
+    override fun send(recipient: Any, message: String) = this.messenger.send(recipient, message)
 
     private fun getPluginTitle(): String = listOf(this.pluginName, this.pluginVersion).joinToString(" ")
 
@@ -83,9 +64,5 @@ class LoadingConsoleSender @Inject constructor(
     companion object {
         private const val LINE_CHAR = "-"
         private const val LINE_LENGTH = 64
-    }
-
-    enum class State {
-        NOT_STARTED, STARTED, FINISHED;
     }
 }

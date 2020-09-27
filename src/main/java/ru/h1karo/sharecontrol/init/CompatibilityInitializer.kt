@@ -24,20 +24,20 @@ package ru.h1karo.sharecontrol.init
 
 import com.google.inject.Inject
 import com.google.inject.name.Named
-import ru.h1karo.sharecontrol.console.LoadingConsoleSender
+import ru.h1karo.sharecontrol.console.ConsoleStyle
 import ru.h1karo.sharecontrol.module.PluginModule
 import ru.h1karo.sharecontrol.versioning.CompatibilityValidator
 
 class CompatibilityInitializer @Inject constructor(
+    console: ConsoleStyle,
     @Named(PluginModule.VERSION) private val version: String,
-    private val validator: CompatibilityValidator,
-    private val sender: LoadingConsoleSender
-) : AbstractInitializer() {
+    private val validator: CompatibilityValidator
+) : AbstractInitializer(console) {
     override fun initialize() {
         if (!validator.validate(version)) {
-            sender.send("&cThe server kernel version may not be compatible with the plugin.")
-            sender.send("&cThis means that the author of the plugin does not support this version of the kernel at the moment and therefore does not provide a guarantee for the plugins to work with your kernel.")
-            sender.send("&cUse the plugin at your own risk.")
+            this.warning("The server kernel version may not be compatible with the plugin.")
+            this.warning("This means that the author of the plugin does not support this version of the kernel at the moment and therefore does not provide a guarantee for the plugins to work with your kernel.")
+            this.warning("Use the plugin at your own risk.")
         }
     }
 
