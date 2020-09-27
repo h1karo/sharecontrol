@@ -40,6 +40,7 @@
         <semver.version>1.1.1</semver.version>
         <reflections.version>0.9.12</reflections.version>
         <commons-io.version>2.6</commons-io.version>
+        <ktlint-plugin.version>1.6.1</ktlint-plugin.version>
 
         <maven.compiler.source>1.8</maven.compiler.source>
         <maven.compiler.target>1.8</maven.compiler.target>
@@ -188,6 +189,20 @@
                         <always>false</always>
                     </gitDescribe>
                 </configuration>
+            </plugin>
+            <plugin>
+                <groupId>com.github.gantsign.maven</groupId>
+                <artifactId>ktlint-maven-plugin</artifactId>
+                <version>${ktlint-plugin.version}</version>
+                <executions>
+                    <execution>
+                        <id>ktlint</id>
+                        <goals>
+                            <goal>format</goal>
+                            <goal>check</goal>
+                        </goals>
+                    </execution>
+                </executions>
             </plugin>
         </plugins>
     </build>
