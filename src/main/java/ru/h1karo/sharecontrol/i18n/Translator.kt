@@ -31,12 +31,13 @@ import ru.h1karo.sharecontrol.i18n.loader.Loader
 
 @Singleton
 class Translator @Inject constructor(
-        private val locale: Locale,
         private val formatter: MessageFormatter,
         private val loader: Loader
 ) : TranslatorInterface {
     private val catalogues: MutableMap<Locale, MessageCatalogue> = mutableMapOf()
     private val resources: MutableMap<Locale, MutableSet<Resource>> = mutableMapOf()
+
+    private lateinit var locale: Locale
 
     override fun trans(id: String, parameters: Set<String>, locale: Locale?): String {
         val message = getMessage(id, locale)
@@ -45,6 +46,11 @@ class Translator @Inject constructor(
 
     override fun getLocale(): Locale {
         return this.locale
+    }
+
+    fun setLocale(locale: Locale) {
+        this.locale = locale
+        this.initializeLocale(locale)
     }
 
     override fun clear() {
@@ -61,7 +67,7 @@ class Translator @Inject constructor(
         this.initializeLocale(locale)
     }
 
-    fun initializeLocale(locale: Locale) {
+    private fun initializeLocale(locale: Locale) {
         locale.name = this.trans("name", emptySet(), locale)
     }
 

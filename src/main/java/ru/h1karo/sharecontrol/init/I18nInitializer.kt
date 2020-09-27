@@ -23,7 +23,9 @@
 package ru.h1karo.sharecontrol.init
 
 import com.google.inject.Inject
+import com.google.inject.Provider
 import ru.h1karo.sharecontrol.console.LoadingConsoleSender
+import ru.h1karo.sharecontrol.i18n.Locale
 import ru.h1karo.sharecontrol.i18n.Translator
 import ru.h1karo.sharecontrol.i18n.init.ResourceFinder
 import ru.h1karo.sharecontrol.i18n.init.ResourceSyncer
@@ -32,7 +34,8 @@ class I18nInitializer @Inject constructor(
         private val sender: LoadingConsoleSender,
         private val syncer: ResourceSyncer,
         private val finder: ResourceFinder,
-        private val translator: Translator
+        private val translator: Translator,
+        private val localeProvider: Provider<Locale>
 ) : AbstractInitializer() {
     override fun initialize() {
         this.sender.send("&7Loading messages...")
@@ -41,8 +44,8 @@ class I18nInitializer @Inject constructor(
         this.translator.clear()
         this.finder.find().forEach { this.translator.addResource(it) }
 
-        val locale = this.translator.getLocale()
-        this.translator.initializeLocale(locale)
+        val locale = this.localeProvider.get()
+        this.translator.setLocale(locale)
 
         this.sender.send("&7Locale detected: %s (%s)".format(locale.name, locale.abbr))
         this.sender.send("&7Messages loading complete.")
