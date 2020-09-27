@@ -31,9 +31,8 @@ class ConfigurationInitializer @Inject constructor(
     private val sender: LoadingConsoleSender
 ) : AbstractInitializer() {
     override fun initialize() {
-        this.sender.send("Configuration initialization started...")
         this.pluginConfiguration.initialize()
-        this.sender.send("Configuration initialization completed.")
+        this.sender.success("&8Configuration component loaded.")
     }
 
     override fun terminate() {}

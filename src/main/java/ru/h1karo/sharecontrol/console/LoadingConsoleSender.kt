@@ -25,14 +25,16 @@ package ru.h1karo.sharecontrol.console
 import com.google.inject.Inject
 import com.google.inject.Singleton
 import com.google.inject.name.Named
-import org.apache.commons.lang.StringUtils
 import ru.h1karo.sharecontrol.Sender
 import ru.h1karo.sharecontrol.module.PluginModule
 
 @Singleton
 class LoadingConsoleSender @Inject constructor(
     private val sender: ConsoleSender,
-    @Named(PluginModule.NAME) private val pluginName: String
+    @Named(PluginModule.NAME)
+    private val pluginName: String,
+    @Named(PluginModule.VERSION)
+    private val pluginVersion: String
 ) : Sender {
     private var state: State = State.NOT_STARTED
 
@@ -42,8 +44,10 @@ class LoadingConsoleSender @Inject constructor(
         }
 
         this.state = State.STARTED
-        this.send(getLine(true))
+        this.send(this.getTitledLine())
     }
+
+    fun success(message: String): LoadingConsoleSender = this.send("&2✓&7 $message")
 
     override fun send(message: String): LoadingConsoleSender {
         if (this.state != State.STARTED) {
@@ -59,25 +63,25 @@ class LoadingConsoleSender @Inject constructor(
             throw RuntimeException("You cannot finish the loading twice.")
         }
 
-        this.sender.send(getLine())
+        this.sender.send(this.getLine())
         this.state = State.FINISHED
     }
 
-    private fun getLine(withPluginName: Boolean = false): String {
-        val line = if (withPluginName) {
-            val lineLength = LINE_LENGTH - pluginName.length - 2
-            val semiLine = String.format("%0" + lineLength / 2 + "d", 0)
-            val parts = arrayOf(semiLine, pluginName, semiLine)
-            StringUtils.join(parts, ' ')
-        } else {
-            String.format("%0" + LINE_LENGTH + "d", 0)
-        }
+    private fun getPluginTitle(): String = listOf(this.pluginName, this.pluginVersion).joinToString(" ")
 
-        return line.replace("0", LINE_CHAR.toString())
+    private fun getLine(): String {
+        return "&8" + LINE_CHAR.repeat(LINE_LENGTH)
+    }
+
+    private fun getTitledLine(): String {
+        val title = getPluginTitle()
+        val lineLength = LINE_LENGTH - title.length - 2
+        val semiLine = LINE_CHAR.repeat(lineLength / 2)
+        return "&8$semiLine &9$title &8$semiLine"
     }
 
     companion object {
-        private const val LINE_CHAR = '='
+        private const val LINE_CHAR = "-"
         private const val LINE_LENGTH = 64
     }
 

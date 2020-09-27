@@ -38,8 +38,6 @@ class I18nInitializer @Inject constructor(
     private val localeProvider: Provider<Locale>
 ) : AbstractInitializer() {
     override fun initialize() {
-        this.sender.send("&7Loading messages...")
-
         this.syncer.sync()
         this.translator.clear()
         this.finder.find().forEach { this.translator.addResource(it) }
@@ -47,8 +45,8 @@ class I18nInitializer @Inject constructor(
         val locale = this.localeProvider.get()
         this.translator.setLocale(locale)
 
-        this.sender.send("&7Locale detected: %s (%s)".format(locale.name, locale.abbr))
-        this.sender.send("&7Messages loading complete.")
+        this.sender.send("&8Locale detected: &7%s&8 (&9%s&8)".format(locale.name, locale.abbr))
+        this.sender.success("&8Internationalization component loaded.")
     }
 
     override fun terminate() {
