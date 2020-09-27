@@ -20,8 +20,12 @@
  * @link https://github.com/h1karo/sharecontrol
  */
 
-package ru.h1karo.sharecontrol
+package ru.h1karo.sharecontrol.resource
 
-interface SenderInterface {
-    fun send(message: String): SenderInterface
+import com.google.inject.Inject
+import org.bukkit.plugin.Plugin
+import java.io.InputStream
+
+class ResourceManager @Inject constructor(private val plugin: Plugin) {
+    fun getResource(filename: String): InputStream? = this.plugin.getResource(filename)
 }

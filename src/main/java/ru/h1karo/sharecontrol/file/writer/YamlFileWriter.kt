@@ -20,12 +20,29 @@
  * @link https://github.com/h1karo/sharecontrol
  */
 
-package ru.h1karo.sharecontrol.configuration.entry
+package ru.h1karo.sharecontrol.file.writer
 
-import com.google.inject.Inject
-import ru.h1karo.sharecontrol.configuration.plugin.PluginConfiguration
+import org.bukkit.configuration.file.YamlConfiguration
+import java.io.File
 
-class ParameterContainer @Inject constructor(private val configuration: PluginConfiguration) {
-    fun <T> get(parameter: ParameterInterface<T>): ParameterValue<T>? =
-            this.configuration.get(parameter)
+class YamlFileWriter : Writer {
+    override fun write(resource: Any, data: Map<String, Any>, format: String): Boolean {
+        if (resource !is File) {
+            throw IllegalArgumentException("%s can load only from the file.".format(this::class.java))
+        }
+
+        if (!resource.exists()) {
+            resource.createNewFile()
+        }
+
+        val config = YamlConfiguration()
+        data.forEach { config.set(it.key, it.value) }
+        config.save(resource)
+
+        return true
+    }
+
+    override fun supports(resource: Any, format: String): Boolean {
+        return resource is File && listOf("yaml", "yml").contains(format)
+    }
 }

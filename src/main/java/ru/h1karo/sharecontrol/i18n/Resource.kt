@@ -20,9 +20,6 @@
  * @link https://github.com/h1karo/sharecontrol
  */
 
-package ru.h1karo.sharecontrol
+package ru.h1karo.sharecontrol.i18n
 
-interface InitializerInterface {
-    fun initialize()
-    fun terminate()
-}
+data class Resource(val locale: Locale, val resource: String, val format: String)

@@ -22,12 +22,28 @@
 
 package ru.h1karo.sharecontrol.i18n
 
-import ru.h1karo.sharecontrol.configuration.entry.ParameterValueInterface
+import ru.h1karo.sharecontrol.configuration.entry.ParameterValue
 
-enum class Locale(private val abbr: String) : ParameterValueInterface<String> {
-    ENGLISH("en"),
-    RUSSIAN("ru");
+data class Locale(val abbr: String) : ParameterValue<String> {
+    lateinit var name: String
 
-    fun getAbbr(): String = abbr
-    override fun getValue(): String = this.getAbbr()
+    override fun getValue(): String = this.abbr
+
+    override fun hashCode(): Int {
+        return this.abbr.hashCode()
+    }
+
+    override fun equals(other: Any?): Boolean {
+        if (this === other) {
+            return true
+        }
+
+        if (javaClass != other?.javaClass) {
+            return false
+        }
+
+        other as Locale
+
+        return abbr == other.abbr
+    }
 }

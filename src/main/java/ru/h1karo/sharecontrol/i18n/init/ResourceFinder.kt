@@ -20,22 +20,34 @@
  * @link https://github.com/h1karo/sharecontrol
  */
 
-package ru.h1karo.sharecontrol.configuration
+package ru.h1karo.sharecontrol.i18n.init
 
 import com.google.inject.Inject
-import ru.h1karo.sharecontrol.InitializerInterface
-import ru.h1karo.sharecontrol.configuration.plugin.PluginConfiguration
-import ru.h1karo.sharecontrol.console.LoadingBlock
+import com.google.inject.name.Named
+import org.apache.commons.io.FilenameUtils
+import ru.h1karo.sharecontrol.i18n.Locale
+import ru.h1karo.sharecontrol.i18n.Resource
+import ru.h1karo.sharecontrol.module.I18nModule
+import java.io.File
 
-class ConfigurationInitializer @Inject constructor(
-        private val pluginConfiguration: PluginConfiguration,
-        private val sender: LoadingBlock
-) : InitializerInterface {
-    override fun initialize() {
-        this.sender.send("Configuration initialization started...")
-        this.pluginConfiguration.initialize()
-        this.sender.send("Configuration initialization completed.")
+class ResourceFinder @Inject constructor(
+        @Named(I18nModule.MESSAGES_DIRECTORY)
+        private val directory: File
+) {
+    fun find(): Set<Resource> {
+        val files = this.directory.listFiles()
+
+        if (files === null) {
+            return emptySet()
+        }
+
+        return files.map { this.findLocaleResources(it) }.toSet()
     }
 
-    override fun terminate() {}
+    private fun findLocaleResources(file: File): Resource {
+        val abbr = FilenameUtils.getBaseName(file.name)
+        val locale = Locale(abbr)
+
+        return Resource(locale, file.absolutePath, file.extension)
+    }
 }

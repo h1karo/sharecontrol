@@ -20,12 +20,19 @@
  * @link https://github.com/h1karo/sharecontrol
  */
 
-package ru.h1karo.sharecontrol.configuration.entry
+package ru.h1karo.sharecontrol.i18n
 
-import com.google.inject.Inject
-import ru.h1karo.sharecontrol.configuration.plugin.PluginConfiguration
+import ru.h1karo.sharecontrol.i18n.exception.InvalidCatalogueException
 
-class ParameterContainer @Inject constructor(private val configuration: PluginConfiguration) {
-    fun <T> get(parameter: ParameterInterface<T>): ParameterValue<T>? =
-            this.configuration.get(parameter)
+data class MessageCatalogue(val locale: Locale, val messages: Map<String, String> = emptyMap()) {
+    fun addCatalogue(catalogue: MessageCatalogue): MessageCatalogue {
+        if (this.locale !== catalogue.locale) {
+            throw InvalidCatalogueException("The catalogues cannot be merged because their locales are different.")
+        }
+
+        val m = this.messages.toMutableMap()
+        m.putAll(catalogue.messages)
+
+        return MessageCatalogue(this.locale, m.toMap())
+    }
 }

@@ -20,12 +20,12 @@
  * @link https://github.com/h1karo/sharecontrol
  */
 
-package ru.h1karo.sharecontrol.configuration.entry
+package ru.h1karo.sharecontrol.i18n.format
 
-import com.google.inject.Inject
-import ru.h1karo.sharecontrol.configuration.plugin.PluginConfiguration
+import java.text.MessageFormat
 
-class ParameterContainer @Inject constructor(private val configuration: PluginConfiguration) {
-    fun <T> get(parameter: ParameterInterface<T>): ParameterValue<T>? =
-            this.configuration.get(parameter)
+class IcuMessageFormatter : MessageFormatter {
+    override fun format(message: String, parameters: Set<String>): String {
+        return MessageFormat.format(message, parameters)
+    }
 }

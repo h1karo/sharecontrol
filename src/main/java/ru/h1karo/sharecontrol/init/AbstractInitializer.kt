@@ -20,12 +20,12 @@
  * @link https://github.com/h1karo/sharecontrol
  */
 
-package ru.h1karo.sharecontrol.configuration.entry
+package ru.h1karo.sharecontrol.init
 
-import com.google.inject.Inject
-import ru.h1karo.sharecontrol.configuration.plugin.PluginConfiguration
+abstract class AbstractInitializer : Initializer {
+    override fun getPriority(): Int = 1
 
-class ParameterContainer @Inject constructor(private val configuration: PluginConfiguration) {
-    fun <T> get(parameter: ParameterInterface<T>): ParameterValue<T>? =
-            this.configuration.get(parameter)
+    final override fun compareTo(other: Initializer): Int {
+        return other.getPriority() - this.getPriority()
+    }
 }

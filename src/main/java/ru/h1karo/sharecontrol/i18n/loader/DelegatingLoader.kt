@@ -20,25 +20,18 @@
  * @link https://github.com/h1karo/sharecontrol
  */
 
-package ru.h1karo.sharecontrol.versioning
+package ru.h1karo.sharecontrol.i18n.loader
 
 import com.google.inject.Inject
-import com.google.inject.name.Named
-import ru.h1karo.sharecontrol.InitializerInterface
-import ru.h1karo.sharecontrol.console.LoadingBlock
+import com.google.inject.Singleton
+import ru.h1karo.sharecontrol.file.reader.Reader
+import ru.h1karo.sharecontrol.i18n.MessageCatalogue
+import ru.h1karo.sharecontrol.i18n.Resource
 
-class CompatibilityInitializer @Inject constructor(
-    @Named("version") private val version: String,
-    private val validator: CompatibilityValidator,
-    private val sender: LoadingBlock
-) : InitializerInterface {
-    override fun initialize() {
-        if (!validator.validate(version)) {
-            sender.send("&cThe server kernel version may not be compatible with the plugin.")
-            sender.send("&cThis means that the author of the plugin does not support this version of the kernel at the moment and therefore does not provide a guarantee for the plugins to work with your kernel.")
-            sender.send("&cUse the plugin at your own risk.")
-        }
+@Singleton
+class DelegatingLoader @Inject constructor(private val reader: Reader) : Loader {
+    override fun load(resource: Resource): MessageCatalogue {
+        val messages = this.reader.read(resource.resource, resource.format).mapValues { it.value.toString() }
+        return MessageCatalogue(resource.locale, messages)
     }
-
-    override fun terminate() {}
 }

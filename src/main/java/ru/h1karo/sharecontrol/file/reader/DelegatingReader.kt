@@ -20,12 +20,29 @@
  * @link https://github.com/h1karo/sharecontrol
  */
 
-package ru.h1karo.sharecontrol.configuration.entry
+package ru.h1karo.sharecontrol.file.reader
 
 import com.google.inject.Inject
-import ru.h1karo.sharecontrol.configuration.plugin.PluginConfiguration
+import com.google.inject.Singleton
+import ru.h1karo.sharecontrol.file.exception.NotFoundReaderException
 
-class ParameterContainer @Inject constructor(private val configuration: PluginConfiguration) {
-    fun <T> get(parameter: ParameterInterface<T>): ParameterValue<T>? =
-            this.configuration.get(parameter)
+@Singleton
+class DelegatingReader @Inject constructor(private val readers: Set<@JvmSuppressWildcards Reader>) : Reader {
+    override fun read(resource: Any, format: String): Map<String, Any> {
+        val reader = this.getReader(resource, format)
+        return reader.read(resource, format)
+    }
+
+    private fun getReader(resource: Any, format: String): Reader {
+        val reader = this.readers.find { it.supports(resource, format) }
+        if (reader === null) {
+            throw NotFoundReaderException(resource, format)
+        }
+
+        return reader
+    }
+
+    override fun supports(resource: Any, format: String): Boolean {
+        return this.readers.any { it.supports(resource, format) }
+    }
 }

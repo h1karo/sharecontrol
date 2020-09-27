@@ -20,12 +20,11 @@
  * @link https://github.com/h1karo/sharecontrol
  */
 
-package ru.h1karo.sharecontrol.configuration.entry
+package ru.h1karo.sharecontrol.i18n.loader
 
-import com.google.inject.Inject
-import ru.h1karo.sharecontrol.configuration.plugin.PluginConfiguration
+import ru.h1karo.sharecontrol.i18n.MessageCatalogue
+import ru.h1karo.sharecontrol.i18n.Resource
 
-class ParameterContainer @Inject constructor(private val configuration: PluginConfiguration) {
-    fun <T> get(parameter: ParameterInterface<T>): ParameterValue<T>? =
-            this.configuration.get(parameter)
+interface Loader {
+    fun load(resource: Resource): MessageCatalogue
 }

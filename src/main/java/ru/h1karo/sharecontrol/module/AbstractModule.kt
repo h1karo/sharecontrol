@@ -20,24 +20,23 @@
  * @link https://github.com/h1karo/sharecontrol
  */
 
-package ru.h1karo.sharecontrol
+package ru.h1karo.sharecontrol.module
 
-import com.google.inject.Inject
-import ru.h1karo.sharecontrol.console.LoadingBlock
+import com.google.inject.AbstractModule
+import com.google.inject.multibindings.Multibinder
+import org.reflections.Reflections
+import ru.h1karo.sharecontrol.ShareControl
+import java.lang.reflect.Modifier
 
-class ChainInitializer @Inject constructor(
-        private val initializers: Set<@JvmSuppressWildcards InitializerInterface>,
-        private val block: LoadingBlock
-) : InitializerInterface {
-    override fun initialize() {
-        this.block.start()
-        this.initializers.forEach { it.initialize() }
-        this.block.end()
-    }
+abstract class AbstractModule : AbstractModule() {
+    protected fun <T> bindSet(type: Class<T>, exclude: Set<Class<out T>> = setOf()) {
+        val reflections = Reflections(ShareControl::class.java.`package`.name)
+        val services = reflections.getSubTypesOf(type)
 
-    override fun terminate() {
-        this.block.start()
-        this.initializers.forEach { it.terminate() }
-        this.block.end()
+        services.removeIf { Modifier.isInterface(it.modifiers) || Modifier.isAbstract(it.modifiers) }
+        exclude.forEach { services.remove(it) }
+
+        val binder = Multibinder.newSetBinder(binder(), type)
+        services.forEach { binder.addBinding().to(it) }
     }
 }

@@ -20,12 +20,29 @@
  * @link https://github.com/h1karo/sharecontrol
  */
 
-package ru.h1karo.sharecontrol.configuration.entry
+package ru.h1karo.sharecontrol.file.writer
 
 import com.google.inject.Inject
-import ru.h1karo.sharecontrol.configuration.plugin.PluginConfiguration
+import com.google.inject.Singleton
+import ru.h1karo.sharecontrol.file.exception.NotFoundWriterException
 
-class ParameterContainer @Inject constructor(private val configuration: PluginConfiguration) {
-    fun <T> get(parameter: ParameterInterface<T>): ParameterValue<T>? =
-            this.configuration.get(parameter)
+@Singleton
+class DelegatingWriter @Inject constructor(private val writers: Set<@JvmSuppressWildcards Writer>) : Writer {
+    override fun write(resource: Any, data: Map<String, Any>, format: String): Boolean {
+        val writer = this.getWriter(resource, format)
+        return writer.write(resource, data, format)
+    }
+
+    private fun getWriter(resource: Any, format: String): Writer {
+        val writer = this.writers.find { it.supports(resource, format) }
+        if (writer === null) {
+            throw NotFoundWriterException(resource, format)
+        }
+
+        return writer
+    }
+
+    override fun supports(resource: Any, format: String): Boolean {
+        return this.writers.any { it.supports(resource, format) }
+    }
 }

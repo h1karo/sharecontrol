@@ -20,8 +20,12 @@
  * @link https://github.com/h1karo/sharecontrol
  */
 
-package ru.h1karo.sharecontrol.configuration.entry
+package ru.h1karo.sharecontrol.i18n
 
-interface DescribedEntryInterface : EntryInterface {
-    fun getDescription(): List<String>
+import ru.h1karo.sharecontrol.Resettable
+
+interface TranslatorInterface : Resettable {
+    fun trans(id: String, parameters: Set<String> = setOf(), locale: Locale? = null): String
+
+    fun getLocale(): Locale
 }

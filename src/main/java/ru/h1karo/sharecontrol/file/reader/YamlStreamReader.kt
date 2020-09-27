@@ -20,12 +20,23 @@
  * @link https://github.com/h1karo/sharecontrol
  */
 
-package ru.h1karo.sharecontrol.configuration.entry
+package ru.h1karo.sharecontrol.file.reader
 
-import com.google.inject.Inject
-import ru.h1karo.sharecontrol.configuration.plugin.PluginConfiguration
+import org.bukkit.configuration.file.YamlConfiguration
+import java.io.Reader as IoReader
 
-class ParameterContainer @Inject constructor(private val configuration: PluginConfiguration) {
-    fun <T> get(parameter: ParameterInterface<T>): ParameterValue<T>? =
-            this.configuration.get(parameter)
+class YamlStreamReader : Reader {
+    override fun read(resource: Any, format: String): Map<String, Any> {
+        if (resource !is IoReader) {
+            throw IllegalArgumentException("%s can load messages only from readers.".format(this::class.java))
+        }
+
+        return YamlConfiguration
+                .loadConfiguration(resource)
+                .getValues(true)
+    }
+
+    override fun supports(resource: Any, format: String): Boolean {
+        return resource is IoReader && listOf("yaml", "yml").contains(format)
+    }
 }

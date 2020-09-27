@@ -20,12 +20,21 @@
  * @link https://github.com/h1karo/sharecontrol
  */
 
-package ru.h1karo.sharecontrol.configuration.entry
+package ru.h1karo.sharecontrol.file.reader
 
 import com.google.inject.Inject
-import ru.h1karo.sharecontrol.configuration.plugin.PluginConfiguration
+import java.io.InputStream
+import java.io.InputStreamReader
 
-class ParameterContainer @Inject constructor(private val configuration: PluginConfiguration) {
-    fun <T> get(parameter: ParameterInterface<T>): ParameterValue<T>? =
-            this.configuration.get(parameter)
+class InputStreamReader @Inject constructor(private val reader: Reader) : Reader {
+    override fun read(resource: Any, format: String): Map<String, Any> {
+        if (resource !is InputStream) {
+            throw IllegalArgumentException("%s can load messages only from input stream.".format(this::class.java))
+        }
+
+        val reader = InputStreamReader(resource, Charsets.UTF_8)
+        return this.reader.read(reader, format)
+    }
+
+    override fun supports(resource: Any, format: String): Boolean = resource is InputStream
 }

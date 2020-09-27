@@ -20,8 +20,10 @@
  * @link https://github.com/h1karo/sharecontrol
  */
 
-package ru.h1karo.sharecontrol.configuration.entry
+package ru.h1karo.sharecontrol.init
 
-interface EntryInterface {
-    fun getPath(): String
+interface Initializer : Comparable<Initializer> {
+    fun initialize()
+    fun terminate()
+    fun getPriority(): Int
 }

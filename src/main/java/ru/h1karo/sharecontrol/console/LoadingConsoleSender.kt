@@ -23,25 +23,44 @@
 package ru.h1karo.sharecontrol.console
 
 import com.google.inject.Inject
+import com.google.inject.Singleton
 import com.google.inject.name.Named
 import org.apache.commons.lang.StringUtils
-import ru.h1karo.sharecontrol.SenderInterface
+import ru.h1karo.sharecontrol.Sender
+import ru.h1karo.sharecontrol.module.PluginModule
 
-class LoadingBlock @Inject constructor(
+@Singleton
+class LoadingConsoleSender @Inject constructor(
         private val sender: ConsoleSender,
-        @Named("name") private val pluginName: String
-) : SenderInterface {
+        @Named(PluginModule.NAME) private val pluginName: String
+) : Sender {
+    private var state: State = State.NOT_STARTED
+
     fun start() {
+        if (this.state == State.STARTED) {
+            throw RuntimeException("You cannot start the loading twice.")
+        }
+
+        this.state = State.STARTED
         this.send(getLine(true))
     }
 
-    override fun send(message: String): LoadingBlock {
+    override fun send(message: String): LoadingConsoleSender {
+        if (this.state != State.STARTED) {
+            throw RuntimeException("You cannot send messages when the loading has not started.")
+        }
+
         this.sender.send(message)
         return this
     }
 
     fun end() {
+        if (this.state == State.FINISHED) {
+            throw RuntimeException("You cannot finish the loading twice.")
+        }
+
         this.sender.send(getLine())
+        this.state = State.FINISHED
     }
 
     private fun getLine(withPluginName: Boolean = false): String {
@@ -60,5 +79,9 @@ class LoadingBlock @Inject constructor(
     companion object {
         private const val LINE_CHAR = '='
         private const val LINE_LENGTH = 64
+    }
+
+    enum class State {
+        NOT_STARTED, STARTED, FINISHED;
     }
 }

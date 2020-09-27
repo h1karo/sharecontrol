@@ -20,8 +20,8 @@
  * @link https://github.com/h1karo/sharecontrol
  */
 
-package ru.h1karo.sharecontrol.configuration.entry
+package ru.h1karo.sharecontrol.i18n.format
 
-interface ParameterValueInterface<T> {
-    fun getValue(): T
+interface MessageFormatter {
+    fun format(message: String, parameters: Set<String>): String
 }

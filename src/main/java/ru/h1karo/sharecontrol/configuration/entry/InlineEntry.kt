@@ -22,7 +22,7 @@
 
 package ru.h1karo.sharecontrol.configuration.entry
 
-class InlineEntry(private val path: String, private val description: List<String>) : DescribedEntryInterface {
+class InlineEntry(private val path: String, private val description: List<String>) : DescribedEntry {
     override fun getPath(): String = this.path
     override fun getDescription(): List<String> = this.description
 }

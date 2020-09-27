@@ -20,12 +20,24 @@
  * @link https://github.com/h1karo/sharecontrol
  */
 
-package ru.h1karo.sharecontrol.configuration.entry
+package ru.h1karo.sharecontrol.init
 
 import com.google.inject.Inject
+import ru.h1karo.sharecontrol.init.Initializer
 import ru.h1karo.sharecontrol.configuration.plugin.PluginConfiguration
+import ru.h1karo.sharecontrol.console.LoadingConsoleSender
 
-class ParameterContainer @Inject constructor(private val configuration: PluginConfiguration) {
-    fun <T> get(parameter: ParameterInterface<T>): ParameterValue<T>? =
-            this.configuration.get(parameter)
+class ConfigurationInitializer @Inject constructor(
+        private val pluginConfiguration: PluginConfiguration,
+        private val sender: LoadingConsoleSender
+) : AbstractInitializer() {
+    override fun initialize() {
+        this.sender.send("Configuration initialization started...")
+        this.pluginConfiguration.initialize()
+        this.sender.send("Configuration initialization completed.")
+    }
+
+    override fun terminate() {}
+
+    override fun getPriority(): Int = 100
 }

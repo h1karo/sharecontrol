@@ -22,11 +22,11 @@
 
 package ru.h1karo.sharecontrol.yaml
 
-import ru.h1karo.sharecontrol.configuration.entry.DescribedEntryInterface
-import ru.h1karo.sharecontrol.configuration.entry.EntryInterface
+import ru.h1karo.sharecontrol.configuration.entry.DescribedEntry
+import ru.h1karo.sharecontrol.configuration.entry.Entry
 
 class YamlCommenter {
-    fun include(yaml: String, entries: Set<EntryInterface>): String {
+    fun include(yaml: String, entries: Set<Entry>): String {
         val comments: HashMap<String, String> = this.prepareComments(entries)
         if (comments.isEmpty()) {
             return yaml
@@ -35,11 +35,11 @@ class YamlCommenter {
         return this.doInclude(yaml.lines(), comments).joinToString(System.lineSeparator())
     }
 
-    private fun prepareComments(entries: Set<EntryInterface>): HashMap<String, String> {
+    private fun prepareComments(entries: Set<Entry>): HashMap<String, String> {
         val comments: HashMap<String, String> = HashMap()
 
         entries.forEach { entry ->
-            if (entry !is DescribedEntryInterface) {
+            if (entry !is DescribedEntry) {
                 return@forEach
             }
 

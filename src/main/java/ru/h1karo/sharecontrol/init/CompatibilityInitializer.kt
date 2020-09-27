@@ -20,28 +20,28 @@
  * @link https://github.com/h1karo/sharecontrol
  */
 
-package ru.h1karo.sharecontrol.versioning
+package ru.h1karo.sharecontrol.init
 
 import com.google.inject.Inject
 import com.google.inject.name.Named
-import net.swiftzer.semver.SemVer
+import ru.h1karo.sharecontrol.console.LoadingConsoleSender
 import ru.h1karo.sharecontrol.module.PluginModule
+import ru.h1karo.sharecontrol.versioning.CompatibilityValidator
 
-class CompatibilityValidator @Inject constructor(
-        @Named(PluginModule.BUKKIT_VERSION) private val bukkitVersion: String
-) {
-    fun validate(version: String): Boolean {
-        val coreVersion = SemVer.parse(this.bukkitVersion)
-        val (start, end) = this.getSupportInterval(version)
-        return coreVersion in start..end
+class CompatibilityInitializer @Inject constructor(
+        @Named(PluginModule.VERSION) private val version: String,
+        private val validator: CompatibilityValidator,
+        private val sender: LoadingConsoleSender
+) : AbstractInitializer() {
+    override fun initialize() {
+        if (!validator.validate(version)) {
+            sender.send("&cThe server kernel version may not be compatible with the plugin.")
+            sender.send("&cThis means that the author of the plugin does not support this version of the kernel at the moment and therefore does not provide a guarantee for the plugins to work with your kernel.")
+            sender.send("&cUse the plugin at your own risk.")
+        }
     }
 
-    @Suppress("UNUSED_PARAMETER")
-    private fun getSupportInterval(version: String): List<SemVer> {
-        // todo remove hard code with version support provider
-        return listOf(
-            SemVer(1, 15),
-            SemVer(1, 15, 2)
-        )
-    }
+    override fun terminate() {}
+
+    override fun getPriority(): Int = 200
 }

@@ -22,7 +22,7 @@
 
 package ru.h1karo.sharecontrol.configuration.entry
 
-interface ParameterInterface<T> : DescribedEntryInterface {
-    fun getDefault(): ParameterValueInterface<T>
-    fun fromString(value: String?): ParameterValueInterface<T>
+interface ParameterInterface<T> : DescribedEntry {
+    fun getDefault(): ParameterValue<T>
+    fun fromString(value: String?): ParameterValue<T>
 }
