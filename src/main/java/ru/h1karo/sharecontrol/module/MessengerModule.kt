@@ -22,10 +22,31 @@
 
 package ru.h1karo.sharecontrol.module
 
+import com.google.inject.Injector
+import com.google.inject.Provides
+import ru.h1karo.sharecontrol.i18n.TranslatorInterface
+import ru.h1karo.sharecontrol.messenger.ColoredMessenger
+import ru.h1karo.sharecontrol.messenger.DelegatingMessenger
+import ru.h1karo.sharecontrol.messenger.Messenger
+import ru.h1karo.sharecontrol.messenger.TranslatableMessenger
 import ru.h1karo.sharecontrol.messenger.transport.Transport
 
 class MessengerModule : AbstractModule() {
     override fun configure() {
         this.bindSet(Transport::class.java)
+        this.bind(Messenger::class.java).to(TranslatableMessenger::class.java)
+    }
+
+    @Provides
+    fun getTranslatableMessenger(injector: Injector): TranslatableMessenger {
+        return TranslatableMessenger(
+            injector.getInstance(ColoredMessenger::class.java),
+            injector.getInstance(TranslatorInterface::class.java)
+        )
+    }
+
+    @Provides
+    fun getColoredMessenger(injector: Injector): ColoredMessenger {
+        return ColoredMessenger(injector.getInstance(DelegatingMessenger::class.java))
     }
 }
