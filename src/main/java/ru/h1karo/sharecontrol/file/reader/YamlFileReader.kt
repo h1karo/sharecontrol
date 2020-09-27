@@ -33,7 +33,8 @@ class YamlFileReader : Reader {
         }
 
         if (!resource.exists()) {
-            throw FileNotFoundException()
+            val message = "File with path `%s` not found.".format(resource.path)
+            throw FileNotFoundException(message)
         }
 
         return YamlConfiguration
