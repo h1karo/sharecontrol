@@ -32,7 +32,7 @@ class InputStreamReader @Inject constructor(private val reader: Reader) : Reader
             throw IllegalArgumentException("%s can load messages only from input stream.".format(this::class.java))
         }
 
-        val reader = InputStreamReader(resource)
+        val reader = InputStreamReader(resource, Charsets.UTF_8)
         return this.reader.read(reader, format)
     }
 
