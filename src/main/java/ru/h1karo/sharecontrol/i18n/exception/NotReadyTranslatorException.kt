@@ -22,4 +22,4 @@
 
 package ru.h1karo.sharecontrol.i18n.exception
 
-class NotReadyTranslatorException : RuntimeException("The translator not configured and not ready to translate.")
+class NotReadyTranslatorException : I18nException("The translator not configured and not ready to translate.")

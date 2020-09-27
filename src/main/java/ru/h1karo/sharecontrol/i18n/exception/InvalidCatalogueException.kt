@@ -22,4 +22,4 @@
 
 package ru.h1karo.sharecontrol.i18n.exception
 
-class InvalidCatalogueException(message: String) : RuntimeException(message)
+class InvalidCatalogueException(message: String) : I18nException(message)

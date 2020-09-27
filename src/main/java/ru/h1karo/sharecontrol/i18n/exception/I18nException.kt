@@ -22,6 +22,4 @@
 
 package ru.h1karo.sharecontrol.i18n.exception
 
-import ru.h1karo.sharecontrol.i18n.Locale
-
-class CatalogueNotFoundException(locale: Locale) : I18nException("The messages for locale `%s` not found.".format(locale.abbr))
+open class I18nException(message: String) : RuntimeException(message)

@@ -24,6 +24,7 @@ package ru.h1karo.sharecontrol.messenger
 
 import com.google.inject.Inject
 import ru.h1karo.sharecontrol.i18n.TranslatorInterface
+import ru.h1karo.sharecontrol.i18n.exception.I18nException
 import ru.h1karo.sharecontrol.i18n.exception.MessageNotFoundException
 
 class TranslatableMessenger @Inject constructor(
@@ -34,7 +35,7 @@ class TranslatableMessenger @Inject constructor(
         try {
             val translated = this.translator.trans(message)
             this.messenger.send(recipient, translated)
-        } catch (e: MessageNotFoundException) {
+        } catch (e: I18nException) {
             this.messenger.send(recipient, message)
         }
     }

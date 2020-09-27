@@ -22,4 +22,4 @@
 
 package ru.h1karo.sharecontrol.i18n.exception
 
-class MessageNotFoundException(id: String) : RuntimeException("The message with id `%s` not found.".format(id))
+class MessageNotFoundException(id: String) : I18nException("The message with id `%s` not found.".format(id))
