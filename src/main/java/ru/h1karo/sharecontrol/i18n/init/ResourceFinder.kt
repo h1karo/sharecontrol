@@ -24,6 +24,7 @@ package ru.h1karo.sharecontrol.i18n.init
 
 import com.google.inject.Inject
 import com.google.inject.name.Named
+import org.apache.commons.io.FilenameUtils
 import ru.h1karo.sharecontrol.i18n.Locale
 import ru.h1karo.sharecontrol.i18n.Resource
 import ru.h1karo.sharecontrol.module.I18nModule
@@ -44,7 +45,7 @@ class ResourceFinder @Inject constructor(
     }
 
     private fun findLocaleResources(it: File): Set<Resource> {
-        val locale = Locale(it.name)
+        val locale = Locale(FilenameUtils.getBaseName(it.name))
         val files = it.listFiles()
 
         if (files === null) {
