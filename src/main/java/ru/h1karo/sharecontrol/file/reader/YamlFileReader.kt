@@ -24,15 +24,24 @@ package ru.h1karo.sharecontrol.file.reader
 
 import org.bukkit.configuration.file.YamlConfiguration
 import java.io.File
+import java.io.FileNotFoundException
 
-class YamlFileReader : FileReader() {
-    override fun loadFrom(file: File): Map<String, Any> {
+class YamlFileReader : Reader {
+    override fun read(resource: Any, format: String): Map<String, Any> {
+        if (resource !is File) {
+            throw IllegalArgumentException("%s can load only from the file.".format(this::class.java))
+        }
+
+        if (!resource.exists()) {
+            throw FileNotFoundException()
+        }
+
         return YamlConfiguration
-                .loadConfiguration(file)
+                .loadConfiguration(resource)
                 .getValues(true)
     }
 
     override fun supports(resource: Any, format: String): Boolean {
-        return super.supports(resource, format) && listOf("yaml", "yml").contains(format)
+        return resource is File && listOf("yaml", "yml").contains(format)
     }
 }

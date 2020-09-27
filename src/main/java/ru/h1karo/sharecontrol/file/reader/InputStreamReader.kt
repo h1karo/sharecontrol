@@ -22,21 +22,19 @@
 
 package ru.h1karo.sharecontrol.file.reader
 
+import com.google.inject.Inject
 import java.io.InputStream
 import java.io.InputStreamReader
-import java.io.Reader
 
-abstract class InputStreamReader : ru.h1karo.sharecontrol.file.reader.Reader {
+class InputStreamReader @Inject constructor(private val reader: Reader) : Reader {
     override fun read(resource: Any, format: String): Map<String, Any> {
         if (resource !is InputStream) {
             throw IllegalArgumentException("%s can load messages only from input stream.".format(this::class.java))
         }
 
         val reader = InputStreamReader(resource)
-        return this.loadFrom(reader)
+        return this.reader.read(reader, format)
     }
-
-    abstract fun loadFrom(reader: Reader): Map<String, Any>
 
     override fun supports(resource: Any, format: String): Boolean = resource is InputStream
 }

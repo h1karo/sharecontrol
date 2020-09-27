@@ -22,10 +22,11 @@
 
 package ru.h1karo.sharecontrol.file.reader
 
+import com.google.inject.Inject
 import java.io.File
 import java.io.FileNotFoundException
 
-abstract class FileReader : Reader {
+class FilepathReader @Inject constructor(private val reader: Reader) : Reader {
     override fun read(resource: Any, format: String): Map<String, Any> {
         if (resource !is String) {
             throw IllegalArgumentException("%s can load only from the file paths.".format(this::class.java))
@@ -36,10 +37,8 @@ abstract class FileReader : Reader {
             throw FileNotFoundException()
         }
 
-        return this.loadFrom(file)
+        return this.reader.read(file, format)
     }
-
-    abstract fun loadFrom(file: File): Map<String, Any>
 
     override fun supports(resource: Any, format: String): Boolean = resource is String
 }

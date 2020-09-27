@@ -23,16 +23,20 @@
 package ru.h1karo.sharecontrol.file.reader
 
 import org.bukkit.configuration.file.YamlConfiguration
-import java.io.Reader
+import java.io.Reader as IoReader
 
-class YamlStreamReader : InputStreamReader() {
-    override fun loadFrom(reader: Reader): Map<String, Any> {
+class YamlStreamReader : Reader {
+    override fun read(resource: Any, format: String): Map<String, Any> {
+        if (resource !is IoReader) {
+            throw IllegalArgumentException("%s can load messages only from readers.".format(this::class.java))
+        }
+
         return YamlConfiguration
-                .loadConfiguration(reader)
+                .loadConfiguration(resource)
                 .getValues(true)
     }
 
     override fun supports(resource: Any, format: String): Boolean {
-        return super.supports(resource, format) && listOf("yaml", "yml").contains(format)
+        return resource is IoReader && listOf("yaml", "yml").contains(format)
     }
 }
