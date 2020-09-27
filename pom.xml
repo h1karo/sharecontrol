@@ -139,6 +139,13 @@
                         </goals>
                         <configuration>
                             <minimizeJar>true</minimizeJar>
+                            <artifactSet>
+                                <excludes>
+                                    <exclude>junit:junit</exclude>
+                                    <exclude>jmock:*</exclude>
+                                    <exclude>org.apache.maven:lib:tests</exclude>
+                                </excludes>
+                            </artifactSet>
                             <filters>
                                 <filter>
                                     <artifact>*:*</artifact>
