@@ -35,11 +35,11 @@ import ru.h1karo.sharecontrol.resource.ResourceManager
 import java.io.File
 
 class ResourceSyncer @Inject constructor(
-        @Named(I18nModule.MESSAGES_DIRECTORY)
-        private val directory: File,
-        private val resourceManager: ResourceManager,
-        private val reader: Reader,
-        private val writer: Writer,
+    @Named(I18nModule.MESSAGES_DIRECTORY)
+    private val directory: File,
+    private val resourceManager: ResourceManager,
+    private val reader: Reader,
+    private val writer: Writer,
 ) {
     fun sync() {
         if (!this.directory.exists()) {

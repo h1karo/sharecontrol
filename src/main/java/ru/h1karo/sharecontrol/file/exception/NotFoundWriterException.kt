@@ -23,5 +23,5 @@
 package ru.h1karo.sharecontrol.file.exception
 
 class NotFoundWriterException(resource: Any, format: String) : RuntimeException(
-        "Writer for resource %s in %s not found.".format(resource.toString(), format)
+    "Writer for resource %s in %s not found.".format(resource.toString(), format)
 )

@@ -31,11 +31,11 @@ import ru.h1karo.sharecontrol.i18n.init.ResourceFinder
 import ru.h1karo.sharecontrol.i18n.init.ResourceSyncer
 
 class I18nInitializer @Inject constructor(
-        private val sender: LoadingConsoleSender,
-        private val syncer: ResourceSyncer,
-        private val finder: ResourceFinder,
-        private val translator: Translator,
-        private val localeProvider: Provider<Locale>
+    private val sender: LoadingConsoleSender,
+    private val syncer: ResourceSyncer,
+    private val finder: ResourceFinder,
+    private val translator: Translator,
+    private val localeProvider: Provider<Locale>
 ) : AbstractInitializer() {
     override fun initialize() {
         this.sender.send("&7Loading messages...")

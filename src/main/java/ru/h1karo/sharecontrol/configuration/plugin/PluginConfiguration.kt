@@ -25,31 +25,31 @@ package ru.h1karo.sharecontrol.configuration.plugin
 import com.google.inject.Inject
 import com.google.inject.Singleton
 import com.google.inject.name.Named
-import ru.h1karo.sharecontrol.yaml.YamlFile
 import ru.h1karo.sharecontrol.configuration.entry.Entry
 import ru.h1karo.sharecontrol.module.PluginModule
+import ru.h1karo.sharecontrol.yaml.YamlFile
 import java.io.File
 
 @Singleton
 class PluginConfiguration @Inject constructor(
-        @Named(PluginModule.DIRECTORY) folder: File
+    @Named(PluginModule.DIRECTORY) folder: File
 ) : YamlFile(folder, "config.yaml") {
     override fun getHeader(): List<String> = listOf(
-            "+-----------------------------------------------+ #",
-            "+       ShareControl's configuration file       + #",
-            "+-----------------------------------------------+ #",
-            "The author of the plugin: h1karo",
-            "The repository: https://github.com/h1karo/sharecontrol",
-            "BukkitDev: https://dev.bukkit.org/projects/sharecontrol",
-            "SpigotMC: https://www.spigotmc.org/resources/sharecontrol.9225/",
-            "RuBukkit: http://rubukkit.org/threads/admn-sec-mech-sharecontrol-v2-6-4-kontrol-tvorcheskogo-rezhima-1-7-1-11.106125/",
-            "Thanks for using my plugin!"
+        "+-----------------------------------------------+ #",
+        "+       ShareControl's configuration file       + #",
+        "+-----------------------------------------------+ #",
+        "The author of the plugin: h1karo",
+        "The repository: https://github.com/h1karo/sharecontrol",
+        "BukkitDev: https://dev.bukkit.org/projects/sharecontrol",
+        "SpigotMC: https://www.spigotmc.org/resources/sharecontrol.9225/",
+        "RuBukkit: http://rubukkit.org/threads/admn-sec-mech-sharecontrol-v2-6-4-kontrol-tvorcheskogo-rezhima-1-7-1-11.106125/",
+        "Thanks for using my plugin!"
     )
 
     override fun getEntries(): Set<Entry> = setOf(
-            Locale,
-            Database,
-            Updater,
-            ChatPrefix
+        Locale,
+        Database,
+        Updater,
+        ChatPrefix
     )
 }
