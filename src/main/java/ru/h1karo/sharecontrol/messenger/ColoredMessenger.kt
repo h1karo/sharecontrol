@@ -26,9 +26,9 @@ import com.google.inject.Inject
 import org.bukkit.ChatColor
 
 class ColoredMessenger @Inject constructor(private val messenger: Messenger) : Messenger {
-    override fun send(recipient: Any, message: String) {
+    override fun send(recipient: Any, message: String, parameters: Map<String, Any>) {
         val colored = ChatColor.translateAlternateColorCodes(COLOR_CHAR, message)
-        this.messenger.send(recipient, colored)
+        this.messenger.send(recipient, colored, parameters)
     }
 
     companion object {

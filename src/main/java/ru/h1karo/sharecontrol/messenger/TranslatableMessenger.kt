@@ -31,12 +31,12 @@ class TranslatableMessenger @Inject constructor(
     private val messenger: Messenger,
     private val translator: TranslatorInterface
 ) : Messenger {
-    override fun send(recipient: Any, message: String) {
+    override fun send(recipient: Any, message: String, parameters: Map<String, Any>) {
         try {
-            val translated = this.translator.trans(message)
+            val translated = this.translator.trans(message, parameters)
             this.messenger.send(recipient, translated)
         } catch (e: I18nException) {
-            this.messenger.send(recipient, message)
+            this.messenger.send(recipient, message, parameters)
         }
     }
 }

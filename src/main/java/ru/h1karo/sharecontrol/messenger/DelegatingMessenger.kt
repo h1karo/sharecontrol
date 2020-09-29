@@ -23,13 +23,16 @@
 package ru.h1karo.sharecontrol.messenger
 
 import com.google.inject.Inject
+import ru.h1karo.sharecontrol.messenger.format.MessageFormatter
 import ru.h1karo.sharecontrol.messenger.transport.Transport
 
 class DelegatingMessenger @Inject constructor(
-    private val transports: Set<@JvmSuppressWildcards Transport>
+    private val transports: Set<@JvmSuppressWildcards Transport>,
+    private val formatter: MessageFormatter
 ) : Messenger {
-    override fun send(recipient: Any, message: String) {
-        this.getTransport(recipient).send(recipient, message)
+    override fun send(recipient: Any, message: String, parameters: Map<String, Any>) {
+        val formatted = this.formatter.format(message, parameters)
+        this.getTransport(recipient).send(recipient, formatted)
     }
 
     private fun getTransport(recipient: Any): Transport {
