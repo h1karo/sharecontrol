@@ -22,10 +22,10 @@
 
 package ru.h1karo.sharecontrol.messenger.format
 
-import java.text.MessageFormat
+import com.ibm.icu.text.MessageFormat
 
 class IcuMessageFormatter : MessageFormatter {
-    override fun format(message: String, parameters: Set<String>): String {
+    override fun format(message: String, parameters: Map<String, Any>): String {
         return MessageFormat.format(message, parameters)
     }
 }
