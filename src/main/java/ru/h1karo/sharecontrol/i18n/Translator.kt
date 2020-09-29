@@ -40,7 +40,7 @@ class Translator @Inject constructor(
 
     private lateinit var locale: Locale
 
-    override fun trans(id: String, parameters: Map<String, Any>, locale: Locale?): String {
+    override fun trans(id: String, parameters: Set<String>, locale: Locale?): String {
         val message = getMessage(id, locale)
         return this.formatter.format(message, parameters)
     }
@@ -73,7 +73,7 @@ class Translator @Inject constructor(
     }
 
     private fun initializeLocale(locale: Locale) {
-        locale.name = this.trans("name", emptyMap(), locale)
+        locale.name = this.trans("name", emptySet(), locale)
     }
 
     private fun getMessage(id: String, locale: Locale? = null): String {
