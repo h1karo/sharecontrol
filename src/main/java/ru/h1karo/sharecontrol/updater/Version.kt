@@ -22,4 +22,7 @@
 
 package ru.h1karo.sharecontrol.updater
 
+/**
+ * New version of the plugin.
+ */
 data class Version(val name: String, val link: String)
