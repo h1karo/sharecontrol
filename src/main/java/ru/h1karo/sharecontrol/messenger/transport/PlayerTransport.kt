@@ -33,5 +33,5 @@ class PlayerTransport : Transport {
         recipient.sendMessage(message)
     }
 
-    override fun supports(recipient: Any, message: String): Boolean = recipient is Player
+    override fun supports(recipient: Any): Boolean = recipient is Player
 }

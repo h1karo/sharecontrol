@@ -29,10 +29,10 @@ class DelegatingMessenger @Inject constructor(
     private val transports: Set<@JvmSuppressWildcards Transport>
 ) : Messenger {
     override fun send(recipient: Any, message: String) {
-        this.getTransport(recipient, message).send(recipient, message)
+        this.getTransport(recipient).send(recipient, message)
     }
 
-    private fun getTransport(recipient: Any, message: String): Transport {
-        return this.transports.first { it.supports(recipient, message) }
+    private fun getTransport(recipient: Any): Transport {
+        return this.transports.first { it.supports(recipient) }
     }
 }

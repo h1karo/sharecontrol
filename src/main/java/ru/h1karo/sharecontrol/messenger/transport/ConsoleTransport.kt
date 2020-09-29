@@ -33,5 +33,5 @@ class ConsoleTransport : Transport {
         recipient.sendMessage(message)
     }
 
-    override fun supports(recipient: Any, message: String): Boolean = recipient is ConsoleCommandSender
+    override fun supports(recipient: Any): Boolean = recipient is ConsoleCommandSender
 }

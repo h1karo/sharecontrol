@@ -24,5 +24,5 @@ package ru.h1karo.sharecontrol.messenger.transport
 
 interface Transport {
     fun send(recipient: Any, message: String)
-    fun supports(recipient: Any, message: String): Boolean
+    fun supports(recipient: Any): Boolean
 }
