@@ -24,9 +24,7 @@ package ru.h1karo.sharecontrol.console
 
 import com.google.inject.Inject
 import com.google.inject.Singleton
-import com.google.inject.name.Named
 import ru.h1karo.sharecontrol.messenger.Messenger
-import ru.h1karo.sharecontrol.module.PluginModule
 
 @Singleton
 open class ConsoleStyle @Inject constructor(private val messenger: Messenger) : Messenger {
@@ -36,5 +34,7 @@ open class ConsoleStyle @Inject constructor(private val messenger: Messenger) : 
 
     fun warning(recipient: Any, message: String) = this.send(recipient, "&6!&e $message")
 
-    override fun send(recipient: Any, message: String) = this.messenger.send(recipient, message)
+    override fun send(recipient: Any, message: String, parameters: Map<String, Any>) {
+        this.messenger.send(recipient, message, parameters)
+    }
 }

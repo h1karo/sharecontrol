@@ -25,7 +25,6 @@ package ru.h1karo.sharecontrol.messenger
 import com.google.inject.Inject
 import ru.h1karo.sharecontrol.i18n.TranslatorInterface
 import ru.h1karo.sharecontrol.i18n.exception.I18nException
-import ru.h1karo.sharecontrol.i18n.exception.MessageNotFoundException
 
 class TranslatableMessenger @Inject constructor(
     private val messenger: Messenger,
