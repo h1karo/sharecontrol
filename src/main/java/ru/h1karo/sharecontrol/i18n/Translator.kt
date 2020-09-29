@@ -27,7 +27,7 @@ import com.google.inject.Singleton
 import ru.h1karo.sharecontrol.i18n.exception.CatalogueNotFoundException
 import ru.h1karo.sharecontrol.i18n.exception.MessageNotFoundException
 import ru.h1karo.sharecontrol.i18n.exception.NotReadyTranslatorException
-import ru.h1karo.sharecontrol.i18n.format.MessageFormatter
+import ru.h1karo.sharecontrol.messenger.format.MessageFormatter
 import ru.h1karo.sharecontrol.i18n.loader.Loader
 
 @Singleton

@@ -29,11 +29,14 @@ import ru.h1karo.sharecontrol.messenger.ColoredMessenger
 import ru.h1karo.sharecontrol.messenger.DelegatingMessenger
 import ru.h1karo.sharecontrol.messenger.Messenger
 import ru.h1karo.sharecontrol.messenger.TranslatableMessenger
+import ru.h1karo.sharecontrol.messenger.format.IcuMessageFormatter
+import ru.h1karo.sharecontrol.messenger.format.MessageFormatter
 import ru.h1karo.sharecontrol.messenger.transport.Transport
 
 class MessengerModule : AbstractModule() {
     override fun configure() {
         this.bindSet(Transport::class.java)
+        this.bind(MessageFormatter::class.java).to(IcuMessageFormatter::class.java)
         this.bind(Messenger::class.java).to(TranslatableMessenger::class.java)
     }
 
