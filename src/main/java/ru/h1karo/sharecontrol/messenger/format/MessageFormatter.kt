@@ -20,8 +20,8 @@
  * @link https://github.com/h1karo/sharecontrol
  */
 
-package ru.h1karo.sharecontrol.i18n.exception
+package ru.h1karo.sharecontrol.messenger.format
 
-import ru.h1karo.sharecontrol.i18n.Locale
-
-class CatalogueNotFoundException(locale: Locale) : I18nException("The messages for locale `%s` not found.".format(locale.abbr))
+interface MessageFormatter {
+    fun format(message: String, parameters: Map<String, Any> = emptyMap()): String
+}

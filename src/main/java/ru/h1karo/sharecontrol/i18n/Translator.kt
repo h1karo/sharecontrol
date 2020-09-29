@@ -26,8 +26,9 @@ import com.google.inject.Inject
 import com.google.inject.Singleton
 import ru.h1karo.sharecontrol.i18n.exception.CatalogueNotFoundException
 import ru.h1karo.sharecontrol.i18n.exception.MessageNotFoundException
-import ru.h1karo.sharecontrol.i18n.format.MessageFormatter
+import ru.h1karo.sharecontrol.i18n.exception.NotReadyTranslatorException
 import ru.h1karo.sharecontrol.i18n.loader.Loader
+import ru.h1karo.sharecontrol.messenger.format.MessageFormatter
 
 @Singleton
 class Translator @Inject constructor(
@@ -39,12 +40,16 @@ class Translator @Inject constructor(
 
     private lateinit var locale: Locale
 
-    override fun trans(id: String, parameters: Set<String>, locale: Locale?): String {
+    override fun trans(id: String, parameters: Map<String, Any>, locale: Locale?): String {
         val message = getMessage(id, locale)
         return this.formatter.format(message, parameters)
     }
 
     override fun getLocale(): Locale {
+        if (!this::locale.isInitialized) {
+            throw NotReadyTranslatorException()
+        }
+
         return this.locale
     }
 
@@ -68,7 +73,7 @@ class Translator @Inject constructor(
     }
 
     private fun initializeLocale(locale: Locale) {
-        locale.name = this.trans("name", emptySet(), locale)
+        locale.name = this.trans("name", emptyMap(), locale)
     }
 
     private fun getMessage(id: String, locale: Locale? = null): String {
@@ -77,7 +82,7 @@ class Translator @Inject constructor(
     }
 
     private fun getCatalogue(locale: Locale? = null): MessageCatalogue {
-        val targetLocale: Locale = locale ?: this.locale
+        val targetLocale: Locale = locale ?: this.getLocale()
         return this.catalogues.getOrElse(targetLocale) { this.loadCatalogue(targetLocale) }
     }
 

@@ -20,8 +20,18 @@
  * @link https://github.com/h1karo/sharecontrol
  */
 
-package ru.h1karo.sharecontrol.i18n.format
+package ru.h1karo.sharecontrol.messenger
 
-interface MessageFormatter {
-    fun format(message: String, parameters: Set<String>): String
+import com.google.inject.Inject
+import org.bukkit.ChatColor
+
+class ColoredMessenger @Inject constructor(private val messenger: Messenger) : Messenger {
+    override fun send(recipient: Any, message: String, parameters: Map<String, Any>) {
+        val colored = ChatColor.translateAlternateColorCodes(COLOR_CHAR, message)
+        this.messenger.send(recipient, colored, parameters)
+    }
+
+    companion object {
+        private const val COLOR_CHAR = '&'
+    }
 }

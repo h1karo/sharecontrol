@@ -13,23 +13,13 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with ShareControl. If not, see <https://www.gnu.org/licenses/>.
- *  
+ *
  * @copyright Copyright (c) 2020 ShareControl
  * @author Oleg Kozlov <h1karo@outlook.com>
  * @license GNU General Public License v3.0
  * @link https://github.com/h1karo/sharecontrol
  */
 
-package ru.h1karo.sharecontrol.console
+package ru.h1karo.sharecontrol.i18n.exception
 
-import org.bukkit.Bukkit
-import org.bukkit.ChatColor
-
-class ConsoleSender {
-    private val colorChar = '&'
-
-    fun send(message: String) {
-        val coloredMessage = ChatColor.translateAlternateColorCodes(colorChar, message)
-        Bukkit.getConsoleSender().sendMessage(coloredMessage)
-    }
-}
+open class I18nException(message: String) : RuntimeException(message)

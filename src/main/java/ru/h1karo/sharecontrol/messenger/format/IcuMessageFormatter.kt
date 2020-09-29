@@ -20,8 +20,12 @@
  * @link https://github.com/h1karo/sharecontrol
  */
 
-package ru.h1karo.sharecontrol.i18n.exception
+package ru.h1karo.sharecontrol.messenger.format
 
-import ru.h1karo.sharecontrol.i18n.Locale
+import com.ibm.icu.text.MessageFormat
 
-class CatalogueNotFoundException(locale: Locale) : I18nException("The messages for locale `%s` not found.".format(locale.abbr))
+class IcuMessageFormatter : MessageFormatter {
+    override fun format(message: String, parameters: Map<String, Any>): String {
+        return MessageFormat.format(message, parameters)
+    }
+}

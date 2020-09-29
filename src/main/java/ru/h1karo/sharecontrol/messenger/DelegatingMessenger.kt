@@ -13,19 +13,29 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with ShareControl. If not, see <https://www.gnu.org/licenses/>.
- *
+ *  
  * @copyright Copyright (c) 2020 ShareControl
  * @author Oleg Kozlov <h1karo@outlook.com>
  * @license GNU General Public License v3.0
  * @link https://github.com/h1karo/sharecontrol
  */
 
-package ru.h1karo.sharecontrol.i18n.format
+package ru.h1karo.sharecontrol.messenger
 
-import java.text.MessageFormat
+import com.google.inject.Inject
+import ru.h1karo.sharecontrol.messenger.format.MessageFormatter
+import ru.h1karo.sharecontrol.messenger.transport.Transport
 
-class IcuMessageFormatter : MessageFormatter {
-    override fun format(message: String, parameters: Set<String>): String {
-        return MessageFormat.format(message, parameters)
+class DelegatingMessenger @Inject constructor(
+    private val transports: Set<@JvmSuppressWildcards Transport>,
+    private val formatter: MessageFormatter
+) : Messenger {
+    override fun send(recipient: Any, message: String, parameters: Map<String, Any>) {
+        val formatted = this.formatter.format(message, parameters)
+        this.getTransport(recipient).send(recipient, formatted)
+    }
+
+    private fun getTransport(recipient: Any): Transport {
+        return this.transports.first { it.supports(recipient) }
     }
 }

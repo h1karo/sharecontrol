@@ -20,8 +20,9 @@
  * @link https://github.com/h1karo/sharecontrol
  */
 
-package ru.h1karo.sharecontrol.i18n.exception
+package ru.h1karo.sharecontrol.messenger.transport
 
-import ru.h1karo.sharecontrol.i18n.Locale
-
-class CatalogueNotFoundException(locale: Locale) : I18nException("The messages for locale `%s` not found.".format(locale.abbr))
+interface Transport {
+    fun send(recipient: Any, message: String)
+    fun supports(recipient: Any): Boolean
+}

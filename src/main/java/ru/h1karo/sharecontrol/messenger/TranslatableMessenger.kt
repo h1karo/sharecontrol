@@ -20,8 +20,22 @@
  * @link https://github.com/h1karo/sharecontrol
  */
 
-package ru.h1karo.sharecontrol.i18n.exception
+package ru.h1karo.sharecontrol.messenger
 
-import ru.h1karo.sharecontrol.i18n.Locale
+import com.google.inject.Inject
+import ru.h1karo.sharecontrol.i18n.TranslatorInterface
+import ru.h1karo.sharecontrol.i18n.exception.I18nException
 
-class CatalogueNotFoundException(locale: Locale) : I18nException("The messages for locale `%s` not found.".format(locale.abbr))
+class TranslatableMessenger @Inject constructor(
+    private val messenger: Messenger,
+    private val translator: TranslatorInterface
+) : Messenger {
+    override fun send(recipient: Any, message: String, parameters: Map<String, Any>) {
+        try {
+            val translated = this.translator.trans(message, parameters)
+            this.messenger.send(recipient, translated)
+        } catch (e: I18nException) {
+            this.messenger.send(recipient, message, parameters)
+        }
+    }
+}

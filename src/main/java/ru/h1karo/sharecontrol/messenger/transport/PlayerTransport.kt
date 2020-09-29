@@ -20,8 +20,18 @@
  * @link https://github.com/h1karo/sharecontrol
  */
 
-package ru.h1karo.sharecontrol.i18n.exception
+package ru.h1karo.sharecontrol.messenger.transport
 
-import ru.h1karo.sharecontrol.i18n.Locale
+import org.bukkit.entity.Player
 
-class CatalogueNotFoundException(locale: Locale) : I18nException("The messages for locale `%s` not found.".format(locale.abbr))
+class PlayerTransport : Transport {
+    override fun send(recipient: Any, message: String) {
+        if (recipient !is Player) {
+            throw IllegalArgumentException("%s can sends messages only to player.".format(this::class.java))
+        }
+
+        recipient.sendMessage(message)
+    }
+
+    override fun supports(recipient: Any): Boolean = recipient is Player
+}

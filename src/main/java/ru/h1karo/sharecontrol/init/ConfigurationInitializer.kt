@@ -24,16 +24,15 @@ package ru.h1karo.sharecontrol.init
 
 import com.google.inject.Inject
 import ru.h1karo.sharecontrol.configuration.plugin.PluginConfiguration
-import ru.h1karo.sharecontrol.console.LoadingConsoleSender
+import ru.h1karo.sharecontrol.console.BlockStyle
 
 class ConfigurationInitializer @Inject constructor(
-    private val pluginConfiguration: PluginConfiguration,
-    private val sender: LoadingConsoleSender
-) : AbstractInitializer() {
+    console: BlockStyle,
+    private val pluginConfiguration: PluginConfiguration
+) : AbstractInitializer(console) {
     override fun initialize() {
-        this.sender.send("Configuration initialization started...")
         this.pluginConfiguration.initialize()
-        this.sender.send("Configuration initialization completed.")
+        this.success("Configuration component loaded.")
     }
 
     override fun terminate() {}

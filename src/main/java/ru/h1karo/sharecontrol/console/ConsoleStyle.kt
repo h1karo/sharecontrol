@@ -20,8 +20,21 @@
  * @link https://github.com/h1karo/sharecontrol
  */
 
-package ru.h1karo.sharecontrol.i18n.exception
+package ru.h1karo.sharecontrol.console
 
-import ru.h1karo.sharecontrol.i18n.Locale
+import com.google.inject.Inject
+import com.google.inject.Singleton
+import ru.h1karo.sharecontrol.messenger.Messenger
 
-class CatalogueNotFoundException(locale: Locale) : I18nException("The messages for locale `%s` not found.".format(locale.abbr))
+@Singleton
+open class ConsoleStyle @Inject constructor(private val messenger: Messenger) : Messenger {
+    fun success(recipient: Any, message: String) = this.send(recipient, "&2✓&8 $message")
+
+    fun error(recipient: Any, message: String) = this.send(recipient, "&4✗&c $message")
+
+    fun warning(recipient: Any, message: String) = this.send(recipient, "&6!&e $message")
+
+    override fun send(recipient: Any, message: String, parameters: Map<String, Any>) {
+        this.messenger.send(recipient, message, parameters)
+    }
+}

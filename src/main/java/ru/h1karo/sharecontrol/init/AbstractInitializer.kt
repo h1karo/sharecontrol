@@ -22,7 +22,19 @@
 
 package ru.h1karo.sharecontrol.init
 
-abstract class AbstractInitializer : Initializer {
+import org.bukkit.Bukkit
+import ru.h1karo.sharecontrol.console.BlockStyle
+
+abstract class AbstractInitializer(protected val console: BlockStyle) : Initializer {
+    private val recipient = Bukkit.getConsoleSender()
+
+    protected fun send(message: String) = this.console.send(recipient, message)
+    protected fun success(message: String) = this.console.success(recipient, message)
+    protected fun error(message: String) = this.console.error(recipient, message)
+    protected fun warning(message: String) = this.console.warning(recipient, message)
+    protected fun start() = this.console.sendTitledLine(recipient)
+    protected fun end() = this.console.sendLine(recipient)
+
     override fun getPriority(): Int = 1
 
     final override fun compareTo(other: Initializer): Int {

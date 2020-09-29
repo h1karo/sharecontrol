@@ -30,11 +30,17 @@ import org.bukkit.plugin.java.JavaPlugin
 import ru.h1karo.sharecontrol.init.Initializer
 import ru.h1karo.sharecontrol.module.I18nModule
 import ru.h1karo.sharecontrol.module.InitializationModule
+import ru.h1karo.sharecontrol.module.MessengerModule
 import ru.h1karo.sharecontrol.module.PluginModule
 
 @Singleton
 class ShareControl : JavaPlugin(), Listener {
-    private val injector: Injector = Guice.createInjector(PluginModule(this), InitializationModule(), I18nModule())
+    private val injector: Injector = Guice.createInjector(
+        PluginModule(this),
+        InitializationModule(),
+        I18nModule(),
+        MessengerModule()
+    )
     private val initializer: Initializer = injector.getInstance(Initializer::class.java)
 
     override fun onEnable() = this.initializer.initialize()
