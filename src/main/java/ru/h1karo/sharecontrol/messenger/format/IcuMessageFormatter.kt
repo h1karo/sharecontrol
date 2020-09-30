@@ -26,6 +26,6 @@ import java.text.MessageFormat
 
 class IcuMessageFormatter : MessageFormatter {
     override fun format(message: String, parameters: Set<String>): String {
-        return MessageFormat.format(message, parameters)
+        return MessageFormat.format(message, *parameters.toTypedArray())
     }
 }
