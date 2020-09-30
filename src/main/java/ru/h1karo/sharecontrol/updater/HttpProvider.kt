@@ -22,10 +22,12 @@
 
 package ru.h1karo.sharecontrol.updater
 
+import com.google.gson.Gson
 import com.google.gson.JsonObject
 import com.google.gson.JsonParser
 import net.swiftzer.semver.SemVer
 import ru.h1karo.sharecontrol.updater.exception.UnexpectedValueException
+import java.io.BufferedReader
 import java.io.InputStream
 import java.io.InputStreamReader
 import java.net.URL
@@ -33,8 +35,8 @@ import java.net.URL
 abstract class HttpProvider constructor(private val version: String) : VersionProvider {
     override fun find(): Version? {
         val stream = this.createRequest(this.getUrl())
-        val jsonObject = this.readResponse(stream)
-        val version = this.getVersionFromJson(jsonObject)
+        val map = this.readResponse(stream)
+        val version = this.getVersionFromJson(map)
 
         return when {
             version.toSemVer() > SemVer.parse(this.version) -> version
@@ -52,18 +54,14 @@ abstract class HttpProvider constructor(private val version: String) : VersionPr
         return conn.getInputStream()
     }
 
-    private fun readResponse(stream: InputStream): JsonObject {
-        val reader = InputStreamReader(stream)
-        val element = JsonParser.parseReader(reader)
+    private fun readResponse(stream: InputStream): Map<*, *> {
+        val reader = BufferedReader(InputStreamReader(stream))
+        val response: String = reader.readLines().joinToString("\n")
 
-        if (!element.isJsonObject) {
-            throw UnexpectedValueException("Expected json object, got array.")
-        }
-
-        return element.asJsonObject
+        return Gson().fromJson(response, Map::class.java)
     }
 
-    protected abstract fun getVersionFromJson(jsonObject: JsonObject): Version
+    protected abstract fun getVersionFromJson(map: Map<*, *>): Version
 
     companion object {
         private const val USER_AGENT = "ShareControl Updater"

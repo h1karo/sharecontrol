@@ -33,21 +33,21 @@ import java.text.MessageFormat
 class SpigotMcProvider @Inject constructor(@Named(PluginModule.VERSION) version: String) : HttpProvider(version) {
     override fun getUrl(): String = MessageFormat.format(URL_PATTERN, PLUGIN_ID)
 
-    override fun getVersionFromJson(jsonObject: JsonObject): Version {
-        if (!jsonObject.has("id") || !jsonObject.has("name")) {
+    override fun getVersionFromJson(map: Map<*, *>): Version {
+        if (!map.containsKey("id") || !map.containsKey("name")) {
             throw UnexpectedValueException("Response doesn't contain `id` or `name` parameter.")
         }
 
-        val versionId = jsonObject["id"].asDouble
-        val name = jsonObject["name"].asString
+        val versionId = map["id"] as Double
+        val name = map["name"] as String
         val link = MessageFormat.format(DOWNLOAD_LINK_PATTERN, PLUGIN_ID, versionId.toInt())
 
         return Version(name.removePrefix("v"), link)
     }
 
     companion object {
-        private const val URL_PATTERN = "https://api.spiget.org/v2/resources/{0}/versions/latest"
-        private const val DOWNLOAD_LINK_PATTERN = "https://api.spiget.org/v2/resources/{0}/versions/{1}/download"
+        private const val URL_PATTERN = "https://api.spiget.org/v2/resources/{0,number,#}/versions/latest"
+        private const val DOWNLOAD_LINK_PATTERN = "https://api.spiget.org/v2/resources/{0,number,#}/versions/{1,number,#}/download"
         private const val PLUGIN_ID = 9225
     }
 }

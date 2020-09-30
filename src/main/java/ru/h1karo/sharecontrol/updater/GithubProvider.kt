@@ -31,11 +31,11 @@ import java.text.MessageFormat
 class GithubProvider @Inject constructor(@Named(PluginModule.VERSION) version: String) : HttpProvider(version) {
     override fun getUrl(): String = MessageFormat.format(URL_PATTERN, OWNER, REPOSITORY)
 
-    override fun getVersionFromJson(jsonObject: JsonObject): Version {
-        val name = jsonObject["name"].asString
-        val assets = jsonObject["assets"].asJsonArray
-        val asset = assets.first().asJsonObject
-        val link = asset["browser_download_url"].asString
+    override fun getVersionFromJson(map: Map<*, *>): Version {
+        val name = map["tag_name"] as String
+        val assets = map["assets"] as List<*>
+        val asset = assets.first() as Map<*, *>
+        val link = asset["browser_download_url"] as String
 
         return Version(name.removePrefix("v"), link)
     }
