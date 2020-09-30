@@ -28,7 +28,11 @@ import com.google.inject.Singleton
 import org.bukkit.event.Listener
 import org.bukkit.plugin.java.JavaPlugin
 import ru.h1karo.sharecontrol.init.Initializer
-import ru.h1karo.sharecontrol.module.*
+import ru.h1karo.sharecontrol.module.I18nModule
+import ru.h1karo.sharecontrol.module.InitializationModule
+import ru.h1karo.sharecontrol.module.MessengerModule
+import ru.h1karo.sharecontrol.module.PluginModule
+import ru.h1karo.sharecontrol.module.UpdaterModule
 
 @Singleton
 class ShareControl : JavaPlugin(), Listener {

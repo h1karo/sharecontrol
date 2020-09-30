@@ -23,10 +23,7 @@
 package ru.h1karo.sharecontrol.updater
 
 import com.google.gson.Gson
-import com.google.gson.JsonObject
-import com.google.gson.JsonParser
 import net.swiftzer.semver.SemVer
-import ru.h1karo.sharecontrol.updater.exception.UnexpectedValueException
 import java.io.BufferedReader
 import java.io.InputStream
 import java.io.InputStreamReader

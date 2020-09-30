@@ -22,7 +22,6 @@
 
 package ru.h1karo.sharecontrol.updater
 
-import com.google.gson.JsonObject
 import com.google.inject.Inject
 import com.google.inject.name.Named
 import ru.h1karo.sharecontrol.module.PluginModule
