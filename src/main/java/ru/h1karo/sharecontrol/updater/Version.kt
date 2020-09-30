@@ -20,18 +20,13 @@
  * @link https://github.com/h1karo/sharecontrol
  */
 
-package ru.h1karo.sharecontrol.messenger
+package ru.h1karo.sharecontrol.updater
 
-import com.google.inject.Inject
-import org.bukkit.ChatColor
+import net.swiftzer.semver.SemVer
 
-class ColoredMessenger @Inject constructor(private val messenger: Messenger) : Messenger {
-    override fun send(recipient: Any, message: String, parameters: Set<String>) {
-        val colored = ChatColor.translateAlternateColorCodes(COLOR_CHAR, message)
-        this.messenger.send(recipient, colored, parameters)
-    }
-
-    companion object {
-        private const val COLOR_CHAR = '&'
-    }
+/**
+ * New version of the plugin.
+ */
+data class Version(val name: String, val link: String) {
+    fun toSemVer(): SemVer = SemVer.parse(this.name)
 }

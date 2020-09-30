@@ -20,18 +20,28 @@
  * @link https://github.com/h1karo/sharecontrol
  */
 
-package ru.h1karo.sharecontrol.messenger
+package ru.h1karo.sharecontrol.updater
 
 import com.google.inject.Inject
-import org.bukkit.ChatColor
+import com.google.inject.name.Named
+import ru.h1karo.sharecontrol.module.PluginModule
+import java.text.MessageFormat
 
-class ColoredMessenger @Inject constructor(private val messenger: Messenger) : Messenger {
-    override fun send(recipient: Any, message: String, parameters: Set<String>) {
-        val colored = ChatColor.translateAlternateColorCodes(COLOR_CHAR, message)
-        this.messenger.send(recipient, colored, parameters)
+class GithubProvider @Inject constructor(@Named(PluginModule.VERSION) version: String) : HttpProvider(version) {
+    override fun getUrl(): String = MessageFormat.format(URL_PATTERN, OWNER, REPOSITORY)
+
+    override fun getVersionFromJson(map: Map<*, *>): Version {
+        val name = map["tag_name"] as String
+        val assets = map["assets"] as List<*>
+        val asset = assets.first() as Map<*, *>
+        val link = asset["browser_download_url"] as String
+
+        return Version(name.removePrefix("v"), link)
     }
 
     companion object {
-        private const val COLOR_CHAR = '&'
+        const val URL_PATTERN = "https://api.github.com/repos/{0}/{1}/releases/latest"
+        const val OWNER = "h1karo"
+        const val REPOSITORY = "sharecontrol"
     }
 }

@@ -28,10 +28,18 @@ import ru.h1karo.sharecontrol.console.BlockStyle
 abstract class AbstractInitializer(protected val console: BlockStyle) : Initializer {
     private val recipient = Bukkit.getConsoleSender()
 
-    protected fun send(message: String) = this.console.send(recipient, message)
-    protected fun success(message: String) = this.console.success(recipient, message)
-    protected fun error(message: String) = this.console.error(recipient, message)
-    protected fun warning(message: String) = this.console.warning(recipient, message)
+    protected fun send(message: String, parameters: Set<String> = emptySet()) =
+        this.console.send(recipient, message, parameters)
+
+    protected fun success(message: String, parameters: Set<String> = emptySet()) =
+        this.console.success(recipient, message, parameters)
+
+    protected fun error(message: String, parameters: Set<String> = emptySet()) =
+        this.console.error(recipient, message, parameters)
+
+    protected fun warning(message: String, parameters: Set<String> = emptySet()) =
+        this.console.warning(recipient, message, parameters)
+
     protected fun start() = this.console.sendTitledLine(recipient)
     protected fun end() = this.console.sendLine(recipient)
 

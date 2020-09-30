@@ -20,18 +20,30 @@
  * @link https://github.com/h1karo/sharecontrol
  */
 
-package ru.h1karo.sharecontrol.messenger
+package ru.h1karo.sharecontrol.module
 
-import com.google.inject.Inject
-import org.bukkit.ChatColor
+import com.google.inject.AbstractModule
+import com.google.inject.Injector
+import com.google.inject.Provides
+import com.google.inject.name.Named
+import ru.h1karo.sharecontrol.configuration.entry.ParameterContainer
+import ru.h1karo.sharecontrol.configuration.plugin.Updater
+import ru.h1karo.sharecontrol.updater.SpigotMcProvider
+import ru.h1karo.sharecontrol.updater.VersionProvider
 
-class ColoredMessenger @Inject constructor(private val messenger: Messenger) : Messenger {
-    override fun send(recipient: Any, message: String, parameters: Set<String>) {
-        val colored = ChatColor.translateAlternateColorCodes(COLOR_CHAR, message)
-        this.messenger.send(recipient, colored, parameters)
+class UpdaterModule : AbstractModule() {
+    override fun configure() {
+        this.bind(VersionProvider::class.java).to(SpigotMcProvider::class.java)
+    }
+
+    @Provides
+    @Named(UPDATER_ENABLED)
+    fun isUpdaterEnabled(injector: Injector): Boolean {
+        val parameterContainer = injector.getInstance(ParameterContainer::class.java)
+        return parameterContainer.get(Updater).getValue()
     }
 
     companion object {
-        private const val COLOR_CHAR = '&'
+        const val UPDATER_ENABLED = "updater-enabled"
     }
 }

@@ -25,7 +25,7 @@ package ru.h1karo.sharecontrol.i18n
 import ru.h1karo.sharecontrol.Resettable
 
 interface TranslatorInterface : Resettable {
-    fun trans(id: String, parameters: Map<String, Any> = emptyMap(), locale: Locale? = null): String
+    fun trans(id: String, parameters: Set<String> = emptySet(), locale: Locale? = null): String
 
     fun getLocale(): Locale
 }
