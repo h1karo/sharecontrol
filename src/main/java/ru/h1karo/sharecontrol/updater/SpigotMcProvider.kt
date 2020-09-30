@@ -22,64 +22,32 @@
 
 package ru.h1karo.sharecontrol.updater
 
-import com.google.gson.JsonParser
+import com.google.gson.JsonObject
 import com.google.inject.Inject
 import com.google.inject.name.Named
-import net.swiftzer.semver.SemVer
 import ru.h1karo.sharecontrol.module.PluginModule
 import ru.h1karo.sharecontrol.updater.exception.UnexpectedValueException
-import java.io.InputStream
-import java.io.InputStreamReader
-import java.net.URL
+import java.text.MessageFormat
 
 
-class SpigotMcProvider @Inject constructor(
-    @Named(PluginModule.VERSION)
-    private val version: String
-) : VersionProvider {
-    override fun find(): Version? {
-        val stream = this.createRequest()
-        val version = this.readResponse(stream)
+class SpigotMcProvider @Inject constructor(@Named(PluginModule.VERSION) version: String) : HttpProvider(version) {
+    override fun getUrl(): String = MessageFormat.format(URL_PATTERN, PLUGIN_ID)
 
-        return when {
-            version.toSemVer() > SemVer.parse(this.version) -> version
-            else -> null
-        }
-    }
-
-    private fun createRequest(): InputStream {
-        val url = URL(URL_PATTERN.format(PLUGIN_ID))
-        val conn = url.openConnection()
-        conn.addRequestProperty("User-Agent", USER_AGENT)
-        conn.doOutput = true
-
-        return conn.getInputStream()
-    }
-
-    private fun readResponse(stream: InputStream): Version {
-        val reader = InputStreamReader(stream)
-        val element = JsonParser.parseReader(reader)
-
-        if (!element.isJsonObject) {
-            throw UnexpectedValueException("Expected json object, got array.")
-        }
-
-        val version = element.asJsonObject
-        if (!version.has("id") || !version.has("name")) {
+    override fun getVersionFromJson(jsonObject: JsonObject): Version {
+        if (!jsonObject.has("id") || !jsonObject.has("name")) {
             throw UnexpectedValueException("Response doesn't contain `id` or `name` parameter.")
         }
 
-        val versionId = version["id"].asDouble
-        val name = version["name"].asString
-        val link = DOWNLOAD_LINK_PATTERN.format(PLUGIN_ID, versionId.toInt())
+        val versionId = jsonObject["id"].asDouble
+        val name = jsonObject["name"].asString
+        val link = MessageFormat.format(DOWNLOAD_LINK_PATTERN, PLUGIN_ID, versionId.toInt())
 
         return Version(name.removePrefix("v"), link)
     }
 
     companion object {
-        private const val URL_PATTERN = "https://api.spiget.org/v2/resources/%d/versions/latest"
-        private const val DOWNLOAD_LINK_PATTERN = "https://api.spiget.org/v2/resources/%d/versions/%d/download"
+        private const val URL_PATTERN = "https://api.spiget.org/v2/resources/{0}/versions/latest"
+        private const val DOWNLOAD_LINK_PATTERN = "https://api.spiget.org/v2/resources/{0}/versions/{1}/download"
         private const val PLUGIN_ID = 9225
-        private const val USER_AGENT = "ShareControl Updater"
     }
 }
