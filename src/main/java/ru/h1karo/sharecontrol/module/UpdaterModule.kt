@@ -20,27 +20,30 @@
  * @link https://github.com/h1karo/sharecontrol
  */
 
-package ru.h1karo.sharecontrol
+package ru.h1karo.sharecontrol.module
 
-import com.google.inject.Guice
+import com.google.inject.AbstractModule
 import com.google.inject.Injector
-import com.google.inject.Singleton
-import org.bukkit.event.Listener
-import org.bukkit.plugin.java.JavaPlugin
-import ru.h1karo.sharecontrol.init.Initializer
-import ru.h1karo.sharecontrol.module.*
+import com.google.inject.Provides
+import com.google.inject.name.Named
+import ru.h1karo.sharecontrol.configuration.entry.ParameterContainer
+import ru.h1karo.sharecontrol.configuration.plugin.Updater
+import ru.h1karo.sharecontrol.updater.SpigotMcProvider
+import ru.h1karo.sharecontrol.updater.VersionProvider
 
-@Singleton
-class ShareControl : JavaPlugin(), Listener {
-    private val injector: Injector = Guice.createInjector(
-        PluginModule(this),
-        InitializationModule(),
-        I18nModule(),
-        MessengerModule(),
-        UpdaterModule()
-    )
-    private val initializer: Initializer = injector.getInstance(Initializer::class.java)
+class UpdaterModule : AbstractModule() {
+    override fun configure() {
+        this.bind(VersionProvider::class.java).to(SpigotMcProvider::class.java)
+    }
 
-    override fun onEnable() = this.initializer.initialize()
-    override fun onDisable() = this.initializer.terminate()
+    @Provides
+    @Named(UPDATER_ENABLED)
+    fun isUpdaterEnabled(injector: Injector): Boolean {
+        val parameterContainer = injector.getInstance(ParameterContainer::class.java)
+        return parameterContainer.get(Updater).getValue()
+    }
+
+    companion object {
+        const val UPDATER_ENABLED = "updater-enabled"
+    }
 }
