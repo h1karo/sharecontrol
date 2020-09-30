@@ -73,9 +73,9 @@ class SpigotMcProvider @Inject constructor(
     }
 
     companion object {
-        const val URL_PATTERN = "https://api.spiget.org/v2/resources/%d/versions/latest"
-        const val DOWNLOAD_LINK_PATTERN = "https://api.spiget.org/v2/resources/%d/versions/%d/download"
-        const val PLUGIN_ID = 9225
-        const val USER_AGENT = "ShareControl Updater"
+        private const val URL_PATTERN = "https://api.spiget.org/v2/resources/%d/versions/latest"
+        private const val DOWNLOAD_LINK_PATTERN = "https://api.spiget.org/v2/resources/%d/versions/%d/download"
+        private const val PLUGIN_ID = 9225
+        private const val USER_AGENT = "ShareControl Updater"
     }
 }
