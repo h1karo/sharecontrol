@@ -22,16 +22,16 @@
 
 package ru.h1karo.sharecontrol.updater
 
-import com.google.gson.Gson
+import com.google.gson.JsonParser
 import com.google.inject.Inject
 import com.google.inject.name.Named
 import net.swiftzer.semver.SemVer
 import ru.h1karo.sharecontrol.module.PluginModule
 import ru.h1karo.sharecontrol.updater.exception.UnexpectedValueException
-import java.io.BufferedReader
 import java.io.InputStream
 import java.io.InputStreamReader
 import java.net.URL
+
 
 class SpigotMcProvider @Inject constructor(
     @Named(PluginModule.VERSION)
@@ -57,16 +57,20 @@ class SpigotMcProvider @Inject constructor(
     }
 
     private fun readResponse(stream: InputStream): Version {
-        val reader = BufferedReader(InputStreamReader(stream))
-        val response: String = reader.readLines().joinToString("\n")
+        val reader = InputStreamReader(stream)
+        val element = JsonParser.parseReader(reader)
 
-        val version = Gson().fromJson(response, Map::class.java)
-        if (!version.containsKey("id") || !version.containsKey("name")) {
+        if (!element.isJsonObject) {
+            throw UnexpectedValueException("Expected json object, got array.")
+        }
+
+        val version = element.asJsonObject
+        if (!version.has("id") || !version.has("name")) {
             throw UnexpectedValueException("Response doesn't contain `id` or `name` parameter.")
         }
 
-        val versionId = version["id"] as Double
-        val name = version["name"] as String
+        val versionId = version["id"].asDouble
+        val name = version["name"].asString
         val link = DOWNLOAD_LINK_PATTERN.format(PLUGIN_ID, versionId.toInt())
 
         return Version(name.removePrefix("v"), link)
