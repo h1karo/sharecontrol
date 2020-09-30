@@ -20,13 +20,8 @@
  * @link https://github.com/h1karo/sharecontrol
  */
 
-package ru.h1karo.sharecontrol.updater
+package ru.h1karo.sharecontrol.updater.exception
 
-import net.swiftzer.semver.SemVer
+import java.lang.RuntimeException
 
-/**
- * New version of the plugin.
- */
-data class Version(val name: String, val link: String) {
-    fun toSemVer(): SemVer = SemVer.parse(this.name)
-}
+class UnexpectedValueException(message: String) : RuntimeException(message)
