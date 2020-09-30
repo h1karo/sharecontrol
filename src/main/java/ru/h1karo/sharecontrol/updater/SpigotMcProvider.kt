@@ -69,7 +69,7 @@ class SpigotMcProvider @Inject constructor(
         val name = version["name"] as String
         val link = DOWNLOAD_LINK_PATTERN.format(PLUGIN_ID, versionId.toInt())
 
-        return Version(name, link)
+        return Version(name.removePrefix("v"), link)
     }
 
     companion object {
