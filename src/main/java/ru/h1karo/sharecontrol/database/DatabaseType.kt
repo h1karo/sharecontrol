@@ -20,20 +20,13 @@
  * @link https://github.com/h1karo/sharecontrol
  */
 
-package ru.h1karo.sharecontrol.configuration.plugin
+package ru.h1karo.sharecontrol.database
 
-import ru.h1karo.sharecontrol.configuration.entry.ParameterInterface
-import ru.h1karo.sharecontrol.database.DatabaseType
+import ru.h1karo.sharecontrol.configuration.entry.ParameterValue
 
-object Database : ParameterInterface<String> {
-    override fun getPath(): String = "general.database.type"
-    override fun getDescription(): List<String> = listOf("The database type")
-    override fun getDefault(): DatabaseType = DatabaseType.SQLite
-    override fun fromString(value: String?): DatabaseType {
-        return if (value === null) {
-            this.getDefault()
-        } else {
-            DatabaseType.valueOf(value)
-        }
-    }
+enum class DatabaseType(private val value: String) : ParameterValue<String> {
+    MySQL("mysql"),
+    SQLite("sqlite");
+
+    override fun getValue(): String = value
 }
