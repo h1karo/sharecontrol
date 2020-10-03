@@ -22,8 +22,5 @@
 
 package ru.h1karo.sharecontrol.database.annotation
 
-import javax.inject.Qualifier
-
-@Qualifier
-@DatabaseAnnotation
-annotation class Sqlite
+@Target(AnnotationTarget.CLASS)
+annotation class DatabaseAnnotation

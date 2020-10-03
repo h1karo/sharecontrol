@@ -25,4 +25,5 @@ package ru.h1karo.sharecontrol.database.annotation
 import javax.inject.Qualifier
 
 @Qualifier
+@DatabaseAnnotation
 annotation class Mysql
