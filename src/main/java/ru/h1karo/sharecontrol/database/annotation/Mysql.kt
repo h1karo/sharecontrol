@@ -20,16 +20,9 @@
  * @link https://github.com/h1karo/sharecontrol
  */
 
-package ru.h1karo.sharecontrol.database
+package ru.h1karo.sharecontrol.database.annotation
 
-import ru.h1karo.sharecontrol.configuration.entry.ParameterValue
-import ru.h1karo.sharecontrol.database.annotation.Mysql
-import ru.h1karo.sharecontrol.database.annotation.Sqlite
+import javax.inject.Qualifier
 
-enum class DatabaseType(private val value: String, private val annotation: Class<out Annotation>) : ParameterValue<String> {
-    MySQL("mysql", Mysql::class.java),
-    SQLite("sqlite", Sqlite::class.java);
-
-    override fun getValue(): String = this.value
-    fun getAnnotation(): Class<out Annotation> = this.annotation
-}
+@Qualifier
+annotation class Mysql
