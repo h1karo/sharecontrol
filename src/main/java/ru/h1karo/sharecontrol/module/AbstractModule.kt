@@ -40,5 +40,19 @@ abstract class AbstractModule : AbstractModule() {
         services.forEach { binder.addBinding().to(it) }
     }
 
-    protected fun createReflections() = Reflections(ShareControl::class.java.`package`.name)
+    protected fun <T> bindByAnnotation(type: Class<T>, target: Class<out Annotation>) {
+        val reflections = createReflections()
+        val subtypes = reflections.getSubTypesOf(type)
+
+        for (subtype in subtypes) {
+            val annotation = this.findAnnotated(subtype, target) ?: continue
+            this.bind(type).annotatedWith(annotation).to(subtype)
+        }
+    }
+
+    private fun findAnnotated(type: Class<*>, target: Class<out Annotation>): Annotation? {
+        return type.annotations.find { it.javaClass.isAnnotationPresent(target) }
+    }
+
+    private fun createReflections() = Reflections(ShareControl::class.java.`package`.name)
 }
