@@ -22,6 +22,9 @@
 
 package ru.h1karo.sharecontrol.database
 
+import ru.h1karo.sharecontrol.database.annotation.Sqlite
+
+@Sqlite
 class SqliteDsn constructor(
     private val path: String
 ) : DataSourceName {

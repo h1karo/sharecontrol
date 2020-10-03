@@ -22,6 +22,9 @@
 
 package ru.h1karo.sharecontrol.database
 
+import ru.h1karo.sharecontrol.database.annotation.Mysql
+
+@Mysql
 class MysqlDsn constructor(
     private val host: String,
     private val port: Int,
