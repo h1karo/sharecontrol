@@ -32,9 +32,14 @@ import ru.h1karo.sharecontrol.database.DatabaseType
 
 class DatabaseModule : AbstractModule() {
     @Provides
+    fun getType(injector: Injector): DatabaseType {
+        val container = injector.getInstance(ParameterContainer::class.java)
+        return container.get(Database) as DatabaseType
+    }
+
+    @Provides
     fun getDSN(injector: Injector): DataSourceName {
-        val parameterContainer = injector.getInstance(ParameterContainer::class.java)
-        val type = parameterContainer.get(Database) as DatabaseType
+        val type = injector.getInstance(DatabaseType::class.java)
         return injector.getInstance(Key.get(DataSourceName::class.java, type.getAnnotation()))
     }
 }
