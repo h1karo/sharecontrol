@@ -20,13 +20,8 @@
  * @link https://github.com/h1karo/sharecontrol
  */
 
-package ru.h1karo.sharecontrol.database
+package ru.h1karo.sharecontrol.database.dsn
 
-import ru.h1karo.sharecontrol.database.annotation.Sqlite
-
-@Sqlite
-class SqliteDsn constructor(
-    private val path: String
-) : DataSourceName {
-    override fun toString(): String = "sqlite://${this.path}"
+interface DataSourceName {
+    override fun toString(): String
 }

@@ -27,9 +27,9 @@ import com.google.inject.Key
 import com.google.inject.Provides
 import ru.h1karo.sharecontrol.configuration.entry.ParameterContainer
 import ru.h1karo.sharecontrol.configuration.plugin.Database
-import ru.h1karo.sharecontrol.database.DataSourceName
 import ru.h1karo.sharecontrol.database.DatabaseType
 import ru.h1karo.sharecontrol.database.annotation.DatabaseAnnotation
+import ru.h1karo.sharecontrol.database.dsn.DataSourceName
 
 class DatabaseModule : AbstractModule() {
     override fun configure() {

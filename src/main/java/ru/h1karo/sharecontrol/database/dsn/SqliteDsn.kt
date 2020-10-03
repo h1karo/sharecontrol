@@ -20,17 +20,13 @@
  * @link https://github.com/h1karo/sharecontrol
  */
 
-package ru.h1karo.sharecontrol.database
+package ru.h1karo.sharecontrol.database.dsn
 
-import ru.h1karo.sharecontrol.database.annotation.Mysql
+import ru.h1karo.sharecontrol.database.annotation.Sqlite
 
-@Mysql
-class MysqlDsn constructor(
-    private val host: String,
-    private val port: Int,
-    private val username: String,
-    private val password: String,
-    private val database: String
+@Sqlite
+class SqliteDsn constructor(
+    private val path: String
 ) : DataSourceName {
-    override fun toString(): String = "mysql://${this.username}:${this.password}@${this.host}:${this.port}/${this.database}"
+    override fun toString(): String = "sqlite://${this.path}"
 }
