@@ -25,6 +25,8 @@ package ru.h1karo.sharecontrol.configuration
 import ru.h1karo.sharecontrol.configuration.entry.Entry
 import ru.h1karo.sharecontrol.configuration.entry.Parameter
 import ru.h1karo.sharecontrol.configuration.entry.ParameterValue
+import ru.h1karo.sharecontrol.configuration.entry.VerifiableParameter
+import ru.h1karo.sharecontrol.configuration.exception.InvalidValueException
 import ru.h1karo.sharecontrol.yaml.YamlCommenter
 import java.io.File
 import java.io.FileWriter
@@ -69,6 +71,13 @@ abstract class YamlConfiguration {
 
         if (!has && entry is Parameter<*>) {
             this.config.set(entry.getPath(), entry.getDefault().getValue())
+        }
+
+        if (has && entry is VerifiableParameter<*>) {
+            val value = this.config.get(entry.getPath()) as String?
+            if (!entry.verify(value)) {
+                throw InvalidValueException(entry, value)
+            }
         }
     }
 
