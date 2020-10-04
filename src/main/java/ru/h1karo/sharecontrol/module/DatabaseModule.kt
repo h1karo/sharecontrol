@@ -30,10 +30,12 @@ import ru.h1karo.sharecontrol.configuration.plugin.Database
 import ru.h1karo.sharecontrol.database.DatabaseType
 import ru.h1karo.sharecontrol.database.annotation.DatabaseAnnotation
 import ru.h1karo.sharecontrol.database.config.Configuration
+import ru.h1karo.sharecontrol.database.driver.Driver
 
 class DatabaseModule : AbstractModule() {
     override fun configure() {
         this.bindByAnnotation(Configuration::class.java, DatabaseAnnotation::class.java)
+        this.bindByAnnotation(Driver::class.java, DatabaseAnnotation::class.java)
     }
 
     @Provides
@@ -46,5 +48,11 @@ class DatabaseModule : AbstractModule() {
     fun getConfiguration(injector: Injector): Configuration {
         val type = injector.getInstance(DatabaseType::class.java)
         return injector.getInstance(Key.get(Configuration::class.java, type.getAnnotation()))
+    }
+
+    @Provides
+    fun getDriver(injector: Injector): Driver {
+        val type = injector.getInstance(DatabaseType::class.java)
+        return injector.getInstance(Key.get(Driver::class.java, type.getAnnotation()))
     }
 }
