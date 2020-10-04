@@ -22,10 +22,11 @@
 
 package ru.h1karo.sharecontrol.database.config
 
+import com.google.inject.Inject
 import ru.h1karo.sharecontrol.database.annotation.Mysql
 
 @Mysql
-class MysqlConfiguration(
+class MysqlConfiguration @Inject constructor(
     private val host: String,
     private val port: Int,
     private val username: String,

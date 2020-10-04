@@ -22,12 +22,13 @@
 
 package ru.h1karo.sharecontrol.database.config
 
+import com.google.inject.Inject
 import com.google.inject.name.Named
 import ru.h1karo.sharecontrol.database.annotation.Sqlite
 import ru.h1karo.sharecontrol.module.DatabaseModule
 
 @Sqlite
-class SqliteConfiguration(
+class SqliteConfiguration @Inject constructor(
     @Named(DatabaseModule.PATH)
     private val path: String
 ) : Configuration {
