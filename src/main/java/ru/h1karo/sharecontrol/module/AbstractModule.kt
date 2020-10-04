@@ -49,6 +49,8 @@ abstract class AbstractModule : AbstractModule() {
         val reflections = createReflections()
         val subtypes = reflections.getSubTypesOf(type)
 
+        subtypes.removeIf { Modifier.isInterface(it.modifiers) || Modifier.isAbstract(it.modifiers) }
+
         for (subtype in subtypes) {
             val annotation = subtype.annotations.first { it !is Metadata }
             this.bind(type).annotatedWith(annotation).to(subtype)
