@@ -50,7 +50,7 @@ abstract class AbstractModule : AbstractModule() {
         val subtypes = reflections.getSubTypesOf(type)
 
         for (subtype in subtypes) {
-            val annotation = subtype.annotations.first()
+            val annotation = subtype.annotations.first { it !is Metadata }
             this.bind(type).annotatedWith(annotation).to(subtype)
         }
     }
