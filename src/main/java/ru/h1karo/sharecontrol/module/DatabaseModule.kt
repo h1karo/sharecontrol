@@ -26,11 +26,11 @@ import com.google.inject.Injector
 import com.google.inject.Key
 import com.google.inject.Provides
 import ru.h1karo.sharecontrol.configuration.ParameterContainer
-import ru.h1karo.sharecontrol.configuration.plugin.Database
 import ru.h1karo.sharecontrol.database.DatabaseType
 import ru.h1karo.sharecontrol.database.annotation.DatabaseAnnotation
 import ru.h1karo.sharecontrol.database.config.Configuration
 import ru.h1karo.sharecontrol.database.driver.Driver
+import ru.h1karo.sharecontrol.configuration.plugin.DatabaseType as DatabaseTypeParameter
 
 class DatabaseModule : AbstractModule() {
     override fun configure() {
@@ -41,7 +41,7 @@ class DatabaseModule : AbstractModule() {
     @Provides
     fun getType(injector: Injector): DatabaseType {
         val container = injector.getInstance(ParameterContainer::class.java)
-        return container.get(Database) as DatabaseType
+        return container.get(DatabaseTypeParameter) as DatabaseType
     }
 
     @Provides

@@ -25,7 +25,7 @@ package ru.h1karo.sharecontrol.configuration.plugin
 import ru.h1karo.sharecontrol.configuration.entry.ParameterInterface
 import ru.h1karo.sharecontrol.database.DatabaseType
 
-object Database : ParameterInterface<String> {
+object DatabaseType : ParameterInterface<String> {
     override fun getPath(): String = "general.database.type"
     override fun getDescription(): List<String> = listOf("The database type")
     override fun getDefault(): DatabaseType = DatabaseType.SQLite
