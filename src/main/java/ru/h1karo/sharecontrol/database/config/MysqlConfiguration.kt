@@ -20,17 +20,21 @@
  * @link https://github.com/h1karo/sharecontrol
  */
 
-package ru.h1karo.sharecontrol.database.dsn
+package ru.h1karo.sharecontrol.database.config
 
 import ru.h1karo.sharecontrol.database.annotation.Mysql
 
 @Mysql
-class MysqlDsn constructor(
+class MysqlConfiguration(
     private val host: String,
     private val port: Int,
     private val username: String,
     private val password: String,
     private val database: String
-) : DataSourceName {
-    override fun toString(): String = "mysql://${this.username}:${this.password}@${this.host}:${this.port}/${this.database}"
+) : UserPasswordConfiguration {
+    override fun getUser(): String = this.username
+
+    override fun getPassword(): String = this.password
+
+    override fun getDsn(): String = "mysql://${this.host}:${this.port}/${this.database}"
 }

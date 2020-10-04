@@ -20,8 +20,13 @@
  * @link https://github.com/h1karo/sharecontrol
  */
 
-package ru.h1karo.sharecontrol.database.dsn
+package ru.h1karo.sharecontrol.database.config
 
-interface DataSourceName {
-    override fun toString(): String
+/**
+ * Configuration for database which requires user and password.
+ * @example MySQL, PostgreSQL
+ */
+interface UserPasswordConfiguration : Configuration {
+    fun getUser(): String
+    fun getPassword(): String
 }

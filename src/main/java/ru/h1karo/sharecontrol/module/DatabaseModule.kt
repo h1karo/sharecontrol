@@ -29,11 +29,11 @@ import ru.h1karo.sharecontrol.configuration.entry.ParameterContainer
 import ru.h1karo.sharecontrol.configuration.plugin.Database
 import ru.h1karo.sharecontrol.database.DatabaseType
 import ru.h1karo.sharecontrol.database.annotation.DatabaseAnnotation
-import ru.h1karo.sharecontrol.database.dsn.DataSourceName
+import ru.h1karo.sharecontrol.database.config.Configuration
 
 class DatabaseModule : AbstractModule() {
     override fun configure() {
-        this.bindByAnnotation(DataSourceName::class.java, DatabaseAnnotation::class.java)
+        this.bindByAnnotation(Configuration::class.java, DatabaseAnnotation::class.java)
     }
 
     @Provides
@@ -43,8 +43,8 @@ class DatabaseModule : AbstractModule() {
     }
 
     @Provides
-    fun getDsn(injector: Injector): DataSourceName {
+    fun getConfiguration(injector: Injector): Configuration {
         val type = injector.getInstance(DatabaseType::class.java)
-        return injector.getInstance(Key.get(DataSourceName::class.java, type.getAnnotation()))
+        return injector.getInstance(Key.get(Configuration::class.java, type.getAnnotation()))
     }
 }
