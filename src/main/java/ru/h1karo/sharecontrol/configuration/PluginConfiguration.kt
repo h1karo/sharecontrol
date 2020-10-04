@@ -31,13 +31,12 @@ import ru.h1karo.sharecontrol.configuration.plugin.DatabaseType
 import ru.h1karo.sharecontrol.configuration.plugin.Locale
 import ru.h1karo.sharecontrol.configuration.plugin.Updater
 import ru.h1karo.sharecontrol.module.PluginModule
-import ru.h1karo.sharecontrol.yaml.YamlFile
 import java.io.File
 
 @Singleton
 class PluginConfiguration @Inject constructor(
     @Named(PluginModule.DIRECTORY) folder: File
-) : YamlFile(folder, "config.yaml") {
+) : YamlConfiguration(folder, "config.yaml") {
     override fun getHeader(): List<String> = listOf(
         "+-----------------------------------------------+ #",
         "+       ShareControl's configuration file       + #",

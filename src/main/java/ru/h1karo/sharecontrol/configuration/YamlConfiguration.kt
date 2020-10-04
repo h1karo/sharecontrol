@@ -20,18 +20,19 @@
  * @link https://github.com/h1karo/sharecontrol
  */
 
-package ru.h1karo.sharecontrol.yaml
+package ru.h1karo.sharecontrol.configuration
 
-import org.bukkit.configuration.file.YamlConfiguration
 import ru.h1karo.sharecontrol.configuration.entry.Entry
 import ru.h1karo.sharecontrol.configuration.entry.Parameter
 import ru.h1karo.sharecontrol.configuration.entry.ParameterValue
+import ru.h1karo.sharecontrol.yaml.YamlCommenter
 import java.io.File
 import java.io.FileWriter
+import org.bukkit.configuration.file.YamlConfiguration as BukkitYamlConfiguration
 
-abstract class YamlFile {
+abstract class YamlConfiguration {
     private val file: File
-    private val config: YamlConfiguration = YamlConfiguration()
+    private val config: BukkitYamlConfiguration = BukkitYamlConfiguration()
     private val commenter: YamlCommenter
 
     constructor(folder: File, path: String) {
@@ -44,7 +45,7 @@ abstract class YamlFile {
         this.commenter = YamlCommenter()
     }
 
-    fun initialize(): YamlFile {
+    fun initialize(): YamlConfiguration {
         if (!this.file.exists()) {
             this.file.createNewFile()
         }
