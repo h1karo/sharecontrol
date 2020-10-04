@@ -24,6 +24,7 @@ package ru.h1karo.sharecontrol.init
 
 import com.google.inject.Inject
 import ru.h1karo.sharecontrol.configuration.PluginConfiguration
+import ru.h1karo.sharecontrol.configuration.exception.InvalidValueException
 import ru.h1karo.sharecontrol.console.BlockStyle
 
 class ConfigurationInitializer @Inject constructor(
@@ -31,8 +32,19 @@ class ConfigurationInitializer @Inject constructor(
     private val pluginConfiguration: PluginConfiguration
 ) : AbstractInitializer(console) {
     override fun initialize() {
-        this.pluginConfiguration.initialize()
-        this.success("Configuration component loaded.")
+        try {
+            this.pluginConfiguration.initialize()
+            this.success("Configuration component loaded.")
+        } catch (e: InvalidValueException) {
+            val parameter = e.getParameter()
+            val value = e.getInvalidValue().toString()
+
+            this.error("Invalid value in the config file.")
+            this.error("The parameter path: &f{0}&c.", setOf(parameter.getPath()))
+            this.error("The invalid value: &f{0}&c.", setOf(value))
+            this.error("This parameter accepts &f{0}&c.", setOf(parameter.accepts().joinToString("&c, &f")))
+            this.error("Fix it and reload the plugin with &9{0}&c command.", setOf("/sc reload"))
+        }
     }
 
     override fun terminate() {}
