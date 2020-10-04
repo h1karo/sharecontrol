@@ -22,10 +22,11 @@
 
 package ru.h1karo.sharecontrol.configuration.plugin
 
-import ru.h1karo.sharecontrol.configuration.entry.Parameter
+import ru.h1karo.sharecontrol.configuration.entry.VerifiableParameter
 import ru.h1karo.sharecontrol.database.DatabaseType
+import java.lang.IllegalArgumentException
 
-object DatabaseType : Parameter<String> {
+object DatabaseType : VerifiableParameter<String> {
     override fun getPath(): String = "general.database.type"
     override fun getDescription(): List<String> = listOf("The database type")
     override fun getDefault(): DatabaseType = DatabaseType.SQLite
@@ -34,6 +35,19 @@ object DatabaseType : Parameter<String> {
             this.getDefault()
         } else {
             DatabaseType.valueOf(value)
+        }
+    }
+
+    override fun verify(value: String?): Boolean {
+        if (value === null) {
+            return true
+        }
+
+        return try {
+            DatabaseType.valueOf(value)
+            true
+        } catch (e: IllegalArgumentException) {
+            false
         }
     }
 }
