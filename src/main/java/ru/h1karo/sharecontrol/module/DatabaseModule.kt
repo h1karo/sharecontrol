@@ -26,11 +26,13 @@ import com.google.inject.Injector
 import com.google.inject.Key
 import com.google.inject.Provides
 import com.google.inject.name.Named
+import com.google.inject.name.Names
 import ru.h1karo.sharecontrol.configuration.ParameterContainer
 import ru.h1karo.sharecontrol.configuration.plugin.DatabasePath
 import ru.h1karo.sharecontrol.database.DatabaseType
 import ru.h1karo.sharecontrol.database.config.Configuration
 import ru.h1karo.sharecontrol.database.driver.Driver
+import java.io.File
 import ru.h1karo.sharecontrol.configuration.plugin.DatabaseType as DatabaseTypeParameter
 
 class DatabaseModule : AbstractModule() {
@@ -61,7 +63,9 @@ class DatabaseModule : AbstractModule() {
     @Named(PATH)
     fun getDatabasePath(injector: Injector): String {
         val container = injector.getInstance(ParameterContainer::class.java)
-        return container.get(DatabasePath).getValue()
+        val path = container.get(DatabasePath).getValue()
+        val directory = injector.getInstance(Key.get(File::class.java, Names.named(PluginModule.DATA_DIRECTORY)))
+        return File(directory, path).absolutePath
     }
 
     companion object {

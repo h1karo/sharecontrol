@@ -28,7 +28,7 @@ import ru.h1karo.sharecontrol.configuration.entry.StringValue
 object DatabasePath : Parameter<String> {
     override fun getPath(): String = "general.database.path"
     override fun getDescription(): List<String> = listOf("The database file path.", "Only for SQLite.")
-    override fun getDefault(): StringValue = StringValue("data/data.db")
+    override fun getDefault(): StringValue = StringValue("data.db")
     override fun fromString(value: String?): StringValue {
         return if (value === null) {
             this.getDefault()
