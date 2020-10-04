@@ -40,18 +40,19 @@ abstract class AbstractModule : AbstractModule() {
         services.forEach { binder.addBinding().to(it) }
     }
 
-    protected fun <T> bindByAnnotation(type: Class<T>, target: Class<out Annotation>) {
+    /**
+     * Kotlin does not support annotation inheritance yet.
+     * @TODO refactor with annotation inheritance.
+     * @link https://youtrack.jetbrains.com/issue/KT-22265
+     */
+    protected fun <T> bindByAnnotation(type: Class<T>) {
         val reflections = createReflections()
         val subtypes = reflections.getSubTypesOf(type)
 
         for (subtype in subtypes) {
-            val annotation = this.findAnnotated(subtype, target) ?: continue
+            val annotation = subtype.annotations.first()
             this.bind(type).annotatedWith(annotation).to(subtype)
         }
-    }
-
-    private fun findAnnotated(type: Class<*>, target: Class<out Annotation>): Annotation? {
-        return type.annotations.find { it.javaClass.isAnnotationPresent(target) }
     }
 
     private fun createReflections() = Reflections(ShareControl::class.java.`package`.name)

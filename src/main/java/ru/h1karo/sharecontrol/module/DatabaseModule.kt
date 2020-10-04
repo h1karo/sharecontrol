@@ -29,15 +29,14 @@ import com.google.inject.name.Named
 import ru.h1karo.sharecontrol.configuration.ParameterContainer
 import ru.h1karo.sharecontrol.configuration.plugin.DatabasePath
 import ru.h1karo.sharecontrol.database.DatabaseType
-import ru.h1karo.sharecontrol.database.annotation.DatabaseAnnotation
 import ru.h1karo.sharecontrol.database.config.Configuration
 import ru.h1karo.sharecontrol.database.driver.Driver
 import ru.h1karo.sharecontrol.configuration.plugin.DatabaseType as DatabaseTypeParameter
 
 class DatabaseModule : AbstractModule() {
     override fun configure() {
-        this.bindByAnnotation(Configuration::class.java, DatabaseAnnotation::class.java)
-        this.bindByAnnotation(Driver::class.java, DatabaseAnnotation::class.java)
+        this.bindByAnnotation(Configuration::class.java)
+        this.bindByAnnotation(Driver::class.java)
     }
 
     @Provides
