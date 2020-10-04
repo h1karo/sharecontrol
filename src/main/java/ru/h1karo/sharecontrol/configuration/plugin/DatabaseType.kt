@@ -50,4 +50,6 @@ object DatabaseType : VerifiableParameter<String> {
             false
         }
     }
+
+    override fun accepts(): Set<String> = DatabaseType.values().map { it.getValue() }.toSet()
 }
