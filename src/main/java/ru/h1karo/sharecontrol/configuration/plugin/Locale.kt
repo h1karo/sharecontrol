@@ -22,10 +22,10 @@
 
 package ru.h1karo.sharecontrol.configuration.plugin
 
-import ru.h1karo.sharecontrol.configuration.entry.ParameterInterface
+import ru.h1karo.sharecontrol.configuration.entry.Parameter
 import ru.h1karo.sharecontrol.i18n.Locale
 
-object Locale : ParameterInterface<String> {
+object Locale : Parameter<String> {
     override fun getPath(): String = "general.locale"
     override fun getDescription(): List<String> = listOf(
         "The language of the plugin messages.",

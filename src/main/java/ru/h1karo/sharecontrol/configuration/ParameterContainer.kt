@@ -23,9 +23,9 @@
 package ru.h1karo.sharecontrol.configuration
 
 import com.google.inject.Inject
-import ru.h1karo.sharecontrol.configuration.entry.ParameterInterface
+import ru.h1karo.sharecontrol.configuration.entry.Parameter
 import ru.h1karo.sharecontrol.configuration.entry.ParameterValue
 
 class ParameterContainer @Inject constructor(private val configuration: PluginConfiguration) {
-    fun <T> get(parameter: ParameterInterface<T>): ParameterValue<T> = this.configuration.get(parameter)
+    fun <T> get(parameter: Parameter<T>): ParameterValue<T> = this.configuration.get(parameter)
 }

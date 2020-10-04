@@ -22,10 +22,10 @@
 
 package ru.h1karo.sharecontrol.configuration.plugin
 
-import ru.h1karo.sharecontrol.configuration.entry.ParameterInterface
+import ru.h1karo.sharecontrol.configuration.entry.Parameter
 import ru.h1karo.sharecontrol.database.DatabaseType
 
-object DatabaseType : ParameterInterface<String> {
+object DatabaseType : Parameter<String> {
     override fun getPath(): String = "general.database.type"
     override fun getDescription(): List<String> = listOf("The database type")
     override fun getDefault(): DatabaseType = DatabaseType.SQLite

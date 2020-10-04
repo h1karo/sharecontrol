@@ -23,9 +23,9 @@
 package ru.h1karo.sharecontrol.configuration.plugin
 
 import ru.h1karo.sharecontrol.configuration.entry.BooleanValue
-import ru.h1karo.sharecontrol.configuration.entry.ParameterInterface
+import ru.h1karo.sharecontrol.configuration.entry.Parameter
 
-object ChatPrefix : ParameterInterface<Boolean> {
+object ChatPrefix : Parameter<Boolean> {
     override fun getPath(): String = "chat.prefix.enabled"
     override fun getDescription(): List<String> = listOf("Activates the plugin prefix for all chat messages.")
     override fun getDefault(): BooleanValue = BooleanValue(true)

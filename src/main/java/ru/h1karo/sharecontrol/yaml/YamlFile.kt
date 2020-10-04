@@ -24,7 +24,7 @@ package ru.h1karo.sharecontrol.yaml
 
 import org.bukkit.configuration.file.YamlConfiguration
 import ru.h1karo.sharecontrol.configuration.entry.Entry
-import ru.h1karo.sharecontrol.configuration.entry.ParameterInterface
+import ru.h1karo.sharecontrol.configuration.entry.Parameter
 import ru.h1karo.sharecontrol.configuration.entry.ParameterValue
 import java.io.File
 import java.io.FileWriter
@@ -66,7 +66,7 @@ abstract class YamlFile {
     private fun initializeEntry(entry: Entry) {
         val has = this.config.contains(entry.getPath())
 
-        if (!has && entry is ParameterInterface<*>) {
+        if (!has && entry is Parameter<*>) {
             this.config.set(entry.getPath(), entry.getDefault().getValue())
         }
     }
@@ -75,7 +75,7 @@ abstract class YamlFile {
 
     open fun getHeader(): List<String>? = null
 
-    fun <T> get(parameter: ParameterInterface<T>): ParameterValue<T> {
+    fun <T> get(parameter: Parameter<T>): ParameterValue<T> {
         val value = this.config.get(parameter.getPath())
         if (value === null) {
             return parameter.getDefault()

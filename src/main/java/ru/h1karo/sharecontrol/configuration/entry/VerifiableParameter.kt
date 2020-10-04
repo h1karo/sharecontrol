@@ -22,6 +22,6 @@
 
 package ru.h1karo.sharecontrol.configuration.entry
 
-interface VerifiableParameter<T> : ParameterInterface<T> {
+interface VerifiableParameter<T> : Parameter<T> {
     fun verify(value: String?): Boolean
 }
