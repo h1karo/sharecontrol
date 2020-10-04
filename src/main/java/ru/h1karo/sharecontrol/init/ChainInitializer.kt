@@ -24,6 +24,7 @@ package ru.h1karo.sharecontrol.init
 
 import com.google.inject.Inject
 import ru.h1karo.sharecontrol.console.BlockStyle
+import ru.h1karo.sharecontrol.init.exception.FixableException
 
 class ChainInitializer @Inject constructor(
     console: BlockStyle,
@@ -35,6 +36,8 @@ class ChainInitializer @Inject constructor(
 
             this.start()
             initializers.forEach { it.initialize() }
+        } catch (e: FixableException) {
+            this.error("Fix it and reload the plugin with &9{0}&c command.", setOf("/sc reload"))
         } catch (e: Exception) {
             this.handleException(e)
         } finally {
