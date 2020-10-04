@@ -24,11 +24,16 @@ package ru.h1karo.sharecontrol.messenger
 
 import com.google.inject.Inject
 import org.bukkit.ChatColor
+import ru.h1karo.sharecontrol.messenger.format.MessageFormatter
 
-class ColoredMessenger @Inject constructor(private val messenger: Messenger) : Messenger {
+class ColoredMessenger @Inject constructor(
+    private val messenger: Messenger,
+    private val formatter: MessageFormatter
+) : Messenger {
     override fun send(recipient: Any, message: String, parameters: Set<String>) {
-        val colored = ChatColor.translateAlternateColorCodes(COLOR_CHAR, message)
-        this.messenger.send(recipient, colored, parameters)
+        val formatted = this.formatter.format(message, parameters)
+        val colored = ChatColor.translateAlternateColorCodes(COLOR_CHAR, formatted)
+        this.messenger.send(recipient, colored)
     }
 
     companion object {
