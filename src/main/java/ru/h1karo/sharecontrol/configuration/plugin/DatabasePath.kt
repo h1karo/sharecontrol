@@ -20,16 +20,20 @@
  * @link https://github.com/h1karo/sharecontrol
  */
 
-package ru.h1karo.sharecontrol.database.config
+package ru.h1karo.sharecontrol.configuration.plugin
 
-import com.google.inject.name.Named
-import ru.h1karo.sharecontrol.database.annotation.Sqlite
-import ru.h1karo.sharecontrol.module.DatabaseModule
+import ru.h1karo.sharecontrol.configuration.entry.Parameter
+import ru.h1karo.sharecontrol.configuration.entry.StringValue
 
-@Sqlite
-class SqliteConfiguration(
-    @Named(DatabaseModule.PATH)
-    private val path: String
-) : Configuration {
-    override fun getDsn(): String = "sqlite://${this.path}"
+object DatabasePath : Parameter<String> {
+    override fun getPath(): String = "general.database.path"
+    override fun getDescription(): List<String> = listOf("The database file path.", "Only for SQLite.")
+    override fun getDefault(): StringValue = StringValue("data/data.db")
+    override fun fromString(value: String?): StringValue {
+        return if (value === null) {
+            this.getDefault()
+        } else {
+            StringValue(value)
+        }
+    }
 }

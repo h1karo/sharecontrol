@@ -25,7 +25,9 @@ package ru.h1karo.sharecontrol.module
 import com.google.inject.Injector
 import com.google.inject.Key
 import com.google.inject.Provides
+import com.google.inject.name.Named
 import ru.h1karo.sharecontrol.configuration.ParameterContainer
+import ru.h1karo.sharecontrol.configuration.plugin.DatabasePath
 import ru.h1karo.sharecontrol.database.DatabaseType
 import ru.h1karo.sharecontrol.database.annotation.DatabaseAnnotation
 import ru.h1karo.sharecontrol.database.config.Configuration
@@ -54,5 +56,16 @@ class DatabaseModule : AbstractModule() {
     fun getDriver(injector: Injector): Driver {
         val type = injector.getInstance(DatabaseType::class.java)
         return injector.getInstance(Key.get(Driver::class.java, type.getAnnotation()))
+    }
+
+    @Provides
+    @Named(PATH)
+    fun getDatabasePath(injector: Injector): String {
+        val container = injector.getInstance(ParameterContainer::class.java)
+        return container.get(DatabasePath).getValue()
+    }
+
+    companion object {
+        const val PATH = "databasePath"
     }
 }
