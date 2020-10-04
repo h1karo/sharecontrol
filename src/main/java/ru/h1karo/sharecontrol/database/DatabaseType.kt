@@ -26,10 +26,17 @@ import ru.h1karo.sharecontrol.configuration.entry.ParameterValue
 import ru.h1karo.sharecontrol.database.annotation.Mysql
 import ru.h1karo.sharecontrol.database.annotation.Sqlite
 
-enum class DatabaseType(private val value: String, private val annotation: Class<out Annotation>) : ParameterValue<String> {
+enum class DatabaseType(private val value: String, private val annotation: Class<out Annotation>) :
+    ParameterValue<String> {
     MySQL("mysql", Mysql::class.java),
     SQLite("sqlite", Sqlite::class.java);
 
     override fun getValue(): String = this.value
     fun getAnnotation(): Class<out Annotation> = this.annotation
+
+    companion object {
+        @Throws(IllegalArgumentException::class)
+        fun fromValue(value: String): DatabaseType = values().find { it.value == value }
+            ?: throw IllegalArgumentException("The database type not found for `%s`.".format(value))
+    }
 }

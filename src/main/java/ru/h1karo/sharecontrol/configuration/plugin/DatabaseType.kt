@@ -34,7 +34,7 @@ object DatabaseType : VerifiableParameter<String> {
         return if (value === null) {
             this.getDefault()
         } else {
-            DatabaseType.valueOf(value)
+            DatabaseType.fromValue(value)
         }
     }
 
@@ -44,7 +44,7 @@ object DatabaseType : VerifiableParameter<String> {
         }
 
         return try {
-            DatabaseType.valueOf(value)
+            DatabaseType.fromValue(value)
             true
         } catch (e: IllegalArgumentException) {
             false
