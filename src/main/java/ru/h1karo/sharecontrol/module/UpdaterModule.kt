@@ -26,7 +26,7 @@ import com.google.inject.AbstractModule
 import com.google.inject.Injector
 import com.google.inject.Provides
 import com.google.inject.name.Named
-import ru.h1karo.sharecontrol.configuration.entry.ParameterContainer
+import ru.h1karo.sharecontrol.configuration.ParameterContainer
 import ru.h1karo.sharecontrol.configuration.plugin.Updater
 import ru.h1karo.sharecontrol.updater.SpigotMcProvider
 import ru.h1karo.sharecontrol.updater.VersionProvider

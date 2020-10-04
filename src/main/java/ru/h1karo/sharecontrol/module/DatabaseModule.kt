@@ -25,7 +25,7 @@ package ru.h1karo.sharecontrol.module
 import com.google.inject.Injector
 import com.google.inject.Key
 import com.google.inject.Provides
-import ru.h1karo.sharecontrol.configuration.entry.ParameterContainer
+import ru.h1karo.sharecontrol.configuration.ParameterContainer
 import ru.h1karo.sharecontrol.configuration.plugin.Database
 import ru.h1karo.sharecontrol.database.DatabaseType
 import ru.h1karo.sharecontrol.database.annotation.DatabaseAnnotation

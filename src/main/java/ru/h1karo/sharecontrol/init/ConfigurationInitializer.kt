@@ -23,7 +23,7 @@
 package ru.h1karo.sharecontrol.init
 
 import com.google.inject.Inject
-import ru.h1karo.sharecontrol.configuration.plugin.PluginConfiguration
+import ru.h1karo.sharecontrol.configuration.PluginConfiguration
 import ru.h1karo.sharecontrol.console.BlockStyle
 
 class ConfigurationInitializer @Inject constructor(

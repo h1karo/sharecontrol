@@ -20,12 +20,16 @@
  * @link https://github.com/h1karo/sharecontrol
  */
 
-package ru.h1karo.sharecontrol.configuration.plugin
+package ru.h1karo.sharecontrol.configuration
 
 import com.google.inject.Inject
 import com.google.inject.Singleton
 import com.google.inject.name.Named
 import ru.h1karo.sharecontrol.configuration.entry.Entry
+import ru.h1karo.sharecontrol.configuration.plugin.ChatPrefix
+import ru.h1karo.sharecontrol.configuration.plugin.Database
+import ru.h1karo.sharecontrol.configuration.plugin.Locale
+import ru.h1karo.sharecontrol.configuration.plugin.Updater
 import ru.h1karo.sharecontrol.module.PluginModule
 import ru.h1karo.sharecontrol.yaml.YamlFile
 import java.io.File
