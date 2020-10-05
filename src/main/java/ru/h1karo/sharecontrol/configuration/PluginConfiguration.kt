@@ -27,8 +27,8 @@ import com.google.inject.Singleton
 import com.google.inject.name.Named
 import ru.h1karo.sharecontrol.configuration.entry.Entry
 import ru.h1karo.sharecontrol.configuration.plugin.ChatPrefix
-import ru.h1karo.sharecontrol.configuration.plugin.DatabasePath
-import ru.h1karo.sharecontrol.configuration.plugin.DatabaseType
+import ru.h1karo.sharecontrol.configuration.plugin.database.Path
+import ru.h1karo.sharecontrol.configuration.plugin.database.Type
 import ru.h1karo.sharecontrol.configuration.plugin.Locale
 import ru.h1karo.sharecontrol.configuration.plugin.Updater
 import ru.h1karo.sharecontrol.module.PluginModule
@@ -52,8 +52,8 @@ class PluginConfiguration @Inject constructor(
 
     override fun getEntries(): Set<Entry> = setOf(
         Locale,
-        DatabaseType,
-        DatabasePath,
+        Type,
+        Path,
         Updater,
         ChatPrefix
     )

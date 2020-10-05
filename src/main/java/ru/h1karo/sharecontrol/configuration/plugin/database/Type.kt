@@ -20,19 +20,19 @@
  * @link https://github.com/h1karo/sharecontrol
  */
 
-package ru.h1karo.sharecontrol.configuration.plugin
+package ru.h1karo.sharecontrol.configuration.plugin.database
 
 import ru.h1karo.sharecontrol.configuration.entry.VerifiableParameter
 import ru.h1karo.sharecontrol.database.DatabaseType
 import java.lang.IllegalArgumentException
 
-object DatabaseType : VerifiableParameter<String> {
+object Type : VerifiableParameter<String> {
     override fun getPath(): String = "general.database.type"
     override fun getDescription(): List<String> = listOf("The database type")
     override fun getDefault(): DatabaseType = DatabaseType.SQLite
     override fun fromString(value: String?): DatabaseType {
         return if (value === null) {
-            this.getDefault()
+            getDefault()
         } else {
             DatabaseType.fromValue(value)
         }

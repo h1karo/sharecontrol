@@ -28,12 +28,12 @@ import com.google.inject.Provides
 import com.google.inject.name.Named
 import com.google.inject.name.Names
 import ru.h1karo.sharecontrol.configuration.ParameterContainer
-import ru.h1karo.sharecontrol.configuration.plugin.DatabasePath
+import ru.h1karo.sharecontrol.configuration.plugin.database.Path
 import ru.h1karo.sharecontrol.database.DatabaseType
 import ru.h1karo.sharecontrol.database.config.Configuration
 import ru.h1karo.sharecontrol.database.driver.Driver
 import java.io.File
-import ru.h1karo.sharecontrol.configuration.plugin.DatabaseType as DatabaseTypeParameter
+import ru.h1karo.sharecontrol.configuration.plugin.database.Type as DatabaseTypeParameter
 
 class DatabaseModule : AbstractModule() {
     override fun configure() {
@@ -63,7 +63,7 @@ class DatabaseModule : AbstractModule() {
     @Named(PATH)
     fun getDatabasePath(injector: Injector): String {
         val container = injector.getInstance(ParameterContainer::class.java)
-        val path = container.get(DatabasePath).getValue()
+        val path = container.get(Path).getValue()
 
         val directory = injector.getInstance(Key.get(File::class.java, Names.named(PluginModule.DATA_DIRECTORY)))
         val file = File(directory, path)
