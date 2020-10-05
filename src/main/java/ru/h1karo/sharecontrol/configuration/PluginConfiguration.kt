@@ -27,10 +27,15 @@ import com.google.inject.Singleton
 import com.google.inject.name.Named
 import ru.h1karo.sharecontrol.configuration.entry.Entry
 import ru.h1karo.sharecontrol.configuration.plugin.ChatPrefix
-import ru.h1karo.sharecontrol.configuration.plugin.database.Path
-import ru.h1karo.sharecontrol.configuration.plugin.database.Type
 import ru.h1karo.sharecontrol.configuration.plugin.Locale
 import ru.h1karo.sharecontrol.configuration.plugin.Updater
+import ru.h1karo.sharecontrol.configuration.plugin.database.Host
+import ru.h1karo.sharecontrol.configuration.plugin.database.Name
+import ru.h1karo.sharecontrol.configuration.plugin.database.Password
+import ru.h1karo.sharecontrol.configuration.plugin.database.Path
+import ru.h1karo.sharecontrol.configuration.plugin.database.Port
+import ru.h1karo.sharecontrol.configuration.plugin.database.Type
+import ru.h1karo.sharecontrol.configuration.plugin.database.Username
 import ru.h1karo.sharecontrol.module.PluginModule
 import java.io.File
 
@@ -50,11 +55,10 @@ class PluginConfiguration @Inject constructor(
         "Thanks for using my plugin!"
     )
 
-    override fun getEntries(): Set<Entry> = setOf(
-        Locale,
-        Type,
-        Path,
-        Updater,
-        ChatPrefix
-    )
+    override fun getEntries(): Set<Entry> =
+        setOf(Locale, Updater, ChatPrefix).plus(DATABASE_ENTRIES)
+
+    companion object {
+        val DATABASE_ENTRIES = setOf(Type, Path, Host, Port, Name, Username, Password)
+    }
 }
