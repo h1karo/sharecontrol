@@ -23,22 +23,29 @@
 package ru.h1karo.sharecontrol.init
 
 import com.google.inject.Inject
+import com.google.inject.Provider
 import ru.h1karo.sharecontrol.console.BlockStyle
 import ru.h1karo.sharecontrol.database.Database
 import ru.h1karo.sharecontrol.database.DatabaseType
 
 class DatabaseInitializer @Inject constructor(
     console: BlockStyle,
-    private val databaseType: DatabaseType,
-    private val database: Database
+    private val typeProvider: Provider<DatabaseType>,
+    private val databaseProvider: Provider<Database>
 ) : AbstractInitializer(console) {
     override fun initialize() {
-        this.database.connect()
-        this.success("Connected to %s database.".format(databaseType.toString()))
+        val type = this.typeProvider.get()
+        val database = databaseProvider.get()
+
+        database.connect()
+        this.success("Connected to %s database.".format(type.toString()))
     }
 
     override fun terminate() {
-        this.database.disconnect()
-        this.success("Disconnected from %s database.".format(databaseType.toString()))
+        val type = this.typeProvider.get()
+        val database = databaseProvider.get()
+
+        database.disconnect()
+        this.success("Disconnected from %s database.".format(type.toString()))
     }
 }
