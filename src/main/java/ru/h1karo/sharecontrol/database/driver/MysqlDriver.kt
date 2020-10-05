@@ -34,7 +34,7 @@ class MysqlDriver : Driver {
     override fun validateDriver() {
         try {
             Class.forName("com.mysql.jdbc.Driver")
-        } catch (e: Exception) {
+        } catch (e: ClassNotFoundException) {
             throw DriverException("JDBC driver for MySQL not found.", e)
         }
     }

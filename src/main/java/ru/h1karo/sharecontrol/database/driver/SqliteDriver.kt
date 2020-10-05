@@ -33,7 +33,7 @@ class SqliteDriver : Driver {
     override fun validateDriver() {
         try {
             Class.forName("org.sqlite.JDBC")
-        } catch (e: Exception) {
+        } catch (e: ClassNotFoundException) {
             throw DriverException("JDBC driver for SQLite not found.", e)
         }
     }
