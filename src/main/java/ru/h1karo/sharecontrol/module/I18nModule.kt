@@ -29,6 +29,8 @@ import com.google.inject.Provides
 import com.google.inject.name.Named
 import com.google.inject.name.Names
 import ru.h1karo.sharecontrol.configuration.ParameterContainer
+import ru.h1karo.sharecontrol.i18n.FallbackTranslator
+import ru.h1karo.sharecontrol.i18n.FallbackTranslatorInterface
 import ru.h1karo.sharecontrol.i18n.Locale
 import ru.h1karo.sharecontrol.i18n.Translator
 import ru.h1karo.sharecontrol.i18n.TranslatorInterface
@@ -40,7 +42,13 @@ import ru.h1karo.sharecontrol.configuration.plugin.Locale as LocaleParameter
 class I18nModule : AbstractModule() {
     override fun configure() {
         this.bind(Loader::class.java).to(DelegatingLoader::class.java)
-        this.bind(TranslatorInterface::class.java).to(Translator::class.java)
+        this.bind(TranslatorInterface::class.java).to(FallbackTranslatorInterface::class.java)
+    }
+
+    @Provides
+    fun getFallbackTranslator(injector: Injector): FallbackTranslatorInterface {
+        val translator = injector.getInstance(Translator::class.java)
+        return FallbackTranslator(translator)
     }
 
     @Provides
