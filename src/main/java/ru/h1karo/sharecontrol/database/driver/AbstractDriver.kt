@@ -22,24 +22,14 @@
 
 package ru.h1karo.sharecontrol.database.driver
 
-import ru.h1karo.sharecontrol.database.annotation.Mysql
-import ru.h1karo.sharecontrol.database.config.Configuration
-import ru.h1karo.sharecontrol.database.config.UserPasswordConfiguration
 import ru.h1karo.sharecontrol.database.exception.DriverException
-import java.sql.Connection
-import java.sql.DriverManager
 
-@Mysql
-class MysqlDriver : AbstractDriver("com.mysql.jdbc.Driver") {
-    override fun connect(config: Configuration): Connection {
-        if (config !is UserPasswordConfiguration) {
-            throw DriverException("MySQL requires username and password to connect, but provided configuration have not.")
-        }
-
+abstract class AbstractDriver(private val driverClass: String) : Driver {
+    final override fun validateDriver() {
         try {
-            return DriverManager.getConnection("jdbc:${config.getDsn()}", config.getUser(), config.getPassword())
-        } catch (e: Exception) {
-            throw DriverException("Error on connect to MySQL: ${e.message}", e)
+            Class.forName(this.driverClass)
+        } catch (e: ClassNotFoundException) {
+            throw DriverException("JDBC driver for %s not found.".format(this.javaClass.name), e)
         }
     }
 }

@@ -29,15 +29,7 @@ import java.sql.Connection
 import java.sql.DriverManager
 
 @Sqlite
-class SqliteDriver : Driver {
-    override fun validateDriver() {
-        try {
-            Class.forName("org.sqlite.JDBC")
-        } catch (e: ClassNotFoundException) {
-            throw DriverException("JDBC driver for SQLite not found.", e)
-        }
-    }
-
+class SqliteDriver : AbstractDriver("org.sqlite.JDBC") {
     override fun connect(config: Configuration): Connection {
         try {
 
