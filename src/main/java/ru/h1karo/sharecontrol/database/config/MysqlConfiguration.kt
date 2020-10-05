@@ -23,14 +23,21 @@
 package ru.h1karo.sharecontrol.database.config
 
 import com.google.inject.Inject
+import com.google.inject.name.Named
 import ru.h1karo.sharecontrol.database.annotation.Mysql
+import ru.h1karo.sharecontrol.module.DatabaseModule
 
 @Mysql
 class MysqlConfiguration @Inject constructor(
+    @Named(DatabaseModule.HOST)
     private val host: String,
+    @Named(DatabaseModule.PORT)
     private val port: Int,
+    @Named(DatabaseModule.USERNAME)
     private val username: String,
+    @Named(DatabaseModule.PASSWORD)
     private val password: String,
+    @Named(DatabaseModule.NAME)
     private val database: String
 ) : UserPasswordConfiguration {
     override fun getUser(): String = this.username

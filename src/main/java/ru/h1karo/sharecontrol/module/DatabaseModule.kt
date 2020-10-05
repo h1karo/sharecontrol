@@ -28,7 +28,12 @@ import com.google.inject.Provides
 import com.google.inject.name.Named
 import com.google.inject.name.Names
 import ru.h1karo.sharecontrol.configuration.ParameterContainer
+import ru.h1karo.sharecontrol.configuration.plugin.database.Host
+import ru.h1karo.sharecontrol.configuration.plugin.database.Name
+import ru.h1karo.sharecontrol.configuration.plugin.database.Password
 import ru.h1karo.sharecontrol.configuration.plugin.database.Path
+import ru.h1karo.sharecontrol.configuration.plugin.database.Port
+import ru.h1karo.sharecontrol.configuration.plugin.database.Username
 import ru.h1karo.sharecontrol.database.DatabaseType
 import ru.h1karo.sharecontrol.database.config.Configuration
 import ru.h1karo.sharecontrol.database.driver.Driver
@@ -76,7 +81,47 @@ class DatabaseModule : AbstractModule() {
         return file.absolutePath
     }
 
+    @Provides
+    @Named(HOST)
+    fun getDatabaseHost(injector: Injector): String {
+        val container = injector.getInstance(ParameterContainer::class.java)
+        return container.get(Host).getValue()
+    }
+
+    @Provides
+    @Named(PORT)
+    fun getDatabasePort(injector: Injector): Int {
+        val container = injector.getInstance(ParameterContainer::class.java)
+        return container.get(Port).getValue()
+    }
+
+    @Provides
+    @Named(NAME)
+    fun getDatabaseName(injector: Injector): String {
+        val container = injector.getInstance(ParameterContainer::class.java)
+        return container.get(Name).getValue()
+    }
+
+    @Provides
+    @Named(USERNAME)
+    fun getDatabaseUsername(injector: Injector): String {
+        val container = injector.getInstance(ParameterContainer::class.java)
+        return container.get(Username).getValue()
+    }
+
+    @Provides
+    @Named(PASSWORD)
+    fun getDatabasePassword(injector: Injector): String {
+        val container = injector.getInstance(ParameterContainer::class.java)
+        return container.get(Password).getValue()
+    }
+
     companion object {
         const val PATH = "databasePath"
+        const val HOST = "databaseHost"
+        const val PORT = "databasePort"
+        const val NAME = "databaseName"
+        const val USERNAME = "databaseUsername"
+        const val PASSWORD = "databasePassword"
     }
 }
