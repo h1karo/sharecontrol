@@ -47,7 +47,7 @@ class MysqlDriver : Driver {
         try {
             return DriverManager.getConnection("jdbc:${config.getDsn()}", config.getUser(), config.getPassword())
         } catch (e: Exception) {
-            throw DriverException("Error on connect to MySQL.", e)
+            throw DriverException("Error on connect to MySQL: ${e.message}", e)
         }
     }
 }
