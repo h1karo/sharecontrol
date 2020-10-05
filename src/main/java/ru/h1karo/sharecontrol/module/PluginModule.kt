@@ -75,7 +75,13 @@ class PluginModule(private val plugin: ShareControl) : AbstractModule() {
     @Named(DATA_DIRECTORY)
     fun getDataDirectory(injector: Injector): File {
         val pluginDirectory = injector.getInstance(Key.get(File::class.java, Names.named(DIRECTORY)))
-        return File(pluginDirectory, DATA_DIRECTORY_NAME)
+        val directory = File(pluginDirectory, DATA_DIRECTORY_NAME)
+
+        if (!directory.exists()) {
+            directory.mkdirs()
+        }
+
+        return directory
     }
 
     @Provides

@@ -64,8 +64,16 @@ class DatabaseModule : AbstractModule() {
     fun getDatabasePath(injector: Injector): String {
         val container = injector.getInstance(ParameterContainer::class.java)
         val path = container.get(DatabasePath).getValue()
+
         val directory = injector.getInstance(Key.get(File::class.java, Names.named(PluginModule.DATA_DIRECTORY)))
-        return File(directory, path).absolutePath
+        val file = File(directory, path)
+
+        val parent = file.parentFile
+        if (!parent.exists()) {
+            parent.mkdirs()
+        }
+
+        return file.absolutePath
     }
 
     companion object {
