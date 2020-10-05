@@ -74,7 +74,7 @@ abstract class YamlConfiguration {
         }
 
         if (has && entry is VerifiableParameter<*>) {
-            val value = this.config.get(entry.getPath()) as String?
+            val value = this.config.getString(entry.getPath())
             if (!entry.verify(value)) {
                 throw InvalidValueException(entry, value)
             }
@@ -91,7 +91,7 @@ abstract class YamlConfiguration {
             return parameter.getDefault()
         }
 
-        return parameter.fromString(value as String?)
+        return parameter.fromString(value.toString())
     }
 
     private fun save() {
