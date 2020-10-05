@@ -41,7 +41,7 @@ class Database @Inject constructor(
     }
 
     fun disconnect() {
-        if (this.connection.isClosed) {
+        if (!this::connection.isInitialized || this.connection.isClosed) {
             return
         }
 
