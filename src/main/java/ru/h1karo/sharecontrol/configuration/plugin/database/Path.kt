@@ -20,26 +20,20 @@
  * @link https://github.com/h1karo/sharecontrol
  */
 
-package ru.h1karo.sharecontrol.configuration.plugin
+package ru.h1karo.sharecontrol.configuration.plugin.database
 
 import ru.h1karo.sharecontrol.configuration.entry.Parameter
-import ru.h1karo.sharecontrol.i18n.Locale
+import ru.h1karo.sharecontrol.configuration.entry.StringValue
 
-object Locale : Parameter<String> {
-    override fun getPath(): String = "general.locale"
-    override fun getDescription(): List<String> = listOf(
-        "The language of the plugin messages.",
-        "Available out-of-the-box: en, ru.",
-        "You can add your language by creating a file in the `messages` directory with the appropriate name.",
-        "Default: en"
-    )
-
-    override fun getDefault(): Locale = Locale("en")
-    override fun fromString(value: String?): Locale {
+object Path : Parameter<String> {
+    override fun getPath(): String = "general.database.path"
+    override fun getDescription(): List<String> = listOf("The database file path.", "Only for SQLite.")
+    override fun getDefault(): StringValue = StringValue("data.db")
+    override fun fromString(value: String?): StringValue {
         return if (value === null) {
-            this.getDefault()
+            getDefault()
         } else {
-            Locale(value)
+            StringValue(value)
         }
     }
 }

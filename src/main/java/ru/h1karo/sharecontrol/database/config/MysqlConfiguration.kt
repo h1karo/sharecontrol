@@ -20,26 +20,29 @@
  * @link https://github.com/h1karo/sharecontrol
  */
 
-package ru.h1karo.sharecontrol.configuration.plugin
+package ru.h1karo.sharecontrol.database.config
 
-import ru.h1karo.sharecontrol.configuration.entry.Parameter
-import ru.h1karo.sharecontrol.i18n.Locale
+import com.google.inject.Inject
+import com.google.inject.name.Named
+import ru.h1karo.sharecontrol.database.annotation.Mysql
+import ru.h1karo.sharecontrol.module.DatabaseModule
 
-object Locale : Parameter<String> {
-    override fun getPath(): String = "general.locale"
-    override fun getDescription(): List<String> = listOf(
-        "The language of the plugin messages.",
-        "Available out-of-the-box: en, ru.",
-        "You can add your language by creating a file in the `messages` directory with the appropriate name.",
-        "Default: en"
-    )
+@Mysql
+class MysqlConfiguration @Inject constructor(
+    @Named(DatabaseModule.HOST)
+    private val host: String,
+    @Named(DatabaseModule.PORT)
+    private val port: Int,
+    @Named(DatabaseModule.USERNAME)
+    private val username: String,
+    @Named(DatabaseModule.PASSWORD)
+    private val password: String,
+    @Named(DatabaseModule.NAME)
+    private val database: String
+) : UserPasswordConfiguration {
+    override fun getUser(): String = this.username
 
-    override fun getDefault(): Locale = Locale("en")
-    override fun fromString(value: String?): Locale {
-        return if (value === null) {
-            this.getDefault()
-        } else {
-            Locale(value)
-        }
-    }
+    override fun getPassword(): String = this.password
+
+    override fun getDsn(): String = "mysql://${this.host}:${this.port}/${this.database}"
 }

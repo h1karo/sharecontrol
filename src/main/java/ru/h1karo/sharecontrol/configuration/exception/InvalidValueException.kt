@@ -13,33 +13,21 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with ShareControl. If not, see <https://www.gnu.org/licenses/>.
- *
+ *  
  * @copyright Copyright (c) 2020 ShareControl
  * @author Oleg Kozlov <h1karo@outlook.com>
  * @license GNU General Public License v3.0
  * @link https://github.com/h1karo/sharecontrol
  */
 
-package ru.h1karo.sharecontrol.configuration.plugin
+package ru.h1karo.sharecontrol.configuration.exception
 
-import ru.h1karo.sharecontrol.configuration.entry.Parameter
-import ru.h1karo.sharecontrol.i18n.Locale
+import ru.h1karo.sharecontrol.configuration.entry.VerifiableParameter
 
-object Locale : Parameter<String> {
-    override fun getPath(): String = "general.locale"
-    override fun getDescription(): List<String> = listOf(
-        "The language of the plugin messages.",
-        "Available out-of-the-box: en, ru.",
-        "You can add your language by creating a file in the `messages` directory with the appropriate name.",
-        "Default: en"
-    )
-
-    override fun getDefault(): Locale = Locale("en")
-    override fun fromString(value: String?): Locale {
-        return if (value === null) {
-            this.getDefault()
-        } else {
-            Locale(value)
-        }
-    }
+class InvalidValueException(
+    private val parameter: VerifiableParameter<*>,
+    private val value: String?
+) : RuntimeException("Value for parameter `%s` is invalid.".format(parameter.getPath())) {
+    fun getParameter(): VerifiableParameter<*> = this.parameter
+    fun getInvalidValue(): String? = this.value
 }

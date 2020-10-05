@@ -50,6 +50,9 @@ class MessengerModule : AbstractModule() {
 
     @Provides
     fun getColoredMessenger(injector: Injector): ColoredMessenger {
-        return ColoredMessenger(injector.getInstance(DelegatingMessenger::class.java))
+        return ColoredMessenger(
+            injector.getInstance(DelegatingMessenger::class.java),
+            injector.getInstance(MessageFormatter::class.java)
+        )
     }
 }

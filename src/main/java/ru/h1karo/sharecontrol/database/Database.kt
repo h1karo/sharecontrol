@@ -20,26 +20,31 @@
  * @link https://github.com/h1karo/sharecontrol
  */
 
-package ru.h1karo.sharecontrol.configuration.plugin
+package ru.h1karo.sharecontrol.database
 
-import ru.h1karo.sharecontrol.configuration.entry.Parameter
-import ru.h1karo.sharecontrol.i18n.Locale
+import com.google.inject.Inject
+import com.google.inject.Singleton
+import ru.h1karo.sharecontrol.database.config.Configuration
+import ru.h1karo.sharecontrol.database.driver.Driver
+import java.sql.Connection
 
-object Locale : Parameter<String> {
-    override fun getPath(): String = "general.locale"
-    override fun getDescription(): List<String> = listOf(
-        "The language of the plugin messages.",
-        "Available out-of-the-box: en, ru.",
-        "You can add your language by creating a file in the `messages` directory with the appropriate name.",
-        "Default: en"
-    )
+@Singleton
+class Database @Inject constructor(
+    private val config: Configuration,
+    private val driver: Driver
+) {
+    private lateinit var connection: Connection
 
-    override fun getDefault(): Locale = Locale("en")
-    override fun fromString(value: String?): Locale {
-        return if (value === null) {
-            this.getDefault()
-        } else {
-            Locale(value)
+    fun connect() {
+        this.driver.validateDriver()
+        this.connection = this.driver.connect(this.config)
+    }
+
+    fun disconnect() {
+        if (!this::connection.isInitialized || this.connection.isClosed) {
+            return
         }
+
+        this.connection.close()
     }
 }

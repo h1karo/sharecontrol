@@ -28,6 +28,7 @@ import com.google.inject.Singleton
 import org.bukkit.event.Listener
 import org.bukkit.plugin.java.JavaPlugin
 import ru.h1karo.sharecontrol.init.Initializer
+import ru.h1karo.sharecontrol.module.DatabaseModule
 import ru.h1karo.sharecontrol.module.I18nModule
 import ru.h1karo.sharecontrol.module.InitializationModule
 import ru.h1karo.sharecontrol.module.MessengerModule
@@ -39,6 +40,7 @@ class ShareControl : JavaPlugin(), Listener {
     private val injector: Injector = Guice.createInjector(
         PluginModule(this),
         InitializationModule(),
+        DatabaseModule(),
         I18nModule(),
         MessengerModule(),
         UpdaterModule()

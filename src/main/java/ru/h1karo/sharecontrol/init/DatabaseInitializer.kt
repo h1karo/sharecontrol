@@ -20,23 +20,32 @@
  * @link https://github.com/h1karo/sharecontrol
  */
 
-package ru.h1karo.sharecontrol.messenger
+package ru.h1karo.sharecontrol.init
 
 import com.google.inject.Inject
-import org.bukkit.ChatColor
-import ru.h1karo.sharecontrol.messenger.format.MessageFormatter
+import com.google.inject.Provider
+import ru.h1karo.sharecontrol.console.BlockStyle
+import ru.h1karo.sharecontrol.database.Database
+import ru.h1karo.sharecontrol.database.DatabaseType
 
-class ColoredMessenger @Inject constructor(
-    private val messenger: Messenger,
-    private val formatter: MessageFormatter
-) : Messenger {
-    override fun send(recipient: Any, message: String, parameters: Set<String>) {
-        val formatted = this.formatter.format(message, parameters)
-        val colored = ChatColor.translateAlternateColorCodes(COLOR_CHAR, formatted)
-        this.messenger.send(recipient, colored)
+class DatabaseInitializer @Inject constructor(
+    console: BlockStyle,
+    private val typeProvider: Provider<DatabaseType>,
+    private val databaseProvider: Provider<Database>
+) : AbstractInitializer(console) {
+    override fun initialize() {
+        val type = this.typeProvider.get()
+        val database = databaseProvider.get()
+
+        database.connect()
+        this.success("Connected to %s database.".format(type.toString()))
     }
 
-    companion object {
-        private const val COLOR_CHAR = '&'
+    override fun terminate() {
+        val type = this.typeProvider.get()
+        val database = databaseProvider.get()
+
+        database.disconnect()
+        this.success("Disconnected from %s database.".format(type.toString()))
     }
 }

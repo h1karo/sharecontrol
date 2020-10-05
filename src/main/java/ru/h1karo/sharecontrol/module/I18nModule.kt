@@ -28,7 +28,7 @@ import com.google.inject.Key
 import com.google.inject.Provides
 import com.google.inject.name.Named
 import com.google.inject.name.Names
-import ru.h1karo.sharecontrol.configuration.entry.ParameterContainer
+import ru.h1karo.sharecontrol.configuration.ParameterContainer
 import ru.h1karo.sharecontrol.i18n.Locale
 import ru.h1karo.sharecontrol.i18n.Translator
 import ru.h1karo.sharecontrol.i18n.TranslatorInterface

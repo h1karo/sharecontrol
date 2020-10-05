@@ -20,26 +20,22 @@
  * @link https://github.com/h1karo/sharecontrol
  */
 
-package ru.h1karo.sharecontrol.configuration.plugin
+package ru.h1karo.sharecontrol.database.driver
 
-import ru.h1karo.sharecontrol.configuration.entry.Parameter
-import ru.h1karo.sharecontrol.i18n.Locale
+import ru.h1karo.sharecontrol.database.annotation.Sqlite
+import ru.h1karo.sharecontrol.database.config.Configuration
+import ru.h1karo.sharecontrol.database.exception.DriverException
+import java.sql.Connection
+import java.sql.DriverManager
 
-object Locale : Parameter<String> {
-    override fun getPath(): String = "general.locale"
-    override fun getDescription(): List<String> = listOf(
-        "The language of the plugin messages.",
-        "Available out-of-the-box: en, ru.",
-        "You can add your language by creating a file in the `messages` directory with the appropriate name.",
-        "Default: en"
-    )
+@Sqlite
+class SqliteDriver : AbstractDriver("org.sqlite.JDBC") {
+    override fun connect(config: Configuration): Connection {
+        try {
 
-    override fun getDefault(): Locale = Locale("en")
-    override fun fromString(value: String?): Locale {
-        return if (value === null) {
-            this.getDefault()
-        } else {
-            Locale(value)
+            return DriverManager.getConnection("jdbc:${config.getDsn()}")
+        } catch (e: Exception) {
+            throw DriverException("Error on connect to SQLite: ${e.message}", e)
         }
     }
 }

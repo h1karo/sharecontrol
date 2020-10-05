@@ -20,18 +20,21 @@
  * @link https://github.com/h1karo/sharecontrol
  */
 
-package ru.h1karo.sharecontrol.yaml
+package ru.h1karo.sharecontrol.configuration
 
-import org.bukkit.configuration.file.YamlConfiguration
 import ru.h1karo.sharecontrol.configuration.entry.Entry
-import ru.h1karo.sharecontrol.configuration.entry.ParameterInterface
+import ru.h1karo.sharecontrol.configuration.entry.Parameter
 import ru.h1karo.sharecontrol.configuration.entry.ParameterValue
+import ru.h1karo.sharecontrol.configuration.entry.VerifiableParameter
+import ru.h1karo.sharecontrol.configuration.exception.InvalidValueException
+import ru.h1karo.sharecontrol.yaml.YamlCommenter
 import java.io.File
 import java.io.FileWriter
+import org.bukkit.configuration.file.YamlConfiguration as BukkitYamlConfiguration
 
-abstract class YamlFile {
+abstract class YamlConfiguration {
     private val file: File
-    private val config: YamlConfiguration = YamlConfiguration()
+    private val config: BukkitYamlConfiguration = BukkitYamlConfiguration()
     private val commenter: YamlCommenter
 
     constructor(folder: File, path: String) {
@@ -44,7 +47,7 @@ abstract class YamlFile {
         this.commenter = YamlCommenter()
     }
 
-    fun initialize(): YamlFile {
+    fun initialize(): YamlConfiguration {
         if (!this.file.exists()) {
             this.file.createNewFile()
         }
@@ -66,8 +69,15 @@ abstract class YamlFile {
     private fun initializeEntry(entry: Entry) {
         val has = this.config.contains(entry.getPath())
 
-        if (!has && entry is ParameterInterface<*>) {
+        if (!has && entry is Parameter<*>) {
             this.config.set(entry.getPath(), entry.getDefault().getValue())
+        }
+
+        if (has && entry is VerifiableParameter<*>) {
+            val value = this.config.getString(entry.getPath())
+            if (!entry.verify(value)) {
+                throw InvalidValueException(entry, value)
+            }
         }
     }
 
@@ -75,13 +85,13 @@ abstract class YamlFile {
 
     open fun getHeader(): List<String>? = null
 
-    fun <T> get(parameter: ParameterInterface<T>): ParameterValue<T> {
+    fun <T> get(parameter: Parameter<T>): ParameterValue<T> {
         val value = this.config.get(parameter.getPath())
         if (value === null) {
             return parameter.getDefault()
         }
 
-        return parameter.fromString(value as String?)
+        return parameter.fromString(value.toString())
     }
 
     private fun save() {

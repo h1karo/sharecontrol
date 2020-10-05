@@ -20,26 +20,23 @@
  * @link https://github.com/h1karo/sharecontrol
  */
 
-package ru.h1karo.sharecontrol.configuration.plugin
+package ru.h1karo.sharecontrol.database
 
-import ru.h1karo.sharecontrol.configuration.entry.Parameter
-import ru.h1karo.sharecontrol.i18n.Locale
+import ru.h1karo.sharecontrol.configuration.entry.ParameterValue
+import ru.h1karo.sharecontrol.database.annotation.Mysql
+import ru.h1karo.sharecontrol.database.annotation.Sqlite
 
-object Locale : Parameter<String> {
-    override fun getPath(): String = "general.locale"
-    override fun getDescription(): List<String> = listOf(
-        "The language of the plugin messages.",
-        "Available out-of-the-box: en, ru.",
-        "You can add your language by creating a file in the `messages` directory with the appropriate name.",
-        "Default: en"
-    )
+enum class DatabaseType(private val value: String, private val annotation: Class<out Annotation>) :
+    ParameterValue<String> {
+    MySQL("mysql", Mysql::class.java),
+    SQLite("sqlite", Sqlite::class.java);
 
-    override fun getDefault(): Locale = Locale("en")
-    override fun fromString(value: String?): Locale {
-        return if (value === null) {
-            this.getDefault()
-        } else {
-            Locale(value)
-        }
+    override fun getValue(): String = this.value
+    fun getAnnotation(): Class<out Annotation> = this.annotation
+
+    companion object {
+        @Throws(IllegalArgumentException::class)
+        fun fromValue(value: String): DatabaseType = values().find { it.value == value }
+            ?: throw IllegalArgumentException("The database type not found for `%s`.".format(value))
     }
 }

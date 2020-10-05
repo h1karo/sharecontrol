@@ -35,4 +35,4 @@ This is the official repository of ShareControl Minecraft server plugin. The rep
 
 We use [Maven](https://maven.apache.org/) to compile the plugin. Maven provides all required dependencies.
 
-Install them and run `mvn package`. In the `target` directory, you will get the compiled executable jar-file `ShareControl.jar`.
+Install them and run `mvn clean package`. In the `target` directory, you will get the compiled executable jar-file `ShareControl.jar`.

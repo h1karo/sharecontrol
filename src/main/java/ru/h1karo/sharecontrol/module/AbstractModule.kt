@@ -30,7 +30,7 @@ import java.lang.reflect.Modifier
 
 abstract class AbstractModule : AbstractModule() {
     protected fun <T> bindSet(type: Class<T>, exclude: Set<Class<out T>> = setOf()) {
-        val reflections = Reflections(ShareControl::class.java.`package`.name)
+        val reflections = createReflections()
         val services = reflections.getSubTypesOf(type)
 
         services.removeIf { Modifier.isInterface(it.modifiers) || Modifier.isAbstract(it.modifiers) }
@@ -39,4 +39,23 @@ abstract class AbstractModule : AbstractModule() {
         val binder = Multibinder.newSetBinder(binder(), type)
         services.forEach { binder.addBinding().to(it) }
     }
+
+    /**
+     * Kotlin does not support annotation inheritance yet.
+     * @TODO refactor with annotation inheritance.
+     * @link https://youtrack.jetbrains.com/issue/KT-22265
+     */
+    protected fun <T> bindByAnnotation(type: Class<T>) {
+        val reflections = createReflections()
+        val subtypes = reflections.getSubTypesOf(type)
+
+        subtypes.removeIf { Modifier.isInterface(it.modifiers) || Modifier.isAbstract(it.modifiers) }
+
+        for (subtype in subtypes) {
+            val annotation = subtype.annotations.first { it !is Metadata }
+            this.bind(type).annotatedWith(annotation).to(subtype)
+        }
+    }
+
+    private fun createReflections() = Reflections(ShareControl::class.java.`package`.name)
 }

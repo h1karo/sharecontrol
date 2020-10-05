@@ -20,27 +20,9 @@
  * @link https://github.com/h1karo/sharecontrol
  */
 
-package ru.h1karo.sharecontrol.configuration.plugin
+package ru.h1karo.sharecontrol.database.exception
 
-import ru.h1karo.sharecontrol.configuration.entry.ParameterInterface
-import ru.h1karo.sharecontrol.configuration.entry.ParameterValue
-
-object Database : ParameterInterface<String> {
-    override fun getPath(): String = "general.database.type"
-    override fun getDescription(): List<String> = listOf("The database type")
-    override fun getDefault(): Type = Type.SQLite
-    override fun fromString(value: String?): Type {
-        return if (value === null) {
-            this.getDefault()
-        } else {
-            Type.valueOf(value)
-        }
-    }
-
-    enum class Type(private val value: String) : ParameterValue<String> {
-        MySQL("mysql"),
-        SQLite("sqlite");
-
-        override fun getValue(): String = value
-    }
+open class DatabaseException : RuntimeException {
+    constructor(message: String) : super(message)
+    constructor(message: String, previous: Exception) : super(message, previous)
 }

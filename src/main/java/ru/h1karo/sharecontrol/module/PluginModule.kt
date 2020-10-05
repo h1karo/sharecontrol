@@ -22,8 +22,11 @@
 
 package ru.h1karo.sharecontrol.module
 
+import com.google.inject.Injector
+import com.google.inject.Key
 import com.google.inject.Provides
 import com.google.inject.name.Named
+import com.google.inject.name.Names
 import org.bukkit.plugin.Plugin
 import ru.h1karo.sharecontrol.ShareControl
 import ru.h1karo.sharecontrol.file.reader.DelegatingReader
@@ -69,6 +72,19 @@ class PluginModule(private val plugin: ShareControl) : AbstractModule() {
     }
 
     @Provides
+    @Named(DATA_DIRECTORY)
+    fun getDataDirectory(injector: Injector): File {
+        val pluginDirectory = injector.getInstance(Key.get(File::class.java, Names.named(DIRECTORY)))
+        val directory = File(pluginDirectory, DATA_DIRECTORY_NAME)
+
+        if (!directory.exists()) {
+            directory.mkdirs()
+        }
+
+        return directory
+    }
+
+    @Provides
     @Named(SERVER_VERSION)
     fun getServerVersion(): String {
         return plugin.server.version
@@ -84,7 +100,10 @@ class PluginModule(private val plugin: ShareControl) : AbstractModule() {
         const val NAME = "name"
         const val VERSION = "version"
         const val DIRECTORY = "directory"
+        const val DATA_DIRECTORY = "dataDirectory"
         const val SERVER_VERSION = "serverVersion"
         const val BUKKIT_VERSION = "bukkitVersion"
+
+        private const val DATA_DIRECTORY_NAME = "data"
     }
 }
