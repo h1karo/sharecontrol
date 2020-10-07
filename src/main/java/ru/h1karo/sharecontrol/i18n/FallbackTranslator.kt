@@ -23,11 +23,13 @@
 package ru.h1karo.sharecontrol.i18n
 
 import com.google.inject.Inject
+import com.google.inject.Singleton
 import ru.h1karo.sharecontrol.i18n.exception.CatalogueNotFoundException
 import ru.h1karo.sharecontrol.i18n.exception.I18nException
 import ru.h1karo.sharecontrol.i18n.exception.MessageNotFoundException
 import ru.h1karo.sharecontrol.configuration.plugin.Locale as LocaleParameter
 
+@Singleton
 class FallbackTranslator @Inject constructor(private val translator: TranslatorInterface) : FallbackTranslatorInterface {
     override fun trans(id: String, parameters: Set<String>, locale: Locale?): String {
         return try {
