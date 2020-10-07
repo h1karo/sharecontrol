@@ -45,6 +45,8 @@ class FallbackTranslator @Inject constructor(private val translator: TranslatorI
 
     override fun getLocale(): Locale = this.translator.getLocale()
 
+    override fun setLocale(locale: Locale) = this.translator.setLocale(locale)
+
     override fun getFallbackLocale(): Locale = LocaleParameter.getDefault()
 
     override fun clear() = this.translator.clear()

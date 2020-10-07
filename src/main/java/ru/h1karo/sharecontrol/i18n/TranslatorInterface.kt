@@ -28,4 +28,6 @@ interface TranslatorInterface : Resettable {
     fun trans(id: String, parameters: Set<String> = emptySet(), locale: Locale? = null): String
 
     fun getLocale(): Locale
+
+    fun setLocale(locale: Locale)
 }

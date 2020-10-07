@@ -53,7 +53,7 @@ class Translator @Inject constructor(
         return this.locale
     }
 
-    fun setLocale(locale: Locale) {
+    override fun setLocale(locale: Locale) {
         this.locale = locale
         this.initializeLocale(locale)
     }
