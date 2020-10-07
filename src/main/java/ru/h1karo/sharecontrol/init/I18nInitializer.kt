@@ -26,7 +26,7 @@ import com.google.inject.Inject
 import com.google.inject.Provider
 import ru.h1karo.sharecontrol.console.BlockStyle
 import ru.h1karo.sharecontrol.i18n.Locale
-import ru.h1karo.sharecontrol.i18n.Translator
+import ru.h1karo.sharecontrol.i18n.MutableTranslatorInterface
 import ru.h1karo.sharecontrol.i18n.init.ResourceFinder
 import ru.h1karo.sharecontrol.i18n.init.ResourceSyncer
 
@@ -34,19 +34,28 @@ class I18nInitializer @Inject constructor(
     console: BlockStyle,
     private val syncer: ResourceSyncer,
     private val finder: ResourceFinder,
-    private val translator: Translator,
+    private val translator: MutableTranslatorInterface,
     private val localeProvider: Provider<Locale>
 ) : AbstractInitializer(console) {
     override fun initialize() {
         this.syncer.sync()
         this.translator.clear()
-        this.finder.find().forEach { this.translator.addResource(it) }
+
+        this.finder.find().forEach {
+            this.translator.addResource(it)
+            this.initLocale(it.locale)
+        }
 
         val locale = this.localeProvider.get()
         this.translator.setLocale(locale)
+        this.initLocale(locale)
 
         this.send("Locale detected: &7%s&8 (&9%s&8)".format(locale.name, locale.abbr))
         this.success("Internationalization component loaded.")
+    }
+
+    private fun initLocale(locale: Locale) {
+        locale.name = this.translator.trans("name", emptySet(), locale)
     }
 
     override fun terminate() {

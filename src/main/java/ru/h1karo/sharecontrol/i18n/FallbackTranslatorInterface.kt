@@ -20,16 +20,8 @@
  * @link https://github.com/h1karo/sharecontrol
  */
 
-package ru.h1karo.sharecontrol.database.driver
+package ru.h1karo.sharecontrol.i18n
 
-import ru.h1karo.sharecontrol.database.exception.DriverException
-
-abstract class AbstractDriver(private val driverClass: String) : Driver {
-    final override fun validateDriver() {
-        try {
-            Class.forName(this.driverClass)
-        } catch (e: ClassNotFoundException) {
-            throw DriverException("JDBC driver for %s not found.".format(this.javaClass.name), e)
-        }
-    }
+interface FallbackTranslatorInterface : TranslatorInterface {
+    fun getFallbackLocale(): Locale
 }
