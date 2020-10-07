@@ -30,7 +30,9 @@ import ru.h1karo.sharecontrol.i18n.exception.MessageNotFoundException
 import ru.h1karo.sharecontrol.configuration.plugin.Locale as LocaleParameter
 
 @Singleton
-class FallbackTranslator @Inject constructor(private val translator: TranslatorInterface) : FallbackTranslatorInterface {
+class FallbackTranslator @Inject constructor(
+    private val translator: MutableTranslatorInterface
+) : FallbackTranslatorInterface, MutableTranslatorInterface {
     override fun trans(id: String, parameters: Set<String>, locale: Locale?): String {
         return try {
             this.translator.trans(id, parameters, locale)
@@ -42,6 +44,8 @@ class FallbackTranslator @Inject constructor(private val translator: TranslatorI
             this.translator.trans(id, parameters, this.getFallbackLocale())
         }
     }
+
+    override fun addResource(resource: Resource) = this.translator.addResource(resource)
 
     override fun getLocale(): Locale = this.translator.getLocale()
 

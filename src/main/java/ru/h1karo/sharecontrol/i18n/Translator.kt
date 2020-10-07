@@ -34,7 +34,7 @@ import ru.h1karo.sharecontrol.messenger.format.MessageFormatter
 class Translator @Inject constructor(
     private val formatter: MessageFormatter,
     private val loader: Loader
-) : TranslatorInterface {
+) : MutableTranslatorInterface {
     private val catalogues: MutableMap<Locale, MessageCatalogue> = mutableMapOf()
     private val resources: MutableMap<Locale, MutableSet<Resource>> = mutableMapOf()
 
@@ -63,7 +63,7 @@ class Translator @Inject constructor(
         this.resources.clear()
     }
 
-    fun addResource(resource: Resource) {
+    override fun addResource(resource: Resource) {
         val locale = resource.locale
 
         this.resources.getOrPut(locale, { mutableSetOf() }).add(resource)
