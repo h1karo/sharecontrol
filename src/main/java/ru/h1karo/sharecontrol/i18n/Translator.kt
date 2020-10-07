@@ -55,7 +55,6 @@ class Translator @Inject constructor(
 
     override fun setLocale(locale: Locale) {
         this.locale = locale
-        this.initializeLocale(locale)
     }
 
     override fun clear() {
@@ -68,12 +67,6 @@ class Translator @Inject constructor(
 
         this.resources.getOrPut(locale, { mutableSetOf() }).add(resource)
         this.catalogues.remove(locale)
-
-        this.initializeLocale(locale)
-    }
-
-    private fun initializeLocale(locale: Locale) {
-        locale.name = this.trans("name", emptySet(), locale)
     }
 
     private fun getMessage(id: String, locale: Locale? = null): String {
