@@ -22,9 +22,9 @@
 
 package ru.h1karo.sharecontrol.command.input
 
-data class Argument(
+data class Argument<T>(
     val name: String,
     val required: Boolean = false,
     val isArray: Boolean = false,
-    val defaultValue: String? = null
+    val defaultValue: T? = null
 )

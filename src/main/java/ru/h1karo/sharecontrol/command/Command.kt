@@ -28,8 +28,8 @@ import ru.h1karo.sharecontrol.command.input.Option
 abstract class Command(
     name: String,
     aliases: Set<String> = emptySet(),
-    arguments: Set<Argument> = emptySet(),
-    options: Set<Option> = emptySet(),
+    arguments: Set<Argument<*>> = emptySet(),
+    options: Set<Option<*>> = emptySet(),
 ) {
     private val name = name
         get() = field

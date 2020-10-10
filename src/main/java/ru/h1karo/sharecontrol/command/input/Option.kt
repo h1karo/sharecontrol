@@ -22,8 +22,8 @@
 
 package ru.h1karo.sharecontrol.command.input
 
-data class Option(
+data class Option<T>(
     val name: String,
     val isArray: Boolean = false,
-    val defaultValue: String? = null
+    val defaultValue: T? = null
 )
