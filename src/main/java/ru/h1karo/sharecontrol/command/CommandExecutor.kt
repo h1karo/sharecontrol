@@ -22,18 +22,44 @@
 
 package ru.h1karo.sharecontrol.command
 
+import com.google.inject.Inject
 import com.google.inject.Singleton
-import org.bukkit.command.Command
 import org.bukkit.command.CommandSender
 import org.bukkit.command.TabExecutor
+import ru.h1karo.sharecontrol.command.exception.CommandNotFoundException
+import org.bukkit.command.Command as BukkitCommand
 
 @Singleton
-class CommandExecutor : TabExecutor {
-    override fun onTabComplete(sender: CommandSender, command: Command, alias: String, arguments: Array<out String>): MutableList<String> {
-        TODO("Not yet implemented")
+class CommandExecutor @Inject constructor(
+    private val commands: Set<Command>
+) : TabExecutor {
+    override fun onTabComplete(sender: CommandSender, command: BukkitCommand, alias: String, arguments: Array<out String>): MutableList<String> {
+        return mutableListOf()
     }
 
-    override fun onCommand(sender: CommandSender, command: Command, alias: String, arguments: Array<out String>): Boolean {
-        TODO("Not yet implemented")
+    override fun onCommand(sender: CommandSender, command: BukkitCommand, alias: String, arguments: Array<out String>): Boolean {
+        return try {
+            this.getCommand(arguments).run()
+        } catch (e: CommandNotFoundException) {
+            false
+        }
+    }
+
+    @Throws(CommandNotFoundException::class)
+    private fun getCommand(arguments: Array<out String>): Command {
+        var commands: List<Command>
+        var input: List<String> = arguments.toList()
+
+        do {
+            val joined = input.joinToString(" ")
+            commands = this.commands.filter { it.name.startsWith(joined) }
+            input = input.dropLast(1)
+        } while (commands.isEmpty() && input.isNotEmpty())
+
+        if (commands.size == 1) {
+            return commands.first()
+        }
+
+        throw CommandNotFoundException(arguments.toList())
     }
 }
