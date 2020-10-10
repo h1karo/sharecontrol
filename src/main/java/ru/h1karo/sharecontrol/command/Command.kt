@@ -23,19 +23,15 @@
 package ru.h1karo.sharecontrol.command
 
 import ru.h1karo.sharecontrol.command.input.Argument
-import ru.h1karo.sharecontrol.command.input.Option
 
 abstract class Command(
     name: String,
     aliases: Set<String> = emptySet(),
-    arguments: Set<Argument<*>> = emptySet(),
-    options: Set<Option<*>> = emptySet(),
+    arguments: Set<Argument<*>> = emptySet()
 ) {
     private val name = name
         get() = field
     private val aliases = aliases
-        get() = field
-    private val options = options
         get() = field
     private val arguments = arguments
         get() = field
