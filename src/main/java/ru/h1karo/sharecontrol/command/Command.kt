@@ -25,16 +25,9 @@ package ru.h1karo.sharecontrol.command
 import ru.h1karo.sharecontrol.command.input.Argument
 
 abstract class Command(
-    name: String,
-    aliases: Set<String> = emptySet(),
-    arguments: Set<Argument<*>> = emptySet()
+    val name: String,
+    val aliases: Set<String> = emptySet(),
+    val arguments: Set<Argument<*>> = emptySet()
 ) {
-    private val name = name
-        get() = field
-    private val aliases = aliases
-        get() = field
-    private val arguments = arguments
-        get() = field
-
     abstract fun run()
 }
