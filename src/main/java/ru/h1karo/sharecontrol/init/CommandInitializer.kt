@@ -20,20 +20,22 @@
  * @link https://github.com/h1karo/sharecontrol
  */
 
-package ru.h1karo.sharecontrol.command
+package ru.h1karo.sharecontrol.init
 
-import com.google.inject.Singleton
-import org.bukkit.command.Command
-import org.bukkit.command.CommandSender
-import org.bukkit.command.TabExecutor
+import com.google.inject.Inject
+import org.bukkit.plugin.java.JavaPlugin
+import ru.h1karo.sharecontrol.command.CommandExecutor
+import ru.h1karo.sharecontrol.console.BlockStyle
 
-@Singleton
-class CommandExecutor : TabExecutor {
-    override fun onTabComplete(sender: CommandSender, command: Command, alias: String, arguments: Array<out String>): MutableList<String> {
-        TODO("Not yet implemented")
+class CommandInitializer @Inject constructor(
+    private val plugin: JavaPlugin,
+    private val executor: CommandExecutor,
+    console: BlockStyle
+) : AbstractInitializer(console) {
+    override fun initialize() {
+        val commandName = this.plugin.name.toLowerCase()
+        this.plugin.getCommand(commandName)?.setExecutor(this.executor)
     }
 
-    override fun onCommand(sender: CommandSender, command: Command, alias: String, arguments: Array<out String>): Boolean {
-        TODO("Not yet implemented")
-    }
+    override fun terminate() {}
 }
