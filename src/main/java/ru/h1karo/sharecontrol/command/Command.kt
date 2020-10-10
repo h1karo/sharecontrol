@@ -29,5 +29,5 @@ abstract class Command(
     val aliases: Set<String> = emptySet(),
     val arguments: Set<Argument<*>> = emptySet()
 ) {
-    abstract fun run()
+    abstract fun run(): Boolean
 }
