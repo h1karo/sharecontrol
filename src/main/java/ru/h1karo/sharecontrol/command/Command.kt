@@ -22,6 +22,9 @@
 
 package ru.h1karo.sharecontrol.command
 
+import ru.h1karo.sharecontrol.command.input.Argument
+import ru.h1karo.sharecontrol.command.input.Option
+
 abstract class Command(
     name: String,
     aliases: Set<String> = emptySet(),

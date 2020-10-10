@@ -20,7 +20,7 @@
  * @link https://github.com/h1karo/sharecontrol
  */
 
-package ru.h1karo.sharecontrol.command
+package ru.h1karo.sharecontrol.command.input
 
 data class Option(
     val name: String,
