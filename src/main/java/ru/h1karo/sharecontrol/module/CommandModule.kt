@@ -22,10 +22,10 @@
 
 package ru.h1karo.sharecontrol.module
 
-import ru.h1karo.sharecontrol.command.Command
+import ru.h1karo.sharecontrol.command.CommandInterface
 
 class CommandModule : AbstractModule() {
     override fun configure() {
-        this.bindSet(Command::class.java)
+        this.bindSet(CommandInterface::class.java)
     }
 }

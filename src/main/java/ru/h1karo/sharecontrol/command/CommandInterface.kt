@@ -22,30 +22,12 @@
 
 package ru.h1karo.sharecontrol.command
 
-import ru.h1karo.sharecontrol.command.input.Argument
-import ru.h1karo.sharecontrol.command.input.InputDefinition
 import ru.h1karo.sharecontrol.command.input.InputInterface
 
-abstract class Command(
-    private val name: String,
-    arguments: LinkedHashSet<Argument<*>> = linkedSetOf()
-) : CommandInterface {
-    private val definition = InputDefinition(arguments)
+interface CommandInterface {
+    fun getName(): String
 
-    override fun getName(): String = this.name
+    fun run(input: InputInterface): Boolean
 
-    override fun run(input: InputInterface): Boolean {
-        input.bind(this.definition)
-        input.validate()
-
-        return this.execute(input)
-    }
-
-    protected abstract fun execute(input: InputInterface): Boolean
-
-    override fun toString(): String {
-        return setOf(this.name)
-            .plus(this.definition.getValues().map { it.toString() })
-            .joinToString(" ")
-    }
+    override fun toString(): String
 }

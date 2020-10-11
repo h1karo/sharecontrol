@@ -33,7 +33,7 @@ import org.bukkit.command.Command as BukkitCommand
 
 @Singleton
 class CommandExecutor @Inject constructor(
-    private val commands: Set<@JvmSuppressWildcards Command>
+    private val commands: Set<@JvmSuppressWildcards CommandInterface>
 ) : TabExecutor {
     override fun onTabComplete(sender: CommandSender, command: BukkitCommand, alias: String, arguments: Array<out String>): MutableList<String> {
         return mutableListOf()
@@ -50,14 +50,14 @@ class CommandExecutor @Inject constructor(
         }
     }
 
-    private fun getParameters(arguments: Array<out String>, command: Command): List<String> {
-        return arguments.joinToString(" ").removePrefix(command.name).split(" ")
+    private fun getParameters(arguments: Array<out String>, command: CommandInterface): List<String> {
+        return arguments.joinToString(" ").removePrefix(command.getName()).split(" ")
     }
 
     @Throws(CommandNotFoundException::class)
-    private fun getCommand(arguments: List<String>): Command {
+    private fun getCommand(arguments: List<String>): CommandInterface {
         val joined = arguments.joinToString(" ")
-        val commands: List<Command> = this.commands.filter { it.name.startsWith(joined) }
+        val commands = this.commands.filter { it.getName().startsWith(joined) }
 
         if (commands.isEmpty() && arguments.isNotEmpty()) {
             return this.getCommand(arguments.dropLast(1))
