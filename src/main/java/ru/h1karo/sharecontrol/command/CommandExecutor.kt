@@ -39,22 +39,20 @@ class CommandExecutor @Inject constructor(
 
     override fun onCommand(sender: CommandSender, command: BukkitCommand, alias: String, arguments: Array<out String>): Boolean {
         return try {
-            this.getCommand(arguments).run()
+            this.getCommand(arguments.toList()).run()
         } catch (e: CommandNotFoundException) {
             false
         }
     }
 
     @Throws(CommandNotFoundException::class)
-    private fun getCommand(arguments: Array<out String>): Command {
-        var commands: List<Command>
-        var input: List<String> = arguments.toList()
+    private fun getCommand(arguments: List<String>): Command {
+        val joined = arguments.joinToString(" ")
+        val commands: List<Command> = this.commands.filter { it.name.startsWith(joined) }
 
-        do {
-            val joined = input.joinToString(" ")
-            commands = this.commands.filter { it.name.startsWith(joined) }
-            input = input.dropLast(1)
-        } while (commands.isEmpty() && input.isNotEmpty())
+        if (commands.isEmpty() && arguments.isNotEmpty()) {
+            return this.getCommand(arguments.dropLast(1))
+        }
 
         if (commands.size == 1) {
             return commands.first()
