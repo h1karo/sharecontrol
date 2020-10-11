@@ -28,11 +28,14 @@ import org.bukkit.command.CommandSender
 import org.bukkit.command.TabExecutor
 import ru.h1karo.sharecontrol.command.exception.CommandNotFoundException
 import ru.h1karo.sharecontrol.command.input.ListInput
+import ru.h1karo.sharecontrol.command.output.MessengerOutput
+import ru.h1karo.sharecontrol.messenger.Messenger
 import java.util.LinkedList
 import org.bukkit.command.Command as BukkitCommand
 
 @Singleton
 class CommandExecutor @Inject constructor(
+    private val messenger: Messenger,
     private val commands: Set<@JvmSuppressWildcards CommandInterface>
 ) : TabExecutor {
     override fun onTabComplete(sender: CommandSender, command: BukkitCommand, alias: String, arguments: Array<out String>): MutableList<String> {
@@ -44,8 +47,9 @@ class CommandExecutor @Inject constructor(
             val command = this.getCommand(arguments.toList())
             val parameters = this.getParameters(arguments, command)
             val input = ListInput(parameters)
+            val output = MessengerOutput(this.messenger, sender)
 
-            command.run(input)
+            command.run(input, output)
         } catch (e: CommandNotFoundException) {
             false
         }

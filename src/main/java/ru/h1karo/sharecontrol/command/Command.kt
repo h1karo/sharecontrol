@@ -25,6 +25,7 @@ package ru.h1karo.sharecontrol.command
 import ru.h1karo.sharecontrol.command.input.Argument
 import ru.h1karo.sharecontrol.command.input.InputDefinition
 import ru.h1karo.sharecontrol.command.input.InputInterface
+import ru.h1karo.sharecontrol.command.output.OutputInterface
 
 abstract class Command(
     private val name: String,
@@ -34,14 +35,14 @@ abstract class Command(
 
     override fun getName(): String = this.name
 
-    override fun run(input: InputInterface): Boolean {
+    override fun run(input: InputInterface, output: OutputInterface): Boolean {
         input.bind(this.definition)
         input.validate()
 
-        return this.execute(input)
+        return this.execute(input, output)
     }
 
-    protected abstract fun execute(input: InputInterface): Boolean
+    protected abstract fun execute(input: InputInterface, output: OutputInterface): Boolean
 
     override fun toString(): String {
         return setOf(this.name)
