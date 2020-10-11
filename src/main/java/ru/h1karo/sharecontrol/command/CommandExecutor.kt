@@ -33,7 +33,7 @@ import org.bukkit.command.Command as BukkitCommand
 
 @Singleton
 class CommandExecutor @Inject constructor(
-    private val commands: Set<Command>
+    private val commands: Set<@JvmSuppressWildcards Command>
 ) : TabExecutor {
     override fun onTabComplete(sender: CommandSender, command: BukkitCommand, alias: String, arguments: Array<out String>): MutableList<String> {
         return mutableListOf()
