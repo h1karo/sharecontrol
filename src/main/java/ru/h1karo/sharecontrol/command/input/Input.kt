@@ -23,10 +23,11 @@
 package ru.h1karo.sharecontrol.command.input
 
 import ru.h1karo.sharecontrol.command.exception.NotEnoughArgumentException
+import java.util.LinkedList
 
 abstract class Input : InputInterface {
+    protected var definition: InputDefinition = InputDefinition()
     private var arguments: MutableMap<String, Any?> = mutableMapOf()
-    private var definition: InputDefinition = InputDefinition()
 
     override fun bind(definition: InputDefinition) {
         this.arguments = mutableMapOf()
@@ -49,6 +50,8 @@ abstract class Input : InputInterface {
 
     override fun getArguments(): Map<String, Any?> = this.arguments.toMap()
 
+    override fun getValues(): LinkedList<Any?> = LinkedList(this.arguments.values)
+
     override fun getArgument(name: String): Any? {
         if (!this.hasArgument(name)) {
             throw IllegalArgumentException("An argument with name %s does not exists.".format(name))
@@ -60,6 +63,14 @@ abstract class Input : InputInterface {
         }
     }
 
+    override fun getArgument(index: Int): Any? {
+        if (!this.hasArgument(index)) {
+            throw IllegalArgumentException("An argument with index %s does not exists.".format(index))
+        }
+
+        return this.getValues().getOrElse(index) { this.definition.getArgument(index).defaultValue }
+    }
+
     override fun setArgument(name: String, value: Any?) {
         if (!this.hasArgument(name)) {
             throw IllegalArgumentException("An argument with name %s does not exists.".format(name))
@@ -68,7 +79,13 @@ abstract class Input : InputInterface {
         this.arguments[name] = value
     }
 
+    override fun setArgument(index: Int, value: Any?) {
+        this.setArgument(this.definition.getArgument(index).name, value)
+    }
+
     override fun hasArgument(name: String): Boolean = this.definition.hasArgument(name)
+
+    override fun hasArgument(index: Int): Boolean = this.definition.hasArgument(index)
 
     override fun getStringArgument(name: String): String? = this.getArgument(name) as String?
 

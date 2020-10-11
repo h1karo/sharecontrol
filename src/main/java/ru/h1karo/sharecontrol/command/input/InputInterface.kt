@@ -23,6 +23,7 @@
 package ru.h1karo.sharecontrol.command.input
 
 import ru.h1karo.sharecontrol.command.exception.NotEnoughArgumentException
+import java.util.LinkedList
 
 interface InputInterface {
     fun bind(definition: InputDefinition)
@@ -32,11 +33,37 @@ interface InputInterface {
 
     fun getArguments(): Map<String, Any?>
 
+    fun getValues(): LinkedList<Any?>
+
+    /**
+     * Get argument by name.
+     */
     fun getArgument(name: String): Any?
 
+    /**
+     * Get argument by index.
+     */
+    fun getArgument(index: Int): Any?
+
+    /**
+     * Set argument value by argument name.
+     */
     fun setArgument(name: String, value: Any?)
 
+    /**
+     * Set argument value by argument index.
+     */
+    fun setArgument(index: Int, value: Any?)
+
+    /**
+     * Validates that input definition has the argument by name.
+     */
     fun hasArgument(name: String): Boolean
+
+    /**
+     * Validates that input definition has the argument by index.
+     */
+    fun hasArgument(index: Int): Boolean
 
     fun getStringArgument(name: String): String?
 
