@@ -29,6 +29,10 @@ class ListInput(
 ) : Input() {
     override fun parse() {
         this.definition.getValues().forEachIndexed { index, _ ->
+            if (index >= this.parameters.size) {
+                return@forEachIndexed
+            }
+
             this.setArgument(index, parameters[index])
         }
     }
