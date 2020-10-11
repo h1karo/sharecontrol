@@ -43,21 +43,23 @@ class CommandExecutor @Inject constructor(
         return try {
             val command = this.getCommand(arguments.toList())
             val parameters = this.getParameters(arguments, command)
+            val input = ListInput(parameters)
 
-            command.run(ListInput(parameters as LinkedList<String>))
+            command.run(input)
         } catch (e: CommandNotFoundException) {
             false
         }
     }
 
-    private fun getParameters(arguments: Array<out String>, command: CommandInterface): List<String> {
+    private fun getParameters(arguments: Array<out String>, command: CommandInterface): LinkedList<String> {
         val string = arguments.joinToString(" ")
 
         if (string == command.getName()) {
-            return emptyList()
+            return LinkedList()
         }
 
-        return string.removePrefix(command.getName()).split(" ")
+        val parameters = string.removePrefix(command.getName())
+        return LinkedList(parameters.split(" "))
     }
 
     @Throws(CommandNotFoundException::class)
