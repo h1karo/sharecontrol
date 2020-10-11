@@ -27,6 +27,8 @@ import com.google.inject.Singleton
 import org.bukkit.command.CommandSender
 import org.bukkit.command.TabExecutor
 import ru.h1karo.sharecontrol.command.exception.CommandNotFoundException
+import ru.h1karo.sharecontrol.command.input.ListInput
+import java.util.LinkedList
 import org.bukkit.command.Command as BukkitCommand
 
 @Singleton
@@ -37,12 +39,19 @@ class CommandExecutor @Inject constructor(
         return mutableListOf()
     }
 
-    override fun onCommand(sender: CommandSender, command: BukkitCommand, alias: String, arguments: Array<out String>): Boolean {
+    override fun onCommand(sender: CommandSender, bukkitCommand: BukkitCommand, alias: String, arguments: Array<out String>): Boolean {
         return try {
-            this.getCommand(arguments.toList()).run()
+            val command = this.getCommand(arguments.toList())
+            val parameters = this.getParameters(arguments, command)
+
+            command.run(ListInput(parameters as LinkedList<String>))
         } catch (e: CommandNotFoundException) {
             false
         }
+    }
+
+    private fun getParameters(arguments: Array<out String>, command: Command): List<String> {
+        return arguments.joinToString(" ").removePrefix(command.name).split(" ")
     }
 
     @Throws(CommandNotFoundException::class)
