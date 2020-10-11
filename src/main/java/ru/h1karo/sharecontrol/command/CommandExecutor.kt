@@ -51,7 +51,13 @@ class CommandExecutor @Inject constructor(
     }
 
     private fun getParameters(arguments: Array<out String>, command: CommandInterface): List<String> {
-        return arguments.joinToString(" ").removePrefix(command.getName()).split(" ")
+        val string = arguments.joinToString(" ")
+
+        if (string == command.getName()) {
+            return emptyList()
+        }
+
+        return string.removePrefix(command.getName()).split(" ")
     }
 
     @Throws(CommandNotFoundException::class)
