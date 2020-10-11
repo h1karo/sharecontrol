@@ -29,4 +29,10 @@ abstract class Command(
     val arguments: Set<Argument<*>> = emptySet()
 ) {
     abstract fun run(): Boolean
+
+    override fun toString(): String {
+        return setOf(this.name)
+            .plus(this.arguments.map { it.toString() })
+            .joinToString(" ")
+    }
 }
