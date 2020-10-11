@@ -23,12 +23,23 @@
 package ru.h1karo.sharecontrol.command
 
 import ru.h1karo.sharecontrol.command.input.Argument
+import ru.h1karo.sharecontrol.command.input.InputDefinition
+import ru.h1karo.sharecontrol.command.input.InputInterface
 
 abstract class Command(
     val name: String,
     val arguments: Set<Argument<*>> = emptySet()
 ) {
-    abstract fun run(): Boolean
+    private val definition = InputDefinition(arguments)
+
+    fun run(input: InputInterface): Boolean {
+        input.bind(this.definition)
+        input.validate()
+
+        return this.execute(input)
+    }
+
+    abstract fun execute(input: InputInterface): Boolean
 
     override fun toString(): String {
         return setOf(this.name)
