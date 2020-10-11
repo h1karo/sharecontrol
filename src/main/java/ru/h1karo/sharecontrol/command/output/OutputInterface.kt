@@ -23,14 +23,5 @@
 package ru.h1karo.sharecontrol.command.output
 
 interface OutputInterface {
-    fun success(message: String, parameters: Set<String> = emptySet()) =
-        this.send("&2✓&8 $message", parameters)
-
-    fun error(message: String, parameters: Set<String> = emptySet()) =
-        this.send("&4✗&c $message", parameters)
-
-    fun warning(message: String, parameters: Set<String> = emptySet()) =
-        this.send("&6!&e $message", parameters)
-
-    fun send(message: String, parameters: Set<String>)
+    fun write(message: String, parameters: Set<String>)
 }

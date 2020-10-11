@@ -28,6 +28,6 @@ class MessengerOutput(
     private val messenger: Messenger,
     private val recipient: Any
 ) : OutputInterface {
-    override fun send(message: String, parameters: Set<String>) =
+    override fun write(message: String, parameters: Set<String>) =
         this.messenger.send(this.recipient, message, parameters)
 }
