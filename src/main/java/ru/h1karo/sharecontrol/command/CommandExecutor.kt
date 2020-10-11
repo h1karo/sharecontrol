@@ -58,7 +58,7 @@ class CommandExecutor @Inject constructor(
             return LinkedList()
         }
 
-        val parameters = string.removePrefix(command.getName())
+        val parameters = string.removePrefix(command.getName()).trim()
         return LinkedList(parameters.split(" "))
     }
 
