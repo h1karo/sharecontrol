@@ -26,7 +26,6 @@ import ru.h1karo.sharecontrol.command.input.Argument
 
 abstract class Command(
     val name: String,
-    val aliases: Set<String> = emptySet(),
     val arguments: Set<Argument<*>> = emptySet()
 ) {
     abstract fun run(): Boolean
