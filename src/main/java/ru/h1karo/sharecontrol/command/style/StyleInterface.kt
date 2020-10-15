@@ -23,6 +23,7 @@
 package ru.h1karo.sharecontrol.command.style
 
 import ru.h1karo.sharecontrol.command.output.OutputInterface
+import ru.h1karo.sharecontrol.command.pagination.PaginatorInterface
 
 interface StyleInterface : OutputInterface {
     fun success(message: String, parameters: Set<String> = emptySet()) =
@@ -33,4 +34,6 @@ interface StyleInterface : OutputInterface {
 
     fun warning(message: String, parameters: Set<String> = emptySet()) =
         this.write("&6!&e $message", parameters)
+
+    fun createPaginator(): PaginatorInterface
 }

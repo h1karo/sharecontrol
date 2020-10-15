@@ -23,7 +23,10 @@
 package ru.h1karo.sharecontrol.command.style
 
 import ru.h1karo.sharecontrol.command.output.OutputInterface
+import ru.h1karo.sharecontrol.command.pagination.Paginator
 
 class OutputStyle(private val output: OutputInterface) : StyleInterface {
     override fun write(message: String, parameters: Set<String>) = this.output.write(message, parameters)
+
+    override fun createPaginator(): Paginator = Paginator()
 }
