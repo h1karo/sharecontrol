@@ -35,7 +35,7 @@ class ListCommand @Inject constructor(
     private val translator: TranslatorInterface
 ) : Command(
     "list",
-    linkedSetOf(Argument(PAGE_ARGUMENT, defaultValue = 0))
+    linkedSetOf(Argument(PAGE_ARGUMENT, defaultValue = 1))
 ) {
     override fun execute(input: InputInterface, output: OutputInterface): Boolean {
         val style = OutputStyle(output)
