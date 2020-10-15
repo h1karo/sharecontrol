@@ -23,5 +23,5 @@
 package ru.h1karo.sharecontrol.command.output
 
 interface OutputInterface {
-    fun write(message: String, parameters: Set<String>)
+    fun write(message: String, parameters: Set<String> = setOf())
 }
