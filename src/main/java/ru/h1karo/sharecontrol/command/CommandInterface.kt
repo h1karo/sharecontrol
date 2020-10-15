@@ -28,6 +28,8 @@ import ru.h1karo.sharecontrol.command.output.OutputInterface
 interface CommandInterface {
     fun getName(): String
 
+    fun getKey(): String = this.getName().replace(' ', '-')
+
     fun run(input: InputInterface, output: OutputInterface): Boolean
 
     override fun toString(): String
