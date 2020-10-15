@@ -1,3 +1,7 @@
 name: Русский
 no-permission:
   command: '&cУ Вас недостаточно прав для использования этой команды.'
+commands:
+  _format: '&9{0}&f - &7{1}'
+  list:
+    description: 'Показать список команд'

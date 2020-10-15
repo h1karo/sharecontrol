@@ -1,3 +1,7 @@
 name: English
 no-permission:
   command: '&cYou are not allowed to use this command.'
+commands:
+  _format: '&9{0}&f - &7{1}'
+  list:
+    description: 'Show the command list'
