@@ -56,6 +56,10 @@ class CommandExecutor @Inject constructor(
     }
 
     private fun getParameters(arguments: Array<out String>, command: CommandInterface): LinkedList<String> {
+        if (arguments.isEmpty()) {
+            return LinkedList()
+        }
+
         val string = arguments.joinToString(" ")
 
         if (string == command.getName()) {
