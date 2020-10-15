@@ -68,6 +68,10 @@ class CommandExecutor @Inject constructor(
 
     @Throws(CommandNotFoundException::class)
     private fun getCommand(arguments: List<String>): CommandInterface {
+        if (arguments.isEmpty()) {
+            return this.commands.find { it.getName() == "list" }!!
+        }
+
         val joined = arguments.joinToString(" ")
         val commands = this.commands.filter { it.getName().startsWith(joined) }
 
