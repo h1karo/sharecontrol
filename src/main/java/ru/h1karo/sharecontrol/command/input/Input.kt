@@ -71,25 +71,21 @@ abstract class Input : InputInterface {
         return this.getValues().getOrElse(index) { this.definition.getArgument(index).defaultValue }
     }
 
-    override fun setArgument(name: String, value: Any?) {
+    override fun setArgument(name: String, value: String?) {
         if (!this.hasArgument(name)) {
             throw IllegalArgumentException("An argument with name %s does not exists.".format(name))
         }
 
-        this.arguments[name] = value
+        val definition = this.definition.getArgument(name)
+        this.arguments[name] = definition.transform(value)
     }
 
-    override fun setArgument(index: Int, value: Any?) {
-        this.setArgument(this.definition.getArgument(index).name, value)
+    override fun setArgument(index: Int, value: String?) {
+        val definition = this.definition.getArgument(index)
+        this.setArgument(definition.name, value)
     }
 
     override fun hasArgument(name: String): Boolean = this.definition.hasArgument(name)
 
     override fun hasArgument(index: Int): Boolean = this.definition.hasArgument(index)
-
-    override fun getStringArgument(name: String): String? = this.getArgument(name) as String?
-
-    override fun getBooleanArgument(name: String): Boolean? = this.getArgument(name) as Boolean?
-
-    override fun getIntArgument(name: String): Int? = this.getArgument(name) as Int?
 }

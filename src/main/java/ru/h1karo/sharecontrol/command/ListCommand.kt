@@ -23,8 +23,8 @@
 package ru.h1karo.sharecontrol.command
 
 import com.google.inject.Inject
-import ru.h1karo.sharecontrol.command.input.Argument
 import ru.h1karo.sharecontrol.command.input.InputInterface
+import ru.h1karo.sharecontrol.command.input.IntegerArgument
 import ru.h1karo.sharecontrol.command.output.OutputInterface
 import ru.h1karo.sharecontrol.command.style.OutputStyle
 import ru.h1karo.sharecontrol.i18n.TranslatorInterface
@@ -35,11 +35,11 @@ class ListCommand @Inject constructor(
     private val translator: TranslatorInterface
 ) : Command(
     "list",
-    linkedSetOf(Argument(PAGE_ARGUMENT, defaultValue = 1))
+    linkedSetOf(IntegerArgument(PAGE_ARGUMENT, defaultValue = 1))
 ) {
     override fun execute(input: InputInterface, output: OutputInterface): Boolean {
         val style = OutputStyle(output)
-        val page = input.getIntArgument(PAGE_ARGUMENT) as Int
+        val page = input.getArgument(PAGE_ARGUMENT) as Int
         val items = this.commands.map { this.getListItem(it) }
 
         val paginator = style.createPaginator()

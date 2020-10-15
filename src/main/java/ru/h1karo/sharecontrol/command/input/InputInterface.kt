@@ -48,12 +48,12 @@ interface InputInterface {
     /**
      * Set argument value by argument name.
      */
-    fun setArgument(name: String, value: Any?)
+    fun setArgument(name: String, value: String?)
 
     /**
      * Set argument value by argument index.
      */
-    fun setArgument(index: Int, value: Any?)
+    fun setArgument(index: Int, value: String?)
 
     /**
      * Validates that input definition has the argument by name.
@@ -64,10 +64,4 @@ interface InputInterface {
      * Validates that input definition has the argument by index.
      */
     fun hasArgument(index: Int): Boolean
-
-    fun getStringArgument(name: String): String?
-
-    fun getBooleanArgument(name: String): Boolean?
-
-    fun getIntArgument(name: String): Int?
 }
