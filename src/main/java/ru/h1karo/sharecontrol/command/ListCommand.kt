@@ -47,10 +47,10 @@ class ListCommand @Inject constructor(
             val paginator = style.createPaginator()
             val pagination = paginator.paginate(items.toList(), page, 5)
 
-            output.write("list.title", setOf(pagination.getCurrentPageNumber(), pagination.getLastPageNumber()))
+            output.write("list.title", listOf(page, pagination.getLastPageNumber()))
             pagination.getItems().forEach { output.write(it) }
         } catch (e: PageNumberOutOfRangeException) {
-            output.write("list.title", setOf(e.page, e.maxPage))
+            output.write("list.title", listOf(e.page, e.maxPage))
             output.write("list.empty")
         }
 
@@ -61,7 +61,7 @@ class ListCommand @Inject constructor(
         val descriptionKey = MessageFormat.format("commands.{0}.description", command.getKey())
         val description = this.translator.trans(descriptionKey)
 
-        return this.translator.trans("list.format", setOf(command.toString(), description))
+        return this.translator.trans("list.format", listOf(command.toString(), description))
     }
 
     companion object {

@@ -26,13 +26,13 @@ import ru.h1karo.sharecontrol.command.output.OutputInterface
 import ru.h1karo.sharecontrol.command.pagination.PaginatorInterface
 
 interface StyleInterface : OutputInterface {
-    fun success(message: String, parameters: Set<String> = emptySet()) =
+    fun success(message: String, parameters: Collection<String> = emptySet()) =
         this.write("&2✓&8 $message", parameters)
 
-    fun error(message: String, parameters: Set<String> = emptySet()) =
+    fun error(message: String, parameters: Collection<String> = emptySet()) =
         this.write("&4✗&c $message", parameters)
 
-    fun warning(message: String, parameters: Set<String> = emptySet()) =
+    fun warning(message: String, parameters: Collection<String> = emptySet()) =
         this.write("&6!&e $message", parameters)
 
     fun createPaginator(): PaginatorInterface
