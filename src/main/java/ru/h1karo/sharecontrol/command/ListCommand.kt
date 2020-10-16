@@ -23,6 +23,7 @@
 package ru.h1karo.sharecontrol.command
 
 import com.google.inject.Inject
+import ru.h1karo.sharecontrol.command.exception.PageNumberOutOfRangeException
 import ru.h1karo.sharecontrol.command.input.InputInterface
 import ru.h1karo.sharecontrol.command.input.argument.IntegerArgument
 import ru.h1karo.sharecontrol.command.output.OutputInterface
@@ -42,11 +43,16 @@ class ListCommand @Inject constructor(
         val page = input.getArgument(PAGE_ARGUMENT) as Int
         val items = this.commands.map { this.getListItem(it) }
 
-        val paginator = style.createPaginator()
-        val pagination = paginator.paginate(items.toList(), page, 5)
+        try {
+            val paginator = style.createPaginator()
+            val pagination = paginator.paginate(items.toList(), page, 5)
 
-        output.write("list.title", setOf(pagination.getCurrentPageNumber(), pagination.getLastPageNumber()))
-        pagination.getItems().forEach { output.write(it) }
+            output.write("list.title", setOf(pagination.getCurrentPageNumber(), pagination.getLastPageNumber()))
+            pagination.getItems().forEach { output.write(it) }
+        } catch (e: PageNumberOutOfRangeException) {
+            output.write("list.title", setOf(e.page, e.maxPage))
+            output.write("list.empty")
+        }
 
         return true
     }

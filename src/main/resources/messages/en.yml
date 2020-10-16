@@ -7,3 +7,4 @@ commands:
 list:
   format: '&9{0}&f - &7{1}'
   title: '&9>>> &9&lShare&f&lControl &9>&7 The list of commands &f{0}&7/&f{1}'
+  empty: '&7This page is empty'

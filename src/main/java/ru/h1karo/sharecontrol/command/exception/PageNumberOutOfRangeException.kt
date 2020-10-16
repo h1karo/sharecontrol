@@ -22,6 +22,6 @@
 
 package ru.h1karo.sharecontrol.command.exception
 
-class PageNumberOutOfRangeException(page: Int, maxPage: Int) : IndexOutOfBoundsException(
+class PageNumberOutOfRangeException(val page: Int, val maxPage: Int) : IndexOutOfBoundsException(
     "Page number: %d is out of range. Max page is %d.".format(page, maxPage)
 )
