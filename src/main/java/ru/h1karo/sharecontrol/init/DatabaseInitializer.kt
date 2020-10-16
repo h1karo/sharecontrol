@@ -24,10 +24,12 @@ package ru.h1karo.sharecontrol.init
 
 import com.google.inject.Inject
 import com.google.inject.Provider
+import com.google.inject.Singleton
 import ru.h1karo.sharecontrol.console.BlockStyle
 import ru.h1karo.sharecontrol.database.Database
 import ru.h1karo.sharecontrol.database.DatabaseType
 
+@Singleton
 class DatabaseInitializer @Inject constructor(
     console: BlockStyle,
     private val typeProvider: Provider<DatabaseType>,

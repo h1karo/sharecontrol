@@ -24,12 +24,14 @@ package ru.h1karo.sharecontrol.init
 
 import com.google.inject.Inject
 import com.google.inject.Provider
+import com.google.inject.Singleton
 import ru.h1karo.sharecontrol.console.BlockStyle
 import ru.h1karo.sharecontrol.i18n.Locale
 import ru.h1karo.sharecontrol.i18n.MutableTranslatorInterface
 import ru.h1karo.sharecontrol.i18n.init.ResourceFinder
 import ru.h1karo.sharecontrol.i18n.init.ResourceSyncer
 
+@Singleton
 class I18nInitializer @Inject constructor(
     console: BlockStyle,
     private val syncer: ResourceSyncer,

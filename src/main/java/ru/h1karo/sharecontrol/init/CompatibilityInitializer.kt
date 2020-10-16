@@ -23,11 +23,13 @@
 package ru.h1karo.sharecontrol.init
 
 import com.google.inject.Inject
+import com.google.inject.Singleton
 import com.google.inject.name.Named
 import ru.h1karo.sharecontrol.console.BlockStyle
 import ru.h1karo.sharecontrol.module.PluginModule
 import ru.h1karo.sharecontrol.versioning.CompatibilityValidator
 
+@Singleton
 class CompatibilityInitializer @Inject constructor(
     console: BlockStyle,
     @Named(PluginModule.VERSION) private val version: String,

@@ -23,11 +23,13 @@
 package ru.h1karo.sharecontrol.init
 
 import com.google.inject.Inject
+import com.google.inject.Singleton
 import com.google.inject.name.Named
 import ru.h1karo.sharecontrol.console.BlockStyle
 import ru.h1karo.sharecontrol.module.UpdaterModule
 import ru.h1karo.sharecontrol.updater.VersionProvider
 
+@Singleton
 class UpdaterInitializer @Inject constructor(
     console: BlockStyle,
     @Named(UpdaterModule.UPDATER_ENABLED)

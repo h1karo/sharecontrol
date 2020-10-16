@@ -23,11 +23,13 @@
 package ru.h1karo.sharecontrol.init
 
 import com.google.inject.Inject
+import com.google.inject.Singleton
 import ru.h1karo.sharecontrol.configuration.PluginConfiguration
 import ru.h1karo.sharecontrol.configuration.exception.InvalidValueException
 import ru.h1karo.sharecontrol.console.BlockStyle
 import ru.h1karo.sharecontrol.init.exception.FixableException
 
+@Singleton
 class ConfigurationInitializer @Inject constructor(
     console: BlockStyle,
     private val pluginConfiguration: PluginConfiguration

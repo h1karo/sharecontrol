@@ -23,9 +23,11 @@
 package ru.h1karo.sharecontrol.init
 
 import com.google.inject.Inject
+import com.google.inject.Singleton
 import ru.h1karo.sharecontrol.console.BlockStyle
 import ru.h1karo.sharecontrol.init.exception.FixableException
 
+@Singleton
 class ChainInitializer @Inject constructor(
     console: BlockStyle,
     private val initializers: Set<@JvmSuppressWildcards Initializer>

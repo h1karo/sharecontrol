@@ -23,10 +23,12 @@
 package ru.h1karo.sharecontrol.init
 
 import com.google.inject.Inject
+import com.google.inject.Singleton
 import org.bukkit.command.CommandExecutor
 import org.bukkit.plugin.java.JavaPlugin
 import ru.h1karo.sharecontrol.console.BlockStyle
 
+@Singleton
 class CommandInitializer @Inject constructor(
     private val plugin: JavaPlugin,
     private val executor: CommandExecutor,
