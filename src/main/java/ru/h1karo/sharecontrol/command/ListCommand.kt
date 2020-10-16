@@ -24,7 +24,7 @@ package ru.h1karo.sharecontrol.command
 
 import com.google.inject.Inject
 import ru.h1karo.sharecontrol.command.input.InputInterface
-import ru.h1karo.sharecontrol.command.input.IntegerArgument
+import ru.h1karo.sharecontrol.command.input.argument.IntegerArgument
 import ru.h1karo.sharecontrol.command.output.OutputInterface
 import ru.h1karo.sharecontrol.command.style.OutputStyle
 import ru.h1karo.sharecontrol.i18n.TranslatorInterface

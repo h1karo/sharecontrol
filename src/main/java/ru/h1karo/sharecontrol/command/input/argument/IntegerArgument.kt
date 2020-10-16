@@ -20,7 +20,7 @@
  * @link https://github.com/h1karo/sharecontrol
  */
 
-package ru.h1karo.sharecontrol.command.input
+package ru.h1karo.sharecontrol.command.input.argument
 
 class IntegerArgument(
     name: String,

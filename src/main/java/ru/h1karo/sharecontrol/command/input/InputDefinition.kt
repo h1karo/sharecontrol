@@ -22,6 +22,7 @@
 
 package ru.h1karo.sharecontrol.command.input
 
+import ru.h1karo.sharecontrol.command.input.argument.Argument
 import java.util.LinkedList
 
 class InputDefinition {

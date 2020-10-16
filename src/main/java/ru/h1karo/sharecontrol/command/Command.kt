@@ -22,9 +22,9 @@
 
 package ru.h1karo.sharecontrol.command
 
-import ru.h1karo.sharecontrol.command.input.Argument
 import ru.h1karo.sharecontrol.command.input.InputDefinition
 import ru.h1karo.sharecontrol.command.input.InputInterface
+import ru.h1karo.sharecontrol.command.input.argument.Argument
 import ru.h1karo.sharecontrol.command.output.OutputInterface
 
 abstract class Command(
