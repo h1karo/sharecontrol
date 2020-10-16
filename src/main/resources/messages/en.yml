@@ -2,8 +2,8 @@ name: English
 no-permission:
   command: '&cYou are not allowed to use this command.'
 commands:
-  _format: '&9{0}&f - &7{1}'
   list:
     description: 'Show the command list'
 list:
+  format: '&9{0}&f - &7{1}'
   title: '&9>>> &9&lShare&f&lControl &9>&7 The list of commands &f{0}&7/&f{1}'

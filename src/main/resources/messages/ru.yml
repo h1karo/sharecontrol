@@ -2,8 +2,8 @@ name: Русский
 no-permission:
   command: '&cУ Вас недостаточно прав для использования этой команды.'
 commands:
-  _format: '&9{0}&f - &7{1}'
   list:
     description: 'Показать список команд'
 list:
+  format: '&9{0}&f - &7{1}'
   title: '&9>>> &9&lShare&f&lControl &9>&7 Список команд &f{0}&7/&f{1}'
