@@ -33,7 +33,7 @@ import ru.h1karo.sharecontrol.configuration.plugin.Locale as LocaleParameter
 class FallbackTranslator @Inject constructor(
     private val translator: MutableTranslatorInterface
 ) : FallbackTranslatorInterface, MutableTranslatorInterface {
-    override fun trans(id: String, parameters: Set<String>, locale: Locale?): String {
+    override fun trans(id: String, parameters: Set<Any>, locale: Locale?): String {
         return try {
             this.translator.trans(id, parameters, locale)
         } catch (e: I18nException) {

@@ -30,7 +30,7 @@ class DelegatingMessenger @Inject constructor(
     private val transports: Set<@JvmSuppressWildcards Transport>,
     private val formatter: MessageFormatter
 ) : Messenger {
-    override fun send(recipient: Any, message: String, parameters: Set<String>) {
+    override fun send(recipient: Any, message: String, parameters: Set<Any>) {
         val formatted = this.formatter.format(message, parameters)
         this.getTransport(recipient).send(recipient, formatted)
     }

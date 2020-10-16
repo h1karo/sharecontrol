@@ -23,5 +23,5 @@
 package ru.h1karo.sharecontrol.messenger.format
 
 interface MessageFormatter {
-    fun format(message: String, parameters: Set<String> = emptySet()): String
+    fun format(message: String, parameters: Set<Any> = emptySet()): String
 }
