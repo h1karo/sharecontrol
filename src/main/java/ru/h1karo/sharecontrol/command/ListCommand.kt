@@ -45,6 +45,7 @@ class ListCommand @Inject constructor(
         val paginator = style.createPaginator()
         val pagination = paginator.paginate(items.toList(), page, 5)
 
+        output.write("list.title", setOf(pagination.getCurrentPageNumber(), pagination.getLastPageNumber()))
         pagination.getItems().forEach { output.write(it) }
 
         return true

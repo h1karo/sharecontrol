@@ -5,3 +5,5 @@ commands:
   _format: '&9{0}&f - &7{1}'
   list:
     description: 'Show the command list'
+list:
+  title: '&9>>> &9&lShare&f&lControl &9>&7 The list of commands &f{0}&7/&f{1}'
