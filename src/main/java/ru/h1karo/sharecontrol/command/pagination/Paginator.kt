@@ -22,6 +22,7 @@
 
 package ru.h1karo.sharecontrol.command.pagination
 
+import org.bukkit.util.ChatPaginator
 import ru.h1karo.sharecontrol.command.exception.PageNumberOutOfRangeException
 
 class Paginator : PaginatorInterface {
@@ -30,13 +31,23 @@ class Paginator : PaginatorInterface {
             throw IllegalArgumentException("The page and limit parameters must be positive non-zero integers.")
         }
 
+        val wrappedContent = this.wrap(content)
+        val pages = wrappedContent.chunked(limit)
+
         val pageIndex = page - 1
-        val pages = content.chunked(limit)
         val maxPage = pages.size
         if (maxPage <= pageIndex) {
             throw PageNumberOutOfRangeException(page, maxPage)
         }
 
         return Pagination(pages[pageIndex], page, limit, maxPage)
+    }
+
+    private fun wrap(content: List<String>): List<String> {
+        return content.map { ChatPaginator.wordWrap(it, LINE_LENGTH) }.flatMap { it.toList() }
+    }
+
+    companion object {
+        private const val LINE_LENGTH = ChatPaginator.GUARANTEED_NO_WRAP_CHAT_PAGE_WIDTH
     }
 }
