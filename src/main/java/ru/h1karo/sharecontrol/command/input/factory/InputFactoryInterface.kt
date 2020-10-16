@@ -20,15 +20,14 @@
  * @link https://github.com/h1karo/sharecontrol
  */
 
-package ru.h1karo.sharecontrol.module
+package ru.h1karo.sharecontrol.command.input.factory
 
 import ru.h1karo.sharecontrol.command.CommandInterface
-import ru.h1karo.sharecontrol.command.input.factory.InputFactoryInterface
-import ru.h1karo.sharecontrol.command.input.factory.ListInputFactory
+import ru.h1karo.sharecontrol.command.input.InputInterface
 
-class CommandModule : AbstractModule() {
-    override fun configure() {
-        this.bindSet(CommandInterface::class.java)
-        this.bind(InputFactoryInterface::class.java).to(ListInputFactory::class.java)
-    }
+/**
+ * Creates input instance for target command.
+ */
+interface InputFactoryInterface {
+    fun build(command: CommandInterface, arguments: Collection<String> = listOf()): InputInterface
 }

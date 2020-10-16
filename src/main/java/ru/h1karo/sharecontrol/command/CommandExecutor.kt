@@ -27,16 +27,16 @@ import com.google.inject.Singleton
 import org.bukkit.command.CommandSender
 import org.bukkit.command.TabExecutor
 import ru.h1karo.sharecontrol.command.exception.CommandNotFoundException
-import ru.h1karo.sharecontrol.command.input.ListInput
+import ru.h1karo.sharecontrol.command.input.factory.InputFactoryInterface
 import ru.h1karo.sharecontrol.command.output.MessengerOutput
 import ru.h1karo.sharecontrol.messenger.Messenger
-import java.util.LinkedList
 import org.bukkit.command.Command as BukkitCommand
 
 @Singleton
 class CommandExecutor @Inject constructor(
     private val messenger: Messenger,
-    private val commands: Set<@JvmSuppressWildcards CommandInterface>
+    private val commands: Set<@JvmSuppressWildcards CommandInterface>,
+    private val inputFactory: InputFactoryInterface
 ) : TabExecutor {
     override fun onTabComplete(sender: CommandSender, command: BukkitCommand, alias: String, arguments: Array<out String>): MutableList<String> {
         return mutableListOf()
@@ -45,29 +45,13 @@ class CommandExecutor @Inject constructor(
     override fun onCommand(sender: CommandSender, bukkitCommand: BukkitCommand, alias: String, arguments: Array<out String>): Boolean {
         return try {
             val command = this.getCommand(arguments.toList())
-            val parameters = this.getParameters(arguments, command)
-            val input = ListInput(parameters)
+            val input = this.inputFactory.build(command, arguments.toList())
             val output = MessengerOutput(this.messenger, sender)
 
             command.run(input, output)
         } catch (e: CommandNotFoundException) {
             false
         }
-    }
-
-    private fun getParameters(arguments: Array<out String>, command: CommandInterface): LinkedList<String> {
-        if (arguments.isEmpty()) {
-            return LinkedList()
-        }
-
-        val string = arguments.joinToString(" ")
-
-        if (string == command.getName()) {
-            return LinkedList()
-        }
-
-        val parameters = string.removePrefix(command.getName()).trim()
-        return LinkedList(parameters.split(" "))
     }
 
     @Throws(CommandNotFoundException::class)

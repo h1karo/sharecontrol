@@ -13,22 +13,37 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with ShareControl. If not, see <https://www.gnu.org/licenses/>.
- *
+ *  
  * @copyright Copyright (c) 2020 ShareControl
  * @author Oleg Kozlov <h1karo@outlook.com>
  * @license GNU General Public License v3.0
  * @link https://github.com/h1karo/sharecontrol
  */
 
-package ru.h1karo.sharecontrol.module
+package ru.h1karo.sharecontrol.command.input.factory
 
 import ru.h1karo.sharecontrol.command.CommandInterface
-import ru.h1karo.sharecontrol.command.input.factory.InputFactoryInterface
-import ru.h1karo.sharecontrol.command.input.factory.ListInputFactory
+import ru.h1karo.sharecontrol.command.input.InputInterface
+import ru.h1karo.sharecontrol.command.input.ListInput
+import java.util.LinkedList
 
-class CommandModule : AbstractModule() {
-    override fun configure() {
-        this.bindSet(CommandInterface::class.java)
-        this.bind(InputFactoryInterface::class.java).to(ListInputFactory::class.java)
+class ListInputFactory : InputFactoryInterface {
+    override fun build(command: CommandInterface, arguments: Collection<String>): InputInterface {
+        return ListInput(this.getParameters(arguments, command))
+    }
+
+    private fun getParameters(arguments: Collection<String>, command: CommandInterface): LinkedList<String> {
+        if (arguments.isEmpty()) {
+            return LinkedList()
+        }
+
+        val string = arguments.joinToString(" ")
+
+        if (string == command.getName()) {
+            return LinkedList()
+        }
+
+        val parameters = string.removePrefix(command.getName()).trim()
+        return LinkedList(parameters.split(" "))
     }
 }
