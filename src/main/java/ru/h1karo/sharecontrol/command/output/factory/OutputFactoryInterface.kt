@@ -20,18 +20,10 @@
  * @link https://github.com/h1karo/sharecontrol
  */
 
-package ru.h1karo.sharecontrol.module
+package ru.h1karo.sharecontrol.command.output.factory
 
-import ru.h1karo.sharecontrol.command.CommandInterface
-import ru.h1karo.sharecontrol.command.input.factory.InputFactoryInterface
-import ru.h1karo.sharecontrol.command.input.factory.ListInputFactory
-import ru.h1karo.sharecontrol.command.output.factory.MessengerOutputFactory
-import ru.h1karo.sharecontrol.command.output.factory.OutputFactoryInterface
+import ru.h1karo.sharecontrol.command.output.OutputInterface
 
-class CommandModule : AbstractModule() {
-    override fun configure() {
-        this.bindSet(CommandInterface::class.java)
-        this.bind(InputFactoryInterface::class.java).to(ListInputFactory::class.java)
-        this.bind(OutputFactoryInterface::class.java).to(MessengerOutputFactory::class.java)
-    }
+interface OutputFactoryInterface {
+    fun build(recipient: Any): OutputInterface
 }
