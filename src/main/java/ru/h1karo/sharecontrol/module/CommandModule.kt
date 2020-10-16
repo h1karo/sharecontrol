@@ -22,14 +22,19 @@
 
 package ru.h1karo.sharecontrol.module
 
+import ru.h1karo.sharecontrol.command.CommandExecutor
 import ru.h1karo.sharecontrol.command.CommandInterface
 import ru.h1karo.sharecontrol.command.input.factory.InputFactoryInterface
 import ru.h1karo.sharecontrol.command.input.factory.ListInputFactory
 import ru.h1karo.sharecontrol.command.output.factory.MessengerOutputFactory
 import ru.h1karo.sharecontrol.command.output.factory.OutputFactoryInterface
+import org.bukkit.command.CommandExecutor as BukkitCommandExecutor
+import org.bukkit.command.TabCompleter as BukkitTabCompleter
 
 class CommandModule : AbstractModule() {
     override fun configure() {
+        this.bind(BukkitCommandExecutor::class.java).to(CommandExecutor::class.java)
+        this.bind(BukkitTabCompleter::class.java).to(CommandExecutor::class.java)
         this.bindSet(CommandInterface::class.java)
         this.bind(InputFactoryInterface::class.java).to(ListInputFactory::class.java)
         this.bind(OutputFactoryInterface::class.java).to(MessengerOutputFactory::class.java)

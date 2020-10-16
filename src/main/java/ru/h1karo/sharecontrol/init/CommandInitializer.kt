@@ -23,8 +23,8 @@
 package ru.h1karo.sharecontrol.init
 
 import com.google.inject.Inject
+import org.bukkit.command.CommandExecutor
 import org.bukkit.plugin.java.JavaPlugin
-import ru.h1karo.sharecontrol.command.CommandExecutor
 import ru.h1karo.sharecontrol.console.BlockStyle
 
 class CommandInitializer @Inject constructor(
