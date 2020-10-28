@@ -45,7 +45,8 @@ class CommandExecutor @Inject constructor(
         val joined = arguments.joinToString(" ")
         val commands = this.commands.filter { it.getName().startsWith(joined) }
         val names = commands.map { it.getName() }
-        return names.map { it.removePrefix(joined).trim() }
+        val prefix = arguments.dropLast(1).joinToString(" ")
+        return names.map { it.removePrefix(prefix).trim() }
     }
 
     override fun onCommand(sender: CommandSender, bukkitCommand: BukkitCommand, alias: String, arguments: Array<out String>): Boolean {
