@@ -28,5 +28,5 @@ class IntegerArgument(
     isArray: Boolean = false,
     defaultValue: Int? = null
 ) : Argument<Int>(name, isRequired, isArray, defaultValue) {
-    override fun transform(value: String?): Int? = value?.toIntOrNull()
+    override fun transform(value: String?): Int = value?.toIntOrNull()!!
 }

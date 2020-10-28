@@ -28,5 +28,5 @@ class StringArgument(
     isArray: Boolean = false,
     defaultValue: String? = null
 ) : Argument<String>(name, isRequired, isArray, defaultValue) {
-    override fun transform(value: String?): String? = value
+    override fun transform(value: String?): String = value!!
 }

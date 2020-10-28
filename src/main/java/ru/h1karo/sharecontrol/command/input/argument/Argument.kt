@@ -30,7 +30,8 @@ abstract class Argument<T>(
     val isArray: Boolean = false,
     val defaultValue: T? = null
 ) {
-    abstract fun transform(value: String?): T?
+    @Throws(NullPointerException::class)
+    abstract fun transform(value: String?): T
 
     override fun toString(): String {
         return when {

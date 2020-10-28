@@ -28,5 +28,5 @@ class BooleanArgument(
     isArray: Boolean = false,
     defaultValue: Boolean? = null
 ) : Argument<Boolean>(name, isRequired, isArray, defaultValue) {
-    override fun transform(value: String?): Boolean? = value.toBoolean()
+    override fun transform(value: String?): Boolean = value.toBoolean()
 }
