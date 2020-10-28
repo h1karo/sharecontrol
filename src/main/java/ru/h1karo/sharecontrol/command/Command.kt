@@ -44,7 +44,7 @@ abstract class Command(
 
     protected abstract fun execute(input: InputInterface, output: OutputInterface): Boolean
 
-    override fun toString(): String {
+    override fun serialize(): String {
         return setOf("/sc", this.name)
             .plus(this.definition.getValues().map { it.toString() })
             .joinToString(" ")

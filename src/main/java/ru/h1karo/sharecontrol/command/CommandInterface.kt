@@ -32,5 +32,5 @@ interface CommandInterface {
 
     fun run(input: InputInterface, output: OutputInterface): Boolean
 
-    override fun toString(): String
+    fun serialize(): String
 }

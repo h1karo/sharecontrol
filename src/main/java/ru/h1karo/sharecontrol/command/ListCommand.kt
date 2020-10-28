@@ -61,7 +61,7 @@ class ListCommand @Inject constructor(
         val descriptionKey = MessageFormat.format("commands.{0}.description", command.getKey())
         val description = this.translator.trans(descriptionKey)
 
-        return this.translator.trans("list.format", listOf(command.toString(), description))
+        return this.translator.trans("list.format", listOf(command.serialize(), description))
     }
 
     companion object {
