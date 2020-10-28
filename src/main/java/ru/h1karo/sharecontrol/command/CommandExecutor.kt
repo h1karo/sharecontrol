@@ -26,6 +26,7 @@ import com.google.inject.Inject
 import com.google.inject.Singleton
 import org.bukkit.command.CommandSender
 import org.bukkit.command.TabExecutor
+import ru.h1karo.sharecontrol.command.exception.CommandArgumentException
 import ru.h1karo.sharecontrol.command.exception.CommandNotFoundException
 import ru.h1karo.sharecontrol.command.input.factory.InputFactoryInterface
 import ru.h1karo.sharecontrol.command.output.factory.OutputFactoryInterface
@@ -50,14 +51,23 @@ class CommandExecutor @Inject constructor(
     }
 
     override fun onCommand(sender: CommandSender, bukkitCommand: BukkitCommand, alias: String, arguments: Array<out String>): Boolean {
-        return try {
-            val command = this.getCommand(arguments.toList())
-            val input = this.inputFactory.build(command, arguments.toList())
-            val output = this.outputFactory.build(sender)
+        val command: CommandInterface
+        val output = this.outputFactory.build(sender)
 
-            command.run(input, output)
+        try {
+            command = this.getCommand(arguments.toList())
         } catch (e: CommandNotFoundException) {
-            false
+            output.write("commands._not-found")
+            return true
+        }
+
+        val input = this.inputFactory.build(command, arguments.toList())
+
+        return try {
+            command.run(input, output)
+        } catch (e: CommandArgumentException) {
+            output.write("commands._syntax", setOf(command.serialize()))
+            true
         }
     }
 

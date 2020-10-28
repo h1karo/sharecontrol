@@ -22,6 +22,4 @@
 
 package ru.h1karo.sharecontrol.command.exception
 
-class NotEnoughArgumentException(missedArguments: Set<String>) : CommandArgumentException(
-    "There are not enough arguments for this command. Missed arguments: %s.".format(missedArguments.joinToString(", "))
-)
+open class CommandArgumentException(message: String) : Exception(message)

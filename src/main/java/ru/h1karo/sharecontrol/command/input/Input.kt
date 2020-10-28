@@ -24,6 +24,7 @@ package ru.h1karo.sharecontrol.command.input
 
 import ru.h1karo.sharecontrol.command.exception.NotEnoughArgumentException
 import java.util.LinkedList
+import ru.h1karo.sharecontrol.command.exception.InvalidArgumentException
 
 abstract class Input : InputInterface {
     protected var definition: InputDefinition = InputDefinition()
@@ -75,9 +76,12 @@ abstract class Input : InputInterface {
         if (!this.hasArgument(name)) {
             throw IllegalArgumentException("An argument with name %s does not exists.".format(name))
         }
-
-        val definition = this.definition.getArgument(name)
-        this.arguments[name] = definition.transform(value)
+        try {
+            val definition = this.definition.getArgument(name)
+            this.arguments[name] = definition.transform(value)
+        } catch (e: NullPointerException) {
+            throw InvalidArgumentException(name)
+        }
     }
 
     override fun setArgument(index: Int, value: String?) {

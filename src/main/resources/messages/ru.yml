@@ -2,6 +2,8 @@ name: Русский
 no-permission:
   command: '&cУ Вас недостаточно прав для использования этой команды.'
 commands:
+  _not-found: '&cКоманда не найдена.'
+  _syntax: '&7Синтаксис: &9{0}'
   list:
     description: 'Показать список команд'
   reload:

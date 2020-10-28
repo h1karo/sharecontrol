@@ -22,6 +22,8 @@
 
 package ru.h1karo.sharecontrol.command
 
+import ru.h1karo.sharecontrol.command.exception.CommandArgumentException
+import ru.h1karo.sharecontrol.command.exception.InvalidArgumentException
 import ru.h1karo.sharecontrol.command.input.InputDefinition
 import ru.h1karo.sharecontrol.command.input.InputInterface
 import ru.h1karo.sharecontrol.command.input.argument.Argument
@@ -35,6 +37,7 @@ abstract class Command(
 
     override fun getName(): String = this.name
 
+    @Throws(CommandArgumentException::class)
     override fun run(input: InputInterface, output: OutputInterface): Boolean {
         input.bind(this.definition)
         input.validate()

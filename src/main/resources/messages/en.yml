@@ -2,6 +2,8 @@ name: English
 no-permission:
   command: '&cYou are not allowed to use this command.'
 commands:
+  _not-found: '&cCommand not found.'
+  _syntax: '&7Syntax: &9{0}&7.'
   list:
     description: 'Show the command list'
   reload:
