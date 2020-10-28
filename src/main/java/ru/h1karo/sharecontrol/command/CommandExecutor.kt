@@ -37,8 +37,15 @@ class CommandExecutor @Inject constructor(
     private val inputFactory: InputFactoryInterface,
     private val outputFactory: OutputFactoryInterface
 ) : TabExecutor {
-    override fun onTabComplete(sender: CommandSender, command: BukkitCommand, alias: String, arguments: Array<out String>): MutableList<String> {
-        return mutableListOf()
+    override fun onTabComplete(sender: CommandSender, bukkitCommand: BukkitCommand, alias: String, arguments: Array<out String>): MutableList<String> {
+        return this.findCompletes(arguments.toList()).toMutableList()
+    }
+
+    private fun findCompletes(arguments: List<String>): List<String> {
+        val joined = arguments.joinToString(" ")
+        val commands = this.commands.filter { it.getName().startsWith(joined) }
+        val names = commands.map { it.getName() }
+        return names.map { it.removePrefix(joined).trim() }
     }
 
     override fun onCommand(sender: CommandSender, bukkitCommand: BukkitCommand, alias: String, arguments: Array<out String>): Boolean {
