@@ -70,7 +70,7 @@ class CommandExecutor @Inject constructor(
         val joined = arguments.joinToString(" ")
         val commands = this.commands.filter { it.getName().startsWith(joined) }
 
-        if (commands.isEmpty() && arguments.isNotEmpty()) {
+        if (commands.isEmpty() && arguments.size > 1) {
             return this.getCommand(arguments.dropLast(1))
         }
 
