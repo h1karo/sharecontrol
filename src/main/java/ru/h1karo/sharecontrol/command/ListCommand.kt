@@ -23,6 +23,7 @@
 package ru.h1karo.sharecontrol.command
 
 import com.google.inject.Inject
+import com.google.inject.Provider
 import ru.h1karo.sharecontrol.command.exception.PageNumberOutOfRangeException
 import ru.h1karo.sharecontrol.command.input.InputInterface
 import ru.h1karo.sharecontrol.command.input.argument.IntegerArgument
@@ -32,7 +33,7 @@ import ru.h1karo.sharecontrol.i18n.TranslatorInterface
 import java.text.MessageFormat
 
 class ListCommand @Inject constructor(
-    private val commands: Set<@JvmSuppressWildcards CommandInterface>,
+    private val commandProviders: Collection<@JvmSuppressWildcards Provider<@JvmSuppressWildcards CommandInterface>>,
     private val translator: TranslatorInterface
 ) : Command(
     "list",
@@ -41,7 +42,8 @@ class ListCommand @Inject constructor(
     override fun execute(input: InputInterface, output: OutputInterface): Boolean {
         val style = OutputStyle(output)
         val page = input.getArgument(PAGE_ARGUMENT) as Int
-        val items = this.commands.map { this.getListItem(it) }
+        val commands = this.commandProviders.map { it.get() }
+        val items = commands.map { this.getListItem(it) }
 
         try {
             val paginator = style.createPaginator()
