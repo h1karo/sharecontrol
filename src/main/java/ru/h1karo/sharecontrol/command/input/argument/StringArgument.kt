@@ -28,5 +28,5 @@ class StringArgument(
     defaultValue: String? = null,
     description: String? = null
 ) : Argument<String>(name, type, defaultValue, description) {
-    override fun transform(value: String?): String = value!!
+    override fun transform(value: Any?): String = value.toString()
 }

@@ -48,12 +48,12 @@ interface InputInterface {
     /**
      * Set argument value by argument name.
      */
-    fun setArgument(name: String, value: String?)
+    fun setArgument(name: String, value: Any?)
 
     /**
      * Set argument value by argument index.
      */
-    fun setArgument(index: Int, value: String?)
+    fun setArgument(index: Int, value: Any?)
 
     /**
      * Validates that input definition has the argument by name.

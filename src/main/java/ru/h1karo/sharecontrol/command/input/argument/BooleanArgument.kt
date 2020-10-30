@@ -22,11 +22,27 @@
 
 package ru.h1karo.sharecontrol.command.input.argument
 
+import ru.h1karo.sharecontrol.command.exception.InvalidArgumentException
+
 class BooleanArgument(
     name: String,
     type: Type = Type.OPTIONAL,
     defaultValue: Boolean? = null,
     description: String? = null
 ) : Argument<Boolean>(name, type, defaultValue, description) {
-    override fun transform(value: String?): Boolean = value.toBoolean()
+    override fun transform(value: Any?): Boolean {
+        if (value === null) {
+            throw NullPointerException()
+        }
+
+        if (value is Boolean) {
+            return value
+        }
+
+        if (value is String) {
+            return value.toBoolean()
+        }
+
+        throw InvalidArgumentException(this.name)
+    }
 }

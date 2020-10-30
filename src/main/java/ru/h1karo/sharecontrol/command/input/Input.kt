@@ -72,7 +72,7 @@ abstract class Input : InputInterface {
         return this.getValues().getOrElse(index) { this.definition.getArgument(index).defaultValue }
     }
 
-    override fun setArgument(name: String, value: String?) {
+    override fun setArgument(name: String, value: Any?) {
         if (!this.hasArgument(name)) {
             throw IllegalArgumentException("An argument with name %s does not exists.".format(name))
         }
@@ -81,10 +81,12 @@ abstract class Input : InputInterface {
             this.arguments[name] = definition.transform(value)
         } catch (e: NullPointerException) {
             throw InvalidArgumentException(name)
+        } catch (e: NumberFormatException) {
+            throw InvalidArgumentException(name)
         }
     }
 
-    override fun setArgument(index: Int, value: String?) {
+    override fun setArgument(index: Int, value: Any?) {
         val definition = this.definition.getArgument(index)
         this.setArgument(definition.name, value)
     }

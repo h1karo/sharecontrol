@@ -22,11 +22,35 @@
 
 package ru.h1karo.sharecontrol.command.input.argument
 
+import ru.h1karo.sharecontrol.command.exception.InvalidArgumentException
+
 class IntegerArgument(
     name: String,
     type: Type = Type.OPTIONAL,
     defaultValue: Int? = null,
     description: String? = null
 ) : Argument<Int>(name, type, defaultValue, description) {
-    override fun transform(value: String?): Int = value?.toIntOrNull()!!
+    override fun transform(value: Any?): Int {
+        if (value === null) {
+            throw NullPointerException()
+        }
+
+        if (value is Int) {
+            return value
+        }
+
+        if (value is String) {
+            return value.toInt()
+        }
+
+        if (value is Double) {
+            return value.toInt()
+        }
+
+        if (value is Float) {
+            return value.toInt()
+        }
+
+        throw InvalidArgumentException(this.name)
+    }
 }

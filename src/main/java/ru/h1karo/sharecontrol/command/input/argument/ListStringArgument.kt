@@ -20,27 +20,21 @@
  * @link https://github.com/h1karo/sharecontrol
  */
 
-package ru.h1karo.sharecontrol.command.input
+package ru.h1karo.sharecontrol.command.input.argument
 
-import java.util.LinkedList
+import ru.h1karo.sharecontrol.command.exception.InvalidArgumentException
 
-class ListInput(
-    private val parameters: LinkedList<String> = LinkedList()
-) : Input() {
-    override fun parse() {
-        this.definition.getValues().forEachIndexed { index, definition ->
-            if (index >= this.parameters.size) {
-                return
-            }
-
-            if (!definition.isArray()) {
-                this.setArgument(index, parameters[index])
-                return@forEachIndexed
-            }
-
-            val value = parameters.slice(index..parameters.size)
-            this.setArgument(index, value)
-            return
+class ListStringArgument(
+    name: String,
+    type: Type = Type.OPTIONAL,
+    defaultValue: List<String>? = null,
+    description: String? = null
+) : Argument<List<String>>(name, type, defaultValue, description) {
+    override fun transform(value: Any?): List<String> {
+        if (value !is List<*>) {
+            throw InvalidArgumentException(this.name)
         }
+
+        return value.map { it.toString() }
     }
 }

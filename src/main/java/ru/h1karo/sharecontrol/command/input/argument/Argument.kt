@@ -31,7 +31,7 @@ abstract class Argument<T>(
     val description: String? = null
 ) {
     @Throws(NullPointerException::class)
-    abstract fun transform(value: String?): T
+    abstract fun transform(value: Any?): T
 
     fun serialize(): String {
         return when {
