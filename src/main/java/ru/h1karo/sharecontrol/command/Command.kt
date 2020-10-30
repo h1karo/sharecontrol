@@ -23,7 +23,6 @@
 package ru.h1karo.sharecontrol.command
 
 import ru.h1karo.sharecontrol.command.exception.CommandArgumentException
-import ru.h1karo.sharecontrol.command.exception.InvalidArgumentException
 import ru.h1karo.sharecontrol.command.input.InputDefinition
 import ru.h1karo.sharecontrol.command.input.InputInterface
 import ru.h1karo.sharecontrol.command.input.argument.Argument

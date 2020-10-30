@@ -22,9 +22,9 @@
 
 package ru.h1karo.sharecontrol.command.input
 
+import ru.h1karo.sharecontrol.command.exception.InvalidArgumentException
 import ru.h1karo.sharecontrol.command.exception.NotEnoughArgumentException
 import java.util.LinkedList
-import ru.h1karo.sharecontrol.command.exception.InvalidArgumentException
 
 abstract class Input : InputInterface {
     protected var definition: InputDefinition = InputDefinition()
