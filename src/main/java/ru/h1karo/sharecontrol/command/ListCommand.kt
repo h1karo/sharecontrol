@@ -30,13 +30,13 @@ import ru.h1karo.sharecontrol.command.input.argument.IntegerArgument
 import ru.h1karo.sharecontrol.command.output.OutputInterface
 import ru.h1karo.sharecontrol.command.style.OutputStyle
 import ru.h1karo.sharecontrol.i18n.TranslatorInterface
-import java.text.MessageFormat
 
 class ListCommand @Inject constructor(
     private val commandProviders: Collection<@JvmSuppressWildcards Provider<@JvmSuppressWildcards CommandInterface>>,
     private val translator: TranslatorInterface
 ) : Command(
     "list",
+    "commands.list.description",
     linkedSetOf(IntegerArgument(PAGE_ARGUMENT, defaultValue = 1))
 ) {
     override fun execute(input: InputInterface, output: OutputInterface): Boolean {
@@ -60,8 +60,7 @@ class ListCommand @Inject constructor(
     }
 
     private fun getListItem(command: CommandInterface): String {
-        val descriptionKey = MessageFormat.format("commands.{0}.description", command.getKey())
-        val description = this.translator.trans(descriptionKey)
+        val description = this.translator.trans(command.getDescription())
 
         return this.translator.trans("list.format", listOf(command.serialize(), description))
     }

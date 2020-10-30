@@ -30,11 +30,14 @@ import ru.h1karo.sharecontrol.command.output.OutputInterface
 
 abstract class Command(
     private val name: String,
+    private val description: String,
     arguments: LinkedHashSet<Argument<*>> = linkedSetOf()
 ) : CommandInterface {
     private val definition = InputDefinition(arguments)
 
     override fun getName(): String = this.name
+
+    override fun getDescription(): String = this.description
 
     @Throws(CommandArgumentException::class)
     override fun run(input: InputInterface, output: OutputInterface): Boolean {
