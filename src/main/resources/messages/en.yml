@@ -6,6 +6,16 @@ commands:
   _syntax: '§7Syntax: §9{0}§7.'
   list:
     description: 'Show the command list'
+    arguments:
+      page:
+        name: 'page'
+        description: 'The page number'
+  help:
+    description: 'Show command details'
+    arguments:
+      command:
+        name: 'command'
+        description: 'The target command'
   reload:
     description: 'Reload the plugin'
 list:
@@ -17,3 +27,15 @@ reload:
   error: >-
     §cAn error occurred while trying to reload the plugin.
     §7The error was saved in the log file.
+help:
+  title: '§9>>> §9§lShare§f§lControl §9>§7 The command helper'
+  command: '§7Command syntax: §9{0}§7.'
+  arguments:
+    title: '§7The command arguments:'
+    list: '§9{0}§7 - §f{1}§7 [{2}].'
+    required: '§crequired§7'
+    optional: '§aoptional§7'
+  many:
+    title: '§7Several commands were found by request, please select one.'
+    list: '§7{0}. §9{1}§7.'
+  not-found: '§cNo command found by request.'

@@ -23,12 +23,15 @@
 package ru.h1karo.sharecontrol.command
 
 import ru.h1karo.sharecontrol.command.input.InputInterface
+import ru.h1karo.sharecontrol.command.input.argument.Argument
 import ru.h1karo.sharecontrol.command.output.OutputInterface
 
 interface CommandInterface {
     fun getName(): String
 
     fun getDescription(): String
+
+    fun getArguments(): List<Argument<*>>
 
     fun run(input: InputInterface, output: OutputInterface): Boolean
 

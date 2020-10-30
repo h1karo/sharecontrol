@@ -40,6 +40,8 @@ abstract class Command(
 
     override fun getDescription(): String = this.description
 
+    override fun getArguments(): List<Argument<*>> = this.definition.getValues()
+
     @Throws(CommandArgumentException::class)
     override fun run(input: InputInterface, output: OutputInterface): Boolean {
         input.bind(this.definition)
@@ -58,5 +60,7 @@ abstract class Command(
 
     companion object {
         const val DESCRIPTION_KEY = "commands.{0}.description"
+        const val ARGUMENT_NAME_KEY = "commands.{0}.arguments.{1}.name"
+        const val ARGUMENT_DESCRIPTION_KEY = "commands.{0}.arguments.{1}.description"
     }
 }
