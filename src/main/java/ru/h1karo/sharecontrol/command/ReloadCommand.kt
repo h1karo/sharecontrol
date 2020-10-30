@@ -30,7 +30,7 @@ import ru.h1karo.sharecontrol.init.Initializer
 
 class ReloadCommand @Inject constructor(
     private val initializer: Initializer
-) : Command("reload", "commands.reload.description") {
+) : Command("reload") {
     override fun execute(input: InputInterface, output: OutputInterface): Boolean {
         val style = OutputStyle(output)
 

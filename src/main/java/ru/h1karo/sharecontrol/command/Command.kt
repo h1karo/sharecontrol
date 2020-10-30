@@ -27,11 +27,12 @@ import ru.h1karo.sharecontrol.command.input.InputDefinition
 import ru.h1karo.sharecontrol.command.input.InputInterface
 import ru.h1karo.sharecontrol.command.input.argument.Argument
 import ru.h1karo.sharecontrol.command.output.OutputInterface
+import java.text.MessageFormat
 
 abstract class Command(
     private val name: String,
-    private val description: String,
-    arguments: LinkedHashSet<Argument<*>> = linkedSetOf()
+    arguments: LinkedHashSet<Argument<*>> = linkedSetOf(),
+    private val description: String = MessageFormat.format(DESCRIPTION_KEY, name),
 ) : CommandInterface {
     private val definition = InputDefinition(arguments)
 
@@ -53,5 +54,9 @@ abstract class Command(
         return setOf("/sc", this.name)
             .plus(this.definition.getValues().map { it.serialize() })
             .joinToString(" ")
+    }
+
+    companion object {
+        const val DESCRIPTION_KEY = "commands.{0}.description"
     }
 }

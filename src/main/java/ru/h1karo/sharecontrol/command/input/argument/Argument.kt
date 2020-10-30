@@ -49,6 +49,8 @@ abstract class Argument<T>(
     fun isArray(): Boolean = this.type === Type.ARRAY
 
     companion object {
+        const val DESCRIPTION_KEY = "commands.{0}.arguments.{1}.description"
+
         const val REQUIRED_PATTERN = "<{0}>"
         const val OPTIONAL_PATTERN = "[{0}]"
         const val DEFAULT_VALUE_PATTERN = "[{0}={1}]"
