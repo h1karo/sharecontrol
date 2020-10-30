@@ -48,7 +48,7 @@ abstract class Command(
 
     override fun serialize(): String {
         return setOf("/sc", this.name)
-            .plus(this.definition.getValues().map { it.toString() })
+            .plus(this.definition.getValues().map { it.serialize() })
             .joinToString(" ")
     }
 }

@@ -32,7 +32,7 @@ abstract class Argument<T>(
     @Throws(NullPointerException::class)
     abstract fun transform(value: String?): T
 
-    override fun toString(): String {
+    fun serialize(): String {
         return when {
             this.isRequired() -> MessageFormat.format(REQUIRED_PATTERN, this.name)
             this.isArray() -> MessageFormat.format(ARRAY_PATTERN, this.name)
