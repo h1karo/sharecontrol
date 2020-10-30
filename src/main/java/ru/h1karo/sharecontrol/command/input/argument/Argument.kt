@@ -26,8 +26,7 @@ import java.text.MessageFormat
 
 abstract class Argument<T>(
     val name: String,
-    val isRequired: Boolean = false,
-    val isArray: Boolean = false,
+    val type: Type = Type.OPTIONAL,
     val defaultValue: T? = null
 ) {
     @Throws(NullPointerException::class)
@@ -35,15 +34,23 @@ abstract class Argument<T>(
 
     override fun toString(): String {
         return when {
-            this.isRequired -> MessageFormat.format(REQUIRED_PATTERN, this.name)
+            this.isRequired() -> MessageFormat.format(REQUIRED_PATTERN, this.name)
             this.defaultValue === null -> MessageFormat.format(OPTIONAL_PATTERN, this.name)
             else -> MessageFormat.format(DEFAULT_VALUE_PATTERN, this.name, this.defaultValue)
         }
     }
+
+    fun isRequired(): Boolean = this.type === Type.REQUIRED
+
+    fun isOptional(): Boolean = this.type === Type.OPTIONAL
+
+    fun isArray(): Boolean = this.type === Type.ARRAY
 
     companion object {
         const val REQUIRED_PATTERN = "<{0}>"
         const val OPTIONAL_PATTERN = "[{0}]"
         const val DEFAULT_VALUE_PATTERN = "[{0}={1}]"
     }
+
+    enum class Type { REQUIRED, OPTIONAL, ARRAY }
 }

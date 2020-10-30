@@ -55,14 +55,14 @@ class InputDefinition {
             throw IllegalArgumentException("Cannot to add an argument after an array argument.")
         }
 
-        if (this.hasOptional() && argument.isRequired) {
+        if (this.hasOptional() && argument.isRequired()) {
             throw IllegalArgumentException("Cannot to add an required argument after an optional argument.")
         }
 
         this.arguments[argument.name] = argument
     }
 
-    private fun hasArray(): Boolean = this.arguments.any { it.value.isArray }
+    private fun hasArray(): Boolean = this.arguments.any { it.value.isArray() }
 
-    private fun hasOptional(): Boolean = this.arguments.any { !it.value.isRequired }
+    private fun hasOptional(): Boolean = this.arguments.any { !it.value.isRequired() }
 }

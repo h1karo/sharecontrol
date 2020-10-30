@@ -24,9 +24,8 @@ package ru.h1karo.sharecontrol.command.input.argument
 
 class BooleanArgument(
     name: String,
-    isRequired: Boolean = false,
-    isArray: Boolean = false,
+    type: Type = Type.OPTIONAL,
     defaultValue: Boolean? = null
-) : Argument<Boolean>(name, isRequired, isArray, defaultValue) {
+) : Argument<Boolean>(name, type, defaultValue) {
     override fun transform(value: String?): Boolean = value.toBoolean()
 }

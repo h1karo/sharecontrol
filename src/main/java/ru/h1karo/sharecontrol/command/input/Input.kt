@@ -41,7 +41,7 @@ abstract class Input : InputInterface {
 
     override fun validate() {
         val missedArguments = this.definition.getArguments()
-            .filter { it.value.isRequired }
+            .filter { it.value.isRequired() }
             .filter { !this.arguments.containsKey(it.key) }
 
         if (missedArguments.isNotEmpty()) {
