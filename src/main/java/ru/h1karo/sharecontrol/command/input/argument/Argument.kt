@@ -35,6 +35,7 @@ abstract class Argument<T>(
     override fun toString(): String {
         return when {
             this.isRequired() -> MessageFormat.format(REQUIRED_PATTERN, this.name)
+            this.isArray() -> MessageFormat.format(ARRAY_PATTERN, this.name)
             this.defaultValue === null -> MessageFormat.format(OPTIONAL_PATTERN, this.name)
             else -> MessageFormat.format(DEFAULT_VALUE_PATTERN, this.name, this.defaultValue)
         }
@@ -50,6 +51,7 @@ abstract class Argument<T>(
         const val REQUIRED_PATTERN = "<{0}>"
         const val OPTIONAL_PATTERN = "[{0}]"
         const val DEFAULT_VALUE_PATTERN = "[{0}={1}]"
+        const val ARRAY_PATTERN = "[{0}...]"
     }
 
     enum class Type { REQUIRED, OPTIONAL, ARRAY }
