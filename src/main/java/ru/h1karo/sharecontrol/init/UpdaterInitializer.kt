@@ -47,9 +47,9 @@ class UpdaterInitializer @Inject constructor(
             return
         }
 
-        this.send("&7A new version of the plugin has been found: &9{0}&7.", setOf(version.name))
-        this.send(" &7You can download the update at this link:")
-        this.send(" &9{0}&7.", setOf(version.link))
+        this.send("§7A new version of the plugin has been found: §9{0}§7.", setOf(version.name))
+        this.send(" §7You can download the update at this link:")
+        this.send(" §9{0}§7.", setOf(version.link))
     }
 
     override fun terminate() {}

@@ -43,9 +43,9 @@ class ConfigurationInitializer @Inject constructor(
             val value = e.getInvalidValue().toString()
 
             this.error("Invalid value in the config file.")
-            this.error("The parameter path: &f{0}&c.", setOf(parameter.getPath()))
-            this.error("The invalid value: &f{0}&c.", setOf(value))
-            this.error("This parameter accepts &f{0}&c.", setOf(parameter.accepts().joinToString("&c, &f")))
+            this.error("The parameter path: §f{0}§c.", setOf(parameter.getPath()))
+            this.error("The invalid value: §f{0}§c.", setOf(value))
+            this.error("This parameter accepts §f{0}§c.", setOf(parameter.accepts().joinToString("§c, §f")))
 
             throw FixableException(e)
         }
