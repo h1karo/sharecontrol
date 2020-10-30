@@ -26,10 +26,10 @@ import ru.h1karo.sharecontrol.command.exception.InvalidArgumentException
 
 class IntegerArgument(
     name: String,
-    type: Type = Type.OPTIONAL,
+    isRequired: Boolean = false,
     defaultValue: Int? = null,
     description: String? = null
-) : Argument<Int>(name, type, defaultValue, description) {
+) : Argument<Int>(name, isRequired, false, defaultValue, description) {
     override fun transform(value: Any?): Int {
         if (value === null) {
             throw NullPointerException()

@@ -26,10 +26,10 @@ import ru.h1karo.sharecontrol.command.exception.InvalidArgumentException
 
 class ListStringArgument(
     name: String,
-    type: Type = Type.OPTIONAL,
+    isRequired: Boolean = false,
     defaultValue: List<String>? = null,
     description: String? = null
-) : Argument<List<String>>(name, type, defaultValue, description) {
+) : Argument<List<String>>(name, isRequired, true, defaultValue, description) {
     override fun transform(value: Any?): List<String> {
         if (value !is List<*>) {
             throw InvalidArgumentException(this.name)

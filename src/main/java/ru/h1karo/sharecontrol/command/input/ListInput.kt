@@ -33,7 +33,7 @@ class ListInput(
                 return
             }
 
-            if (!definition.isArray()) {
+            if (!definition.isArray) {
                 this.setArgument(index, parameters[index])
                 return@forEachIndexed
             }

@@ -26,10 +26,10 @@ import ru.h1karo.sharecontrol.command.exception.InvalidArgumentException
 
 class BooleanArgument(
     name: String,
-    type: Type = Type.OPTIONAL,
+    isRequired: Boolean = false,
     defaultValue: Boolean? = null,
     description: String? = null
-) : Argument<Boolean>(name, type, defaultValue, description) {
+) : Argument<Boolean>(name, isRequired, false, defaultValue, description) {
     override fun transform(value: Any?): Boolean {
         if (value === null) {
             throw NullPointerException()
