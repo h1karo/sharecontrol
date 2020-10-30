@@ -25,7 +25,8 @@ package ru.h1karo.sharecontrol.command.input.argument
 class StringArgument(
     name: String,
     type: Type = Type.OPTIONAL,
-    defaultValue: String? = null
-) : Argument<String>(name, type, defaultValue) {
+    defaultValue: String? = null,
+    description: String? = null
+) : Argument<String>(name, type, defaultValue, description) {
     override fun transform(value: String?): String = value!!
 }

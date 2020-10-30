@@ -27,7 +27,8 @@ import java.text.MessageFormat
 abstract class Argument<T>(
     val name: String,
     val type: Type = Type.OPTIONAL,
-    val defaultValue: T? = null
+    val defaultValue: T? = null,
+    val description: String? = null
 ) {
     @Throws(NullPointerException::class)
     abstract fun transform(value: String?): T

@@ -25,7 +25,8 @@ package ru.h1karo.sharecontrol.command.input.argument
 class IntegerArgument(
     name: String,
     type: Type = Type.OPTIONAL,
-    defaultValue: Int? = null
-) : Argument<Int>(name, type, defaultValue) {
+    defaultValue: Int? = null,
+    description: String? = null
+) : Argument<Int>(name, type, defaultValue, description) {
     override fun transform(value: String?): Int = value?.toIntOrNull()!!
 }
