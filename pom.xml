@@ -38,7 +38,7 @@
         <annotations.version>20.1.0</annotations.version>
         <compiler.version>3.8.1</compiler.version>
         <shade.version>3.2.4</shade.version>
-        <git-commit.version>4.0.2</git-commit.version>
+        <git-commit.version>4.0.3</git-commit.version>
         <semver.version>1.1.1</semver.version>
         <reflections.version>0.9.12</reflections.version>
         <commons-io.version>2.8.0</commons-io.version>
