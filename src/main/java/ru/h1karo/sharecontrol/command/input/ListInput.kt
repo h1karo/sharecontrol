@@ -34,11 +34,12 @@ class ListInput(
             }
 
             if (!definition.isArray) {
-                this.setArgument(index, parameters[index])
+                this.setArgument(index, this.parameters[index])
                 return@forEachIndexed
             }
 
-            val value = parameters.slice(index..parameters.size)
+            val lastIndex = this.parameters.size - 1
+            val value = this.parameters.slice(index..lastIndex)
             this.setArgument(index, value)
             return
         }
