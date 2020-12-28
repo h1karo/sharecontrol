@@ -23,8 +23,10 @@
 package ru.h1karo.sharecontrol.i18n
 
 import ru.h1karo.sharecontrol.Resettable
+import ru.h1karo.sharecontrol.i18n.exception.I18nException
 
 interface TranslatorInterface : Resettable {
+    @Throws(I18nException::class)
     fun trans(id: String, parameters: Collection<Any> = emptySet(), locale: Locale? = null): String
 
     fun getLocale(): Locale
