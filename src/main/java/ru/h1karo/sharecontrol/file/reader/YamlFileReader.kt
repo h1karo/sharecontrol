@@ -40,6 +40,7 @@ class YamlFileReader : Reader {
         return YamlConfiguration
             .loadConfiguration(resource)
             .getValues(true)
+            .filter { it.value is String }
     }
 
     override fun supports(resource: Any, format: String): Boolean {

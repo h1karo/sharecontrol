@@ -20,23 +20,28 @@
  * @link https://github.com/h1karo/sharecontrol
  */
 
-package ru.h1karo.sharecontrol.console
+package ru.h1karo.sharecontrol.command.input
 
-import com.google.inject.Inject
-import com.google.inject.Singleton
-import ru.h1karo.sharecontrol.messenger.Messenger
+import java.util.LinkedList
 
-@Singleton
-open class ConsoleStyle @Inject constructor(private val messenger: Messenger) : Messenger {
-    fun success(recipient: Any, message: String, parameters: Collection<Any> = emptySet()) =
-        this.send(recipient, "§2✓§8 $message", parameters)
+class ListInput(
+    private val parameters: LinkedList<String> = LinkedList()
+) : Input() {
+    override fun parse() {
+        this.definition.getValues().forEachIndexed { index, definition ->
+            if (index >= this.parameters.size) {
+                return
+            }
 
-    fun error(recipient: Any, message: String, parameters: Collection<Any> = emptySet()) =
-        this.send(recipient, "§4✗§c $message", parameters)
+            if (!definition.isArray) {
+                this.setArgument(index, this.parameters[index])
+                return@forEachIndexed
+            }
 
-    fun warning(recipient: Any, message: String, parameters: Collection<Any> = emptySet()) =
-        this.send(recipient, "§6!§e $message", parameters)
-
-    override fun send(recipient: Any, message: String, parameters: Collection<Any>) =
-        this.messenger.send(recipient, message, parameters)
+            val lastIndex = this.parameters.size - 1
+            val value = this.parameters.slice(index..lastIndex)
+            this.setArgument(index, value)
+            return
+        }
+    }
 }

@@ -25,7 +25,7 @@ package ru.h1karo.sharecontrol.messenger.format
 import java.text.MessageFormat
 
 class IcuMessageFormatter : MessageFormatter {
-    override fun format(message: String, parameters: Set<String>): String {
+    override fun format(message: String, parameters: Collection<Any>): String {
         return MessageFormat.format(message, *parameters.toTypedArray())
     }
 }

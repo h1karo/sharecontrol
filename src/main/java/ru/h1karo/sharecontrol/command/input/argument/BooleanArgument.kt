@@ -20,23 +20,29 @@
  * @link https://github.com/h1karo/sharecontrol
  */
 
-package ru.h1karo.sharecontrol.console
+package ru.h1karo.sharecontrol.command.input.argument
 
-import com.google.inject.Inject
-import com.google.inject.Singleton
-import ru.h1karo.sharecontrol.messenger.Messenger
+import ru.h1karo.sharecontrol.command.exception.InvalidArgumentException
 
-@Singleton
-open class ConsoleStyle @Inject constructor(private val messenger: Messenger) : Messenger {
-    fun success(recipient: Any, message: String, parameters: Collection<Any> = emptySet()) =
-        this.send(recipient, "§2✓§8 $message", parameters)
+class BooleanArgument(
+    name: String,
+    isRequired: Boolean = false,
+    defaultValue: Boolean? = null,
+    description: String? = null
+) : Argument<Boolean>(name, isRequired, false, defaultValue, description) {
+    override fun transform(value: Any?): Boolean {
+        if (value === null) {
+            throw NullPointerException()
+        }
 
-    fun error(recipient: Any, message: String, parameters: Collection<Any> = emptySet()) =
-        this.send(recipient, "§4✗§c $message", parameters)
+        if (value is Boolean) {
+            return value
+        }
 
-    fun warning(recipient: Any, message: String, parameters: Collection<Any> = emptySet()) =
-        this.send(recipient, "§6!§e $message", parameters)
+        if (value is String) {
+            return value.toBoolean()
+        }
 
-    override fun send(recipient: Any, message: String, parameters: Collection<Any>) =
-        this.messenger.send(recipient, message, parameters)
+        throw InvalidArgumentException(this.name)
+    }
 }

@@ -20,23 +20,20 @@
  * @link https://github.com/h1karo/sharecontrol
  */
 
-package ru.h1karo.sharecontrol.console
+package ru.h1karo.sharecontrol.command
 
-import com.google.inject.Inject
-import com.google.inject.Singleton
-import ru.h1karo.sharecontrol.messenger.Messenger
+import ru.h1karo.sharecontrol.command.input.InputInterface
+import ru.h1karo.sharecontrol.command.input.argument.Argument
+import ru.h1karo.sharecontrol.command.output.OutputInterface
 
-@Singleton
-open class ConsoleStyle @Inject constructor(private val messenger: Messenger) : Messenger {
-    fun success(recipient: Any, message: String, parameters: Collection<Any> = emptySet()) =
-        this.send(recipient, "§2✓§8 $message", parameters)
+interface CommandInterface {
+    fun getName(): String
 
-    fun error(recipient: Any, message: String, parameters: Collection<Any> = emptySet()) =
-        this.send(recipient, "§4✗§c $message", parameters)
+    fun getDescription(): String
 
-    fun warning(recipient: Any, message: String, parameters: Collection<Any> = emptySet()) =
-        this.send(recipient, "§6!§e $message", parameters)
+    fun getArguments(): List<Argument<*>>
 
-    override fun send(recipient: Any, message: String, parameters: Collection<Any>) =
-        this.messenger.send(recipient, message, parameters)
+    fun run(input: InputInterface, output: OutputInterface): Boolean
+
+    fun serialize(): String
 }

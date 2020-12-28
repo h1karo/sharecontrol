@@ -40,7 +40,7 @@ class Translator @Inject constructor(
 
     private lateinit var locale: Locale
 
-    override fun trans(id: String, parameters: Set<String>, locale: Locale?): String {
+    override fun trans(id: String, parameters: Collection<Any>, locale: Locale?): String {
         val message = getMessage(id, locale)
         return this.formatter.format(message, parameters)
     }

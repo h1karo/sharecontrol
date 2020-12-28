@@ -20,23 +20,14 @@
  * @link https://github.com/h1karo/sharecontrol
  */
 
-package ru.h1karo.sharecontrol.console
+package ru.h1karo.sharecontrol.command.input.factory
 
-import com.google.inject.Inject
-import com.google.inject.Singleton
-import ru.h1karo.sharecontrol.messenger.Messenger
+import ru.h1karo.sharecontrol.command.CommandInterface
+import ru.h1karo.sharecontrol.command.input.InputInterface
 
-@Singleton
-open class ConsoleStyle @Inject constructor(private val messenger: Messenger) : Messenger {
-    fun success(recipient: Any, message: String, parameters: Collection<Any> = emptySet()) =
-        this.send(recipient, "§2✓§8 $message", parameters)
-
-    fun error(recipient: Any, message: String, parameters: Collection<Any> = emptySet()) =
-        this.send(recipient, "§4✗§c $message", parameters)
-
-    fun warning(recipient: Any, message: String, parameters: Collection<Any> = emptySet()) =
-        this.send(recipient, "§6!§e $message", parameters)
-
-    override fun send(recipient: Any, message: String, parameters: Collection<Any>) =
-        this.messenger.send(recipient, message, parameters)
+/**
+ * Creates input instance for target command.
+ */
+interface InputFactoryInterface {
+    fun build(command: CommandInterface, arguments: Collection<String> = listOf()): InputInterface
 }

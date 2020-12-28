@@ -28,6 +28,7 @@ import com.google.inject.Singleton
 import org.bukkit.event.Listener
 import org.bukkit.plugin.java.JavaPlugin
 import ru.h1karo.sharecontrol.init.Initializer
+import ru.h1karo.sharecontrol.module.CommandModule
 import ru.h1karo.sharecontrol.module.DatabaseModule
 import ru.h1karo.sharecontrol.module.I18nModule
 import ru.h1karo.sharecontrol.module.InitializationModule
@@ -43,6 +44,7 @@ class ShareControl : JavaPlugin(), Listener {
         DatabaseModule(),
         I18nModule(),
         MessengerModule(),
+        CommandModule(),
         UpdaterModule()
     )
     private val initializer: Initializer = injector.getInstance(Initializer::class.java)

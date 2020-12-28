@@ -20,23 +20,28 @@
  * @link https://github.com/h1karo/sharecontrol
  */
 
-package ru.h1karo.sharecontrol.console
+package ru.h1karo.sharecontrol.command
 
 import com.google.inject.Inject
-import com.google.inject.Singleton
-import ru.h1karo.sharecontrol.messenger.Messenger
+import ru.h1karo.sharecontrol.command.input.InputInterface
+import ru.h1karo.sharecontrol.command.output.OutputInterface
+import ru.h1karo.sharecontrol.command.style.OutputStyle
+import ru.h1karo.sharecontrol.init.Initializer
 
-@Singleton
-open class ConsoleStyle @Inject constructor(private val messenger: Messenger) : Messenger {
-    fun success(recipient: Any, message: String, parameters: Collection<Any> = emptySet()) =
-        this.send(recipient, "§2✓§8 $message", parameters)
+class ReloadCommand @Inject constructor(
+    private val initializer: Initializer
+) : Command("reload") {
+    override fun execute(input: InputInterface, output: OutputInterface): Boolean {
+        val style = OutputStyle(output)
 
-    fun error(recipient: Any, message: String, parameters: Collection<Any> = emptySet()) =
-        this.send(recipient, "§4✗§c $message", parameters)
+        try {
+            this.initializer.terminate()
+            this.initializer.initialize()
+            style.write("reload.success")
+        } catch (e: Exception) {
+            style.error("reload.error")
+        }
 
-    fun warning(recipient: Any, message: String, parameters: Collection<Any> = emptySet()) =
-        this.send(recipient, "§6!§e $message", parameters)
-
-    override fun send(recipient: Any, message: String, parameters: Collection<Any>) =
-        this.messenger.send(recipient, message, parameters)
+        return true
+    }
 }

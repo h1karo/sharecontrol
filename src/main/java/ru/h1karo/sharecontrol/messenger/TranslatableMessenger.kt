@@ -30,7 +30,7 @@ class TranslatableMessenger @Inject constructor(
     private val messenger: Messenger,
     private val translator: TranslatorInterface
 ) : Messenger {
-    override fun send(recipient: Any, message: String, parameters: Set<String>) {
+    override fun send(recipient: Any, message: String, parameters: Collection<Any>) {
         try {
             val translated = this.translator.trans(message, parameters)
             this.messenger.send(recipient, translated)

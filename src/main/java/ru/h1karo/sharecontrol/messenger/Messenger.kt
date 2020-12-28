@@ -23,5 +23,5 @@
 package ru.h1karo.sharecontrol.messenger
 
 interface Messenger {
-    fun send(recipient: Any, message: String, parameters: Set<String> = emptySet())
+    fun send(recipient: Any, message: String, parameters: Collection<Any> = emptySet())
 }

@@ -20,23 +20,23 @@
  * @link https://github.com/h1karo/sharecontrol
  */
 
-package ru.h1karo.sharecontrol.console
+package ru.h1karo.sharecontrol.command.pagination
 
-import com.google.inject.Inject
-import com.google.inject.Singleton
-import ru.h1karo.sharecontrol.messenger.Messenger
+class Pagination(
+    private val items: List<String>,
+    private val currentPage: Int,
+    private val limit: Int,
+    private val lastPage: Int
+) : PaginationInterface {
+    override fun getItems(): Iterable<String> = this.items
 
-@Singleton
-open class ConsoleStyle @Inject constructor(private val messenger: Messenger) : Messenger {
-    fun success(recipient: Any, message: String, parameters: Collection<Any> = emptySet()) =
-        this.send(recipient, "§2✓§8 $message", parameters)
+    override fun getCurrentPageNumber(): Int = this.currentPage
 
-    fun error(recipient: Any, message: String, parameters: Collection<Any> = emptySet()) =
-        this.send(recipient, "§4✗§c $message", parameters)
+    override fun getItemNumberPerPage(): Int = this.limit
 
-    fun warning(recipient: Any, message: String, parameters: Collection<Any> = emptySet()) =
-        this.send(recipient, "§6!§e $message", parameters)
+    override fun getLastPageNumber(): Int = this.lastPage
 
-    override fun send(recipient: Any, message: String, parameters: Collection<Any>) =
-        this.messenger.send(recipient, message, parameters)
+    override fun hasNext(): Boolean = this.getCurrentPageNumber() != this.getLastPageNumber()
+
+    override fun hasPrevious(): Boolean = this.getCurrentPageNumber() != 0
 }

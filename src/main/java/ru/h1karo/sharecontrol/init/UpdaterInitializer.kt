@@ -23,11 +23,13 @@
 package ru.h1karo.sharecontrol.init
 
 import com.google.inject.Inject
+import com.google.inject.Singleton
 import com.google.inject.name.Named
 import ru.h1karo.sharecontrol.console.BlockStyle
 import ru.h1karo.sharecontrol.module.UpdaterModule
 import ru.h1karo.sharecontrol.updater.VersionProvider
 
+@Singleton
 class UpdaterInitializer @Inject constructor(
     console: BlockStyle,
     @Named(UpdaterModule.UPDATER_ENABLED)
@@ -45,9 +47,9 @@ class UpdaterInitializer @Inject constructor(
             return
         }
 
-        this.send("&7A new version of the plugin has been found: &9{0}&7.", setOf(version.name))
-        this.send(" &7You can download the update at this link:")
-        this.send(" &9{0}&7.", setOf(version.link))
+        this.send("§7A new version of the plugin has been found: §9{0}§7.", setOf(version.name))
+        this.send(" §7You can download the update at this link:")
+        this.send(" §9{0}§7.", setOf(version.link))
     }
 
     override fun terminate() {}

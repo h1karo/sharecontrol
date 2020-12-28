@@ -30,13 +30,13 @@ class ColoredMessenger @Inject constructor(
     private val messenger: Messenger,
     private val formatter: MessageFormatter
 ) : Messenger {
-    override fun send(recipient: Any, message: String, parameters: Set<String>) {
+    override fun send(recipient: Any, message: String, parameters: Collection<Any>) {
         val formatted = this.formatter.format(message, parameters)
         val colored = ChatColor.translateAlternateColorCodes(COLOR_CHAR, formatted)
         this.messenger.send(recipient, colored)
     }
 
     companion object {
-        private const val COLOR_CHAR = '&'
+        private const val COLOR_CHAR = ChatColor.COLOR_CHAR
     }
 }

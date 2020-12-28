@@ -20,23 +20,24 @@
  * @link https://github.com/h1karo/sharecontrol
  */
 
-package ru.h1karo.sharecontrol.console
+package ru.h1karo.sharecontrol.init
 
 import com.google.inject.Inject
 import com.google.inject.Singleton
-import ru.h1karo.sharecontrol.messenger.Messenger
+import org.bukkit.command.CommandExecutor
+import org.bukkit.plugin.java.JavaPlugin
+import ru.h1karo.sharecontrol.console.BlockStyle
 
 @Singleton
-open class ConsoleStyle @Inject constructor(private val messenger: Messenger) : Messenger {
-    fun success(recipient: Any, message: String, parameters: Collection<Any> = emptySet()) =
-        this.send(recipient, "§2✓§8 $message", parameters)
+class CommandInitializer @Inject constructor(
+    private val plugin: JavaPlugin,
+    private val executor: CommandExecutor,
+    console: BlockStyle
+) : AbstractInitializer(console) {
+    override fun initialize() {
+        val commandName = this.plugin.name.toLowerCase()
+        this.plugin.getCommand(commandName)?.setExecutor(this.executor)
+    }
 
-    fun error(recipient: Any, message: String, parameters: Collection<Any> = emptySet()) =
-        this.send(recipient, "§4✗§c $message", parameters)
-
-    fun warning(recipient: Any, message: String, parameters: Collection<Any> = emptySet()) =
-        this.send(recipient, "§6!§e $message", parameters)
-
-    override fun send(recipient: Any, message: String, parameters: Collection<Any>) =
-        this.messenger.send(recipient, message, parameters)
+    override fun terminate() {}
 }
