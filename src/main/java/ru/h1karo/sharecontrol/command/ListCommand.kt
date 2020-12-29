@@ -36,16 +36,18 @@ import java.text.MessageFormat
 class ListCommand @Inject constructor(
     private val commandProviders: Collection<@JvmSuppressWildcards Provider<@JvmSuppressWildcards CommandInterface>>,
     private val translator: TranslatorInterface
-) : Command(
-    linkedSetOf(
-        IntegerArgument(
-            PAGE_ARGUMENT,
-            defaultValue = 1,
-            description = MessageFormat.format(Argument.DESCRIPTION_KEY, NAME, PAGE_ARGUMENT)
-        )
-    )
-) {
+) : Command() {
     override fun getName(): String = NAME
+
+    init {
+        this.definition.addArgument(
+            IntegerArgument(
+                PAGE_ARGUMENT,
+                defaultValue = 1,
+                description = MessageFormat.format(Argument.DESCRIPTION_KEY, NAME, PAGE_ARGUMENT)
+            )
+        )
+    }
 
     override fun execute(input: InputInterface, output: OutputInterface): Boolean {
         val style = OutputStyle(output)
