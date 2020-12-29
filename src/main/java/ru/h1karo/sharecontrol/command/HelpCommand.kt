@@ -79,6 +79,8 @@ class HelpCommand @Inject constructor(
 
         val command = commands.first()
         style.write("help.command", setOf(command.serialize()))
+        val description = this.translator.trans(command.getDescription())
+        style.write("help.description", setOf(description))
 
         val arguments = command.getArguments()
         if (arguments.isNotEmpty()) {
@@ -86,8 +88,8 @@ class HelpCommand @Inject constructor(
         }
 
         arguments.forEach {
-            val descriptionKey = MessageFormat.format(ARGUMENT_DESCRIPTION_KEY, command.getName(), it.name)
-            val description = this.translator.trans(descriptionKey)
+            val argumentDescriptionKey = MessageFormat.format(ARGUMENT_DESCRIPTION_KEY, command.getName(), it.name)
+            val argumentDescription = this.translator.trans(argumentDescriptionKey)
 
             val requirementKey = when {
                 it.isRequired -> REQUIRED_ARGUMENT_KEY
@@ -95,7 +97,7 @@ class HelpCommand @Inject constructor(
             }
             val requirement = this.translator.trans(requirementKey)
 
-            style.write("help.arguments.list", setOf(it.name, description, requirement))
+            style.write("help.arguments.list", setOf(it.name, argumentDescription, requirement))
         }
 
         return true

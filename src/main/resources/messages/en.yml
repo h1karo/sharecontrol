@@ -27,7 +27,8 @@ reload:
     §7The error was saved in the log file.
 help:
   title: '§9>>> §9§lShare§f§lControl §9>§7 The command helper'
-  command: '§7Command syntax: §9{0}§7.'
+  command: '§7The syntax: §9{0}§7.'
+  description: '§7The description: §f{0}§7.'
   arguments:
     title: '§7The command arguments:'
     list: '§9{0}§7 - §f{1}§7 [{2}].'

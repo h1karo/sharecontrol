@@ -28,6 +28,7 @@ reload:
 help:
   title: '§9>>> §9§lShare§f§lControl §9>§7 Помощник'
   command: '§7Синтаксис команды: §9{0}§7.'
+  description: '§7Описание: §f{0}§7.'
   arguments:
     title: '§7Аргументы команды:'
     list: '§9{0}§7 - §f{1}§7 [{2}].'
