@@ -34,9 +34,12 @@ import java.text.MessageFormat
 
 class HelpCommand @Inject constructor(
     private val commandProviders: Collection<@JvmSuppressWildcards Provider<@JvmSuppressWildcards CommandInterface>>,
-    private val translator: TranslatorInterface
+    private val translator: TranslatorInterface,
+    private val parent: ShareControlCommand
 ) : Command() {
     override fun getName(): String = NAME
+
+    override fun getParent(): CommandInterface = this.parent
 
     init {
         this.definition.addArgument(
@@ -91,7 +94,9 @@ class HelpCommand @Inject constructor(
         return true
     }
 
-    private fun provideCommands() = this.commandProviders.map { it.get() }
+    private fun provideCommands() = this.commandProviders
+        .map { it.get() }
+        .filter { it.getParent() is ShareControlCommand }
 
     companion object {
         const val NAME = "help"

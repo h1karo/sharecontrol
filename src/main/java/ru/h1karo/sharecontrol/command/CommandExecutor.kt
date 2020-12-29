@@ -53,15 +53,16 @@ class CommandExecutor @Inject constructor(
     override fun onCommand(sender: CommandSender, bukkitCommand: BukkitCommand, alias: String, arguments: Array<out String>): Boolean {
         val command: CommandInterface
         val output = this.outputFactory.build(sender)
+        val inputArguments = listOf(bukkitCommand.name, *arguments)
 
         try {
-            command = this.getCommand(arguments.toList())
+            command = this.getCommand(inputArguments)
         } catch (e: CommandNotFoundException) {
             output.write("commands._not-found")
             return true
         }
 
-        val input = this.inputFactory.build(command, arguments.toList())
+        val input = this.inputFactory.build(command, inputArguments)
 
         return try {
             command.run(input, output)
@@ -72,22 +73,18 @@ class CommandExecutor @Inject constructor(
     }
 
     @Throws(CommandNotFoundException::class)
-    private fun getCommand(arguments: List<String>): CommandInterface {
-        if (arguments.isEmpty()) {
-            return this.commands.find { it.getName() == "list" }!!
-        }
+    private fun getCommand(input: List<String>): CommandInterface {
+        val joined = input.joinToString(" ")
+        val commands = this.commands.filter { it.getFullName().equals(joined, true) }
 
-        val joined = arguments.joinToString(" ")
-        val commands = this.commands.filter { it.getName().equals(joined, true) }
-
-        if (commands.isEmpty() && arguments.size > 1) {
-            return this.getCommand(arguments.dropLast(1))
+        if (commands.isEmpty() && input.size > 1) {
+            return this.getCommand(input.dropLast(1))
         }
 
         if (commands.size == 1) {
             return commands.first()
         }
 
-        throw CommandNotFoundException(arguments.toList())
+        throw CommandNotFoundException(input.toList())
     }
 }

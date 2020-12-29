@@ -4,6 +4,8 @@ no-permission:
 commands:
   _not-found: '§cCommand not found.'
   _syntax: '§7Syntax: §9{0}§7.'
+  sharecontrol:
+    description: 'The main plugin command'
   list:
     description: 'Show the command list'
     arguments:

@@ -4,6 +4,8 @@ no-permission:
 commands:
   _not-found: '§cКоманда не найдена.'
   _syntax: '§7Синтаксис: §9{0}'
+  sharecontrol:
+    description: 'Основная команда плагина'
   list:
     description: 'Показать список команд'
     arguments:

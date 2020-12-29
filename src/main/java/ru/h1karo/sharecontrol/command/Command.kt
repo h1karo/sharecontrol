@@ -32,6 +32,8 @@ import java.text.MessageFormat
 abstract class Command : CommandInterface {
     protected val definition = InputDefinition()
 
+    override fun getParent(): CommandInterface? = null
+
     override fun getDescription(): String = MessageFormat.format(DESCRIPTION_KEY, this.getName())
 
     override fun getArguments(): List<Argument<*>> = this.definition.getValues()
@@ -47,9 +49,26 @@ abstract class Command : CommandInterface {
     protected abstract fun execute(input: InputInterface, output: OutputInterface): Boolean
 
     override fun serialize(): String {
-        return setOf("/sc", this.getName())
+        val command = setOf(this.getFullName())
             .plus(this.getArguments().map { it.serialize() })
             .joinToString(" ")
+        return CommandInterface.COMMAND_CHAR + command
+    }
+
+    override fun getFullName(): String =
+        setOf(this.getPrefix(), this.getName())
+            .joinToString(" ")
+            .trim(' ')
+
+    private fun getPrefix(): String {
+        var parent = this.getParent()
+        val parts = LinkedHashSet<String>()
+        while (parent !== null) {
+            parts.add(parent.getName())
+            parent = parent.getParent()
+        }
+
+        return parts.reversed().joinToString(" ")
     }
 
     companion object {

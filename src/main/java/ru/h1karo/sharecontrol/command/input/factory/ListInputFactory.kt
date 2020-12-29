@@ -39,11 +39,11 @@ class ListInputFactory : InputFactoryInterface {
 
         val string = arguments.joinToString(" ")
 
-        if (string == command.getName()) {
+        if (string == command.getFullName()) {
             return LinkedList()
         }
 
-        val parameters = string.removePrefix(command.getName()).trim()
+        val parameters = string.removePrefix(command.getFullName()).trim()
         return LinkedList(parameters.split(" "))
     }
 }
