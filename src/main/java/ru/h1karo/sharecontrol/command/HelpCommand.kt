@@ -56,7 +56,12 @@ class HelpCommand @Inject constructor(
         val commandList = input.getArgument(COMMAND_ARGUMENT) as List<*>
 
         val joined = commandList.joinToString(" ")
-        val commands = this.provideCommands().filter { it.getName().equals(joined, true) }
+        val commands = this.provideCommands().filter {
+            val name = it.getFullName()
+                .removePrefix(this.parent.getFullName())
+                .trim(' ')
+            name.equals(joined, true)
+        }
 
         style.write("help.title")
         if (commands.isEmpty()) {
@@ -96,7 +101,16 @@ class HelpCommand @Inject constructor(
 
     private fun provideCommands() = this.commandProviders
         .map { it.get() }
-        .filter { it.getParent() is ShareControlCommand }
+        .filter { this.getFirstParent(it) is ShareControlCommand }
+
+    private fun getFirstParent(command: CommandInterface): CommandInterface? {
+        var parent = command.getParent()
+        while (parent?.getParent() != null) {
+            parent = parent.getParent()
+        }
+
+        return parent
+    }
 
     companion object {
         const val NAME = "help"
