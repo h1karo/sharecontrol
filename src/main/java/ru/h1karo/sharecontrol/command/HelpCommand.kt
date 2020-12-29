@@ -101,16 +101,7 @@ class HelpCommand @Inject constructor(
 
     private fun provideCommands() = this.commandProviders
         .map { it.get() }
-        .filter { this.getFirstParent(it) is ShareControlCommand }
-
-    private fun getFirstParent(command: CommandInterface): CommandInterface? {
-        var parent = command.getParent()
-        while (parent?.getParent() != null) {
-            parent = parent.getParent()
-        }
-
-        return parent
-    }
+        .filter { it.getFirstParent() is ShareControlCommand }
 
     companion object {
         const val NAME = "help"

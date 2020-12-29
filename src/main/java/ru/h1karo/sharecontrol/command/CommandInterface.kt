@@ -33,6 +33,8 @@ interface CommandInterface {
 
     fun getParent(): CommandInterface?
 
+    fun getFirstParent(): CommandInterface?
+
     fun getDescription(): String
 
     fun getArguments(): List<Argument<*>>

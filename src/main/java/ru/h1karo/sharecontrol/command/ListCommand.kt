@@ -55,7 +55,7 @@ class ListCommand @Inject constructor(
     override fun execute(input: InputInterface, output: OutputInterface): Boolean {
         val style = OutputStyle(output)
         val page = input.getArgument(PAGE_ARGUMENT) as Int
-        val commands = this.commandProviders.map { it.get() }
+        val commands = this.provideCommands()
         val items = commands.map { this.getListItem(it) }
 
         try {
@@ -77,6 +77,10 @@ class ListCommand @Inject constructor(
 
         return this.translator.trans("list.format", listOf(command.serialize(), description))
     }
+
+    private fun provideCommands() = this.commandProviders
+        .map { it.get() }
+        .filter { it is ShareControlCommand || it.getFirstParent() is ShareControlCommand }
 
     companion object {
         const val NAME = "list"
