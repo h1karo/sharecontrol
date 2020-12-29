@@ -73,9 +73,6 @@ class HelpCommand @Inject constructor(
         }
 
         arguments.forEach {
-            val nameKey = MessageFormat.format(ARGUMENT_NAME_KEY, command.getName(), it.name)
-            val name = this.translator.trans(nameKey)
-
             val descriptionKey = MessageFormat.format(ARGUMENT_DESCRIPTION_KEY, command.getName(), it.name)
             val description = this.translator.trans(descriptionKey)
 
@@ -85,7 +82,7 @@ class HelpCommand @Inject constructor(
             }
             val requirement = this.translator.trans(requirementKey)
 
-            style.write("help.arguments.list", setOf(name, description, requirement))
+            style.write("help.arguments.list", setOf(it.name, description, requirement))
         }
 
         return true

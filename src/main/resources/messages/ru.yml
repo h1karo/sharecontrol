@@ -7,15 +7,11 @@ commands:
   list:
     description: 'Показать список команд'
     arguments:
-      page:
-        name: 'страница'
-        description: 'Номер страницы'
+      page: 'Номер страницы'
   help:
     description: 'Показать информацию о команде'
     arguments:
-      command:
-        name: 'команда'
-        description: 'Запрашиваемая команда'
+      command: 'Запрашиваемая команда'
   reload:
     description: 'Перезагрузить плагин'
 list:

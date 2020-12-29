@@ -60,7 +60,6 @@ abstract class Command(
 
     companion object {
         const val DESCRIPTION_KEY = "commands.{0}.description"
-        const val ARGUMENT_NAME_KEY = "commands.{0}.arguments.{1}.name"
-        const val ARGUMENT_DESCRIPTION_KEY = "commands.{0}.arguments.{1}.description"
+        const val ARGUMENT_DESCRIPTION_KEY = "commands.{0}.arguments.{1}"
     }
 }

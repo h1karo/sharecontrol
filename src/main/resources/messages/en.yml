@@ -7,15 +7,11 @@ commands:
   list:
     description: 'Show the command list'
     arguments:
-      page:
-        name: 'page'
-        description: 'The page number'
+      page: 'The page number'
   help:
     description: 'Show command details'
     arguments:
-      command:
-        name: 'command'
-        description: 'The target command'
+      command: 'The target command'
   reload:
     description: 'Reload the plugin'
 list:
