@@ -36,7 +36,6 @@ class HelpCommand @Inject constructor(
     private val commandProviders: Collection<@JvmSuppressWildcards Provider<@JvmSuppressWildcards CommandInterface>>,
     private val translator: TranslatorInterface
 ) : Command(
-    NAME,
     linkedSetOf(
         ListStringArgument(
             COMMAND_ARGUMENT,
@@ -45,6 +44,8 @@ class HelpCommand @Inject constructor(
         )
     )
 ) {
+    override fun getName(): String = NAME
+
     override fun execute(input: InputInterface, output: OutputInterface): Boolean {
         val style = OutputStyle(output)
         val commandList = input.getArgument(COMMAND_ARGUMENT) as List<*>

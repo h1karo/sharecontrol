@@ -37,7 +37,6 @@ class ListCommand @Inject constructor(
     private val commandProviders: Collection<@JvmSuppressWildcards Provider<@JvmSuppressWildcards CommandInterface>>,
     private val translator: TranslatorInterface
 ) : Command(
-    NAME,
     linkedSetOf(
         IntegerArgument(
             PAGE_ARGUMENT,
@@ -46,6 +45,8 @@ class ListCommand @Inject constructor(
         )
     )
 ) {
+    override fun getName(): String = NAME
+
     override fun execute(input: InputInterface, output: OutputInterface): Boolean {
         val style = OutputStyle(output)
         val page = input.getArgument(PAGE_ARGUMENT) as Int

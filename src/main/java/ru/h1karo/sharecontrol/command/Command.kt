@@ -30,15 +30,11 @@ import ru.h1karo.sharecontrol.command.output.OutputInterface
 import java.text.MessageFormat
 
 abstract class Command(
-    private val name: String,
     arguments: LinkedHashSet<Argument<*>> = linkedSetOf(),
-    private val description: String = MessageFormat.format(DESCRIPTION_KEY, name),
 ) : CommandInterface {
     private val definition = InputDefinition(arguments)
 
-    override fun getName(): String = this.name
-
-    override fun getDescription(): String = this.description
+    override fun getDescription(): String = MessageFormat.format(DESCRIPTION_KEY, this.getName())
 
     override fun getArguments(): List<Argument<*>> = this.definition.getValues()
 
@@ -53,7 +49,7 @@ abstract class Command(
     protected abstract fun execute(input: InputInterface, output: OutputInterface): Boolean
 
     override fun serialize(): String {
-        return setOf("/sc", this.name)
+        return setOf("/sc", this.getName())
             .plus(this.definition.getValues().map { it.serialize() })
             .joinToString(" ")
     }
