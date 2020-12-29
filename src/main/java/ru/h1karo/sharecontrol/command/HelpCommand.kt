@@ -41,6 +41,8 @@ class HelpCommand @Inject constructor(
 
     override fun getParent(): CommandInterface = this.parent
 
+    override fun getPriority(): Int = 800
+
     init {
         this.definition.addArgument(
             ListStringArgument(
@@ -101,6 +103,7 @@ class HelpCommand @Inject constructor(
 
     private fun provideCommands() = this.commandProviders
         .map { it.get() }
+        .sorted()
         .filter { it.getFirstParent() is ShareControlCommand }
 
     companion object {

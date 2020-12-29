@@ -32,6 +32,8 @@ class ShareControlCommand @Inject constructor(
 ) : Command() {
     override fun getName(): String = "sharecontrol"
 
+    override fun getPriority(): Int = 1000
+
     override fun execute(input: InputInterface, output: OutputInterface): Boolean {
         val command = this.listCommandProvider.get()
         return command.run(input, output)

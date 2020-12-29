@@ -80,6 +80,12 @@ abstract class Command : CommandInterface {
         return parts.reversed().joinToString(" ")
     }
 
+    override fun getPriority(): Int = 0
+
+    final override fun compareTo(other: CommandInterface): Int {
+        return other.getPriority() - this.getPriority()
+    }
+
     companion object {
         const val DESCRIPTION_KEY = "commands.{0}.description"
         const val ARGUMENT_DESCRIPTION_KEY = "commands.{0}.arguments.{1}"

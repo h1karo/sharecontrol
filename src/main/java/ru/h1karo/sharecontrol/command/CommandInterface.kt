@@ -26,7 +26,7 @@ import ru.h1karo.sharecontrol.command.input.InputInterface
 import ru.h1karo.sharecontrol.command.input.argument.Argument
 import ru.h1karo.sharecontrol.command.output.OutputInterface
 
-interface CommandInterface {
+interface CommandInterface : Comparable<CommandInterface> {
     fun getName(): String
 
     fun getFullName(): String
@@ -42,6 +42,8 @@ interface CommandInterface {
     fun run(input: InputInterface, output: OutputInterface): Boolean
 
     fun serialize(): String
+
+    fun getPriority(): Int = 0
 
     companion object {
         const val COMMAND_CHAR = "/"

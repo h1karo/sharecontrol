@@ -42,6 +42,8 @@ class ListCommand @Inject constructor(
 
     override fun getParent(): CommandInterface = this.parent
 
+    override fun getPriority(): Int = 900
+
     init {
         this.definition.addArgument(
             IntegerArgument(
@@ -80,6 +82,7 @@ class ListCommand @Inject constructor(
 
     private fun provideCommands() = this.commandProviders
         .map { it.get() }
+        .sorted()
         .filter { it is ShareControlCommand || it.getFirstParent() is ShareControlCommand }
 
     companion object {
