@@ -22,20 +22,6 @@
 
 package ru.h1karo.sharecontrol.command
 
-import com.google.inject.Inject
-import com.google.inject.Provider
-import ru.h1karo.sharecontrol.command.input.InputInterface
-import ru.h1karo.sharecontrol.command.output.OutputInterface
-
-class ShareControlCommand @Inject constructor(
-    private val listCommandProvider: Provider<ListCommand>
-) : RootCommand() {
-    override fun getName(): String = "sharecontrol"
-
-    override fun getPriority(): Int = 1000
-
-    override fun execute(input: InputInterface, output: OutputInterface): Boolean {
-        val command = this.listCommandProvider.get()
-        return command.run(input, output)
-    }
+abstract class RootCommand : Command() {
+    final override fun getParent(): CommandInterface? = null
 }
