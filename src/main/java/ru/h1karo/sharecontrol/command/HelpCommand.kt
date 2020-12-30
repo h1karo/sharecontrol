@@ -78,7 +78,7 @@ class HelpCommand @Inject constructor(
         }
 
         val command = commands.first()
-        style.write("help.command", setOf(command.serialize()))
+        style.write("help.command", setOf(command.getSyntax()))
         val description = this.translator.trans(command.getDescription())
         style.write("help.description", setOf(description))
 

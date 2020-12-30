@@ -57,7 +57,7 @@ abstract class Command : CommandInterface {
 
     protected abstract fun execute(input: InputInterface, output: OutputInterface): Boolean
 
-    override fun serialize(): String {
+    override fun getSyntax(): String {
         val command = setOf(this.getFullName())
             .plus(this.getArguments().map { it.serialize() })
             .joinToString(" ")

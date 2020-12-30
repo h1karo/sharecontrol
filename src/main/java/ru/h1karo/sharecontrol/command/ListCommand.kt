@@ -77,7 +77,7 @@ class ListCommand @Inject constructor(
     private fun getListItem(command: CommandInterface): String {
         val description = this.translator.trans(command.getDescription())
 
-        return this.translator.trans("list.format", listOf(command.serialize(), description))
+        return this.translator.trans("list.format", listOf(command.getSyntax(), description))
     }
 
     private fun provideCommands() = this.commandProviders

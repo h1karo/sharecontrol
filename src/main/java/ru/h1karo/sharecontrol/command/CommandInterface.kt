@@ -44,7 +44,7 @@ interface CommandInterface : Comparable<CommandInterface> {
 
     fun run(input: InputInterface, output: OutputInterface): Boolean
 
-    fun serialize(): String
+    fun getSyntax(): String
 
     fun getPriority(): Int = 0
 

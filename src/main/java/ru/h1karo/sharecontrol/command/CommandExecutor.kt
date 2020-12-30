@@ -64,7 +64,7 @@ class CommandExecutor @Inject constructor(
             output.write("commands._not-found")
             true
         } catch (e: CommandArgumentException) {
-            output.write("commands._syntax", setOf(e.command.serialize()))
+            output.write("commands._syntax", setOf(e.command.getSyntax()))
             true
         }
     }
