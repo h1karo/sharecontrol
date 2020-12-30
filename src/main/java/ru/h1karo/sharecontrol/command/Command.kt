@@ -30,7 +30,7 @@ import ru.h1karo.sharecontrol.command.output.OutputInterface
 import java.text.MessageFormat
 
 abstract class Command : CommandInterface {
-    protected val definition = InputDefinition()
+    override val definition = InputDefinition()
 
     override fun getParent(): CommandInterface? = null
 
@@ -49,7 +49,7 @@ abstract class Command : CommandInterface {
 
     @Throws(CommandArgumentException::class)
     override fun run(input: InputInterface, output: OutputInterface): Boolean {
-        input.bind(this.definition)
+        input.bind(this)
         input.validate()
 
         return this.execute(input, output)

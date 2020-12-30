@@ -22,17 +22,20 @@
 
 package ru.h1karo.sharecontrol.command.input
 
+import ru.h1karo.sharecontrol.command.CommandInterface
 import ru.h1karo.sharecontrol.command.exception.InvalidArgumentException
 import ru.h1karo.sharecontrol.command.exception.NotEnoughArgumentException
 import java.util.LinkedList
 
 abstract class Input : InputInterface {
-    protected var definition: InputDefinition = InputDefinition()
+    protected lateinit var definition: InputDefinition
+    protected lateinit var command: CommandInterface
     private var arguments: MutableMap<String, Any?> = mutableMapOf()
 
-    override fun bind(definition: InputDefinition) {
+    override fun bind(command: CommandInterface) {
         this.arguments = mutableMapOf()
-        this.definition = definition
+        this.definition = command.definition
+        this.command = command
 
         this.parse()
     }
@@ -45,7 +48,7 @@ abstract class Input : InputInterface {
             .filter { !this.arguments.containsKey(it.key) }
 
         if (missedArguments.isNotEmpty()) {
-            throw NotEnoughArgumentException(missedArguments.keys)
+            throw NotEnoughArgumentException(this.command, missedArguments.keys)
         }
     }
 
@@ -80,9 +83,9 @@ abstract class Input : InputInterface {
             val definition = this.definition.getArgument(name)
             this.arguments[name] = definition.transform(value)
         } catch (e: NullPointerException) {
-            throw InvalidArgumentException(name)
+            throw InvalidArgumentException(this.command, name)
         } catch (e: NumberFormatException) {
-            throw InvalidArgumentException(name)
+            throw InvalidArgumentException(this.command, name)
         }
     }
 

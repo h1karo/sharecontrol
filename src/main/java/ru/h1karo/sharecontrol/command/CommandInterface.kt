@@ -22,11 +22,14 @@
 
 package ru.h1karo.sharecontrol.command
 
+import ru.h1karo.sharecontrol.command.input.InputDefinition
 import ru.h1karo.sharecontrol.command.input.InputInterface
 import ru.h1karo.sharecontrol.command.input.argument.Argument
 import ru.h1karo.sharecontrol.command.output.OutputInterface
 
 interface CommandInterface : Comparable<CommandInterface> {
+    val definition: InputDefinition
+
     fun getName(): String
 
     fun getFullName(): String

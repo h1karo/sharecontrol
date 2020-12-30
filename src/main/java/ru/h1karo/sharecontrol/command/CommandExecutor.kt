@@ -55,19 +55,16 @@ class CommandExecutor @Inject constructor(
         val output = this.outputFactory.build(sender)
         val inputArguments = listOf(bukkitCommand.name, *arguments)
 
-        try {
+        return try {
             command = this.getCommand(inputArguments)
+
+            val input = this.inputFactory.build(command, inputArguments)
+            command.run(input, output)
         } catch (e: CommandNotFoundException) {
             output.write("commands._not-found")
-            return true
-        }
-
-        val input = this.inputFactory.build(command, inputArguments)
-
-        return try {
-            command.run(input, output)
+            true
         } catch (e: CommandArgumentException) {
-            output.write("commands._syntax", setOf(command.serialize()))
+            output.write("commands._syntax", setOf(e.command.serialize()))
             true
         }
     }
