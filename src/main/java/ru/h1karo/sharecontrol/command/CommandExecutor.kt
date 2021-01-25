@@ -82,6 +82,6 @@ class CommandExecutor @Inject constructor(
             return commands.first()
         }
 
-        throw CommandNotFoundException(input.toList())
+        throw CommandNotFoundException(input)
     }
 }

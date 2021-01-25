@@ -24,6 +24,8 @@ package ru.h1karo.sharecontrol.command
 
 import com.google.inject.Inject
 import com.google.inject.Provider
+import ru.h1karo.sharecontrol.command.exception.CommandArgumentException
+import ru.h1karo.sharecontrol.command.exception.CommandNotFoundException
 import ru.h1karo.sharecontrol.command.input.InputInterface
 import ru.h1karo.sharecontrol.command.output.OutputInterface
 
@@ -35,7 +37,11 @@ class ShareControlCommand @Inject constructor(
     override val priority: Int = 1000
 
     override fun execute(input: InputInterface, output: OutputInterface): Boolean {
-        val command = this.listCommandProvider.get()
-        return command.run(input, output)
+        return try {
+            val command = this.listCommandProvider.get()
+            command.run(input, output)
+        } catch (e: CommandArgumentException) {
+            throw CommandNotFoundException(emptyList())
+        }
     }
 }

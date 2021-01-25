@@ -22,6 +22,6 @@
 
 package ru.h1karo.sharecontrol.command.exception
 
-class CommandNotFoundException(arguments: List<String>) : Exception(
+class CommandNotFoundException(arguments: Collection<String>) : Exception(
     "The command not found by input %s.".format(arguments.joinToString(""))
 )
