@@ -23,6 +23,7 @@
 package ru.h1karo.sharecontrol.command.input
 
 import ru.h1karo.sharecontrol.command.CommandInterface
+import ru.h1karo.sharecontrol.command.exception.ArgumentTransformationException
 import ru.h1karo.sharecontrol.command.exception.InvalidArgumentException
 import ru.h1karo.sharecontrol.command.exception.NotEnoughArgumentException
 import java.util.LinkedList
@@ -86,6 +87,8 @@ abstract class Input : InputInterface {
             throw InvalidArgumentException(this.command, name)
         } catch (e: NumberFormatException) {
             throw InvalidArgumentException(this.command, name)
+        } catch (e: ArgumentTransformationException) {
+            throw InvalidArgumentException(this.command, e.argument)
         }
     }
 

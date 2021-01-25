@@ -22,7 +22,7 @@
 
 package ru.h1karo.sharecontrol.command.input.argument
 
-import ru.h1karo.sharecontrol.command.exception.InvalidArgumentException
+import ru.h1karo.sharecontrol.command.exception.ArgumentTransformationException
 
 class ListStringArgument(
     name: String,
@@ -32,7 +32,7 @@ class ListStringArgument(
 ) : Argument<List<String>>(name, isRequired, true, defaultValue, description) {
     override fun transform(value: Any?): List<String> {
         if (value !is List<*>) {
-            throw InvalidArgumentException(this.name)
+            throw ArgumentTransformationException(this.name, value)
         }
 
         return value.map { it.toString() }
