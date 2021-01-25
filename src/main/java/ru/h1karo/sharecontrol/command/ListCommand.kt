@@ -24,6 +24,7 @@ package ru.h1karo.sharecontrol.command
 
 import com.google.inject.Inject
 import com.google.inject.Provider
+import org.bukkit.util.ChatPaginator
 import ru.h1karo.sharecontrol.command.exception.PageNumberOutOfRangeException
 import ru.h1karo.sharecontrol.command.input.InputInterface
 import ru.h1karo.sharecontrol.command.input.argument.Argument
@@ -60,7 +61,7 @@ class ListCommand @Inject constructor(
 
         try {
             val paginator = style.createPaginator()
-            val pagination = paginator.paginate(items.toList(), page, 5)
+            val pagination = paginator.paginate(items.toList(), page, LIMIT - 1)
 
             output.write("list.title", listOf(page, pagination.getLastPageNumber()))
             pagination.getItems().forEach { output.write(it) }
@@ -86,5 +87,6 @@ class ListCommand @Inject constructor(
     companion object {
         const val NAME = "list"
         const val PAGE_ARGUMENT = "page"
+        const val LIMIT = ChatPaginator.CLOSED_CHAT_PAGE_HEIGHT
     }
 }
