@@ -30,7 +30,7 @@ import ru.h1karo.sharecontrol.command.output.OutputInterface
 import java.text.MessageFormat
 
 abstract class Command : CommandInterface {
-    override val definition = InputDefinition()
+    final override val definition = InputDefinition()
 
     override val parent: CommandInterface? = null
 
