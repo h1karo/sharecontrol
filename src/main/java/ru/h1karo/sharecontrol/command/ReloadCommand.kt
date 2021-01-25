@@ -30,11 +30,9 @@ import ru.h1karo.sharecontrol.init.Initializer
 
 class ReloadCommand @Inject constructor(
     private val initializer: Initializer,
-    private val parent: ShareControlCommand
+    override val parent: ShareControlCommand
 ) : Command() {
-    override fun getName(): String = NAME
-
-    override fun getParent(): CommandInterface = this.parent
+    override val name: String = NAME
 
     override fun execute(input: InputInterface, output: OutputInterface): Boolean {
         val style = OutputStyle(output)

@@ -30,9 +30,9 @@ import ru.h1karo.sharecontrol.command.output.OutputInterface
 class ShareControlCommand @Inject constructor(
     private val listCommandProvider: Provider<ListCommand>
 ) : RootCommand() {
-    override fun getName(): String = "sharecontrol"
+    override val name: String = "sharecontrol"
 
-    override fun getPriority(): Int = 1000
+    override val priority: Int = 1000
 
     override fun execute(input: InputInterface, output: OutputInterface): Boolean {
         val command = this.listCommandProvider.get()

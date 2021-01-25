@@ -28,13 +28,15 @@ import ru.h1karo.sharecontrol.command.input.argument.Argument
 import ru.h1karo.sharecontrol.command.output.OutputInterface
 
 interface CommandInterface : Comparable<CommandInterface> {
+    val name: String
+
+    val parent: CommandInterface?
+
     val definition: InputDefinition
 
-    fun getName(): String
+    val priority: Int
 
     fun getFullName(): String
-
-    fun getParent(): CommandInterface?
 
     fun getFirstParent(): CommandInterface?
 
@@ -45,8 +47,6 @@ interface CommandInterface : Comparable<CommandInterface> {
     fun run(input: InputInterface, output: OutputInterface): Boolean
 
     fun getSyntax(): String
-
-    fun getPriority(): Int = 0
 
     companion object {
         const val COMMAND_CHAR = "/"

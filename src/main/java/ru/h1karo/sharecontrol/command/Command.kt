@@ -32,18 +32,20 @@ import java.text.MessageFormat
 abstract class Command : CommandInterface {
     override val definition = InputDefinition()
 
-    override fun getParent(): CommandInterface? = null
+    override val parent: CommandInterface? = null
+
+    override val priority: Int = 0
 
     override fun getFirstParent(): CommandInterface? {
-        var parent = this.getParent()
-        while (parent?.getParent() != null) {
-            parent = parent.getParent()
+        var parent = this.parent
+        while (parent?.parent != null) {
+            parent = parent.parent
         }
 
         return parent
     }
 
-    override fun getDescription(): String = MessageFormat.format(DESCRIPTION_KEY, this.getName())
+    override fun getDescription(): String = MessageFormat.format(DESCRIPTION_KEY, this.name)
 
     override fun getArguments(): List<Argument<*>> = this.definition.getValues()
 
@@ -65,25 +67,23 @@ abstract class Command : CommandInterface {
     }
 
     override fun getFullName(): String =
-        setOf(this.getPrefix(), this.getName())
+        setOf(this.getPrefix(), this.name)
             .joinToString(" ")
             .trim(' ')
 
     private fun getPrefix(): String {
-        var parent = this.getParent()
+        var parent = this.parent
         val parts = LinkedHashSet<String>()
         while (parent !== null) {
-            parts.add(parent.getName())
-            parent = parent.getParent()
+            parts.add(parent.name)
+            parent = parent.parent
         }
 
         return parts.reversed().joinToString(" ")
     }
 
-    override fun getPriority(): Int = 0
-
     final override fun compareTo(other: CommandInterface): Int {
-        return other.getPriority() - this.getPriority()
+        return other.priority - this.priority
     }
 
     companion object {

@@ -23,5 +23,5 @@
 package ru.h1karo.sharecontrol.command
 
 abstract class RootCommand : Command() {
-    final override fun getParent(): CommandInterface? = null
+    final override val parent: CommandInterface? = null
 }

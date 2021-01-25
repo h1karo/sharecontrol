@@ -44,8 +44,8 @@ class CommandExecutor @Inject constructor(
 
     private fun findCompletes(arguments: List<String>): List<String> {
         val joined = arguments.joinToString(" ")
-        val commands = this.commands.filter { it.getName().startsWith(joined) }
-        val names = commands.map { it.getName() }
+        val commands = this.commands.filter { it.name.startsWith(joined) }
+        val names = commands.map { it.name }
         val prefix = arguments.dropLast(1).joinToString(" ")
         return names.map { it.removePrefix(prefix).trim() }
     }

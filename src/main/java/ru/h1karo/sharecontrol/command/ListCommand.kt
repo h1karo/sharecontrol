@@ -36,13 +36,11 @@ import java.text.MessageFormat
 class ListCommand @Inject constructor(
     private val commandProviders: Collection<@JvmSuppressWildcards Provider<@JvmSuppressWildcards CommandInterface>>,
     private val translator: TranslatorInterface,
-    private val parent: ShareControlCommand
+    override val parent: ShareControlCommand
 ) : Command() {
-    override fun getName(): String = NAME
+    override val name: String = NAME
 
-    override fun getParent(): CommandInterface = this.parent
-
-    override fun getPriority(): Int = 900
+    override val priority: Int = 900
 
     init {
         this.definition.addArgument(

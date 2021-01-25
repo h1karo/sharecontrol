@@ -35,13 +35,10 @@ import java.text.MessageFormat
 class HelpCommand @Inject constructor(
     private val commandProviders: Collection<@JvmSuppressWildcards Provider<@JvmSuppressWildcards CommandInterface>>,
     private val translator: TranslatorInterface,
-    private val parent: ShareControlCommand
+    override val parent: ShareControlCommand
 ) : Command() {
-    override fun getName(): String = NAME
-
-    override fun getParent(): CommandInterface = this.parent
-
-    override fun getPriority(): Int = 800
+    override val name: String = NAME
+    override val priority: Int = 800
 
     init {
         this.definition.addArgument(
@@ -73,7 +70,7 @@ class HelpCommand @Inject constructor(
 
         if (commands.size > 1) {
             style.write("help.many.title")
-            commands.forEachIndexed { index, command -> style.write("help.many.list", setOf(index, command.getName())) }
+            commands.forEachIndexed { index, command -> style.write("help.many.list", setOf(index, command.name)) }
             return true
         }
 
@@ -88,7 +85,7 @@ class HelpCommand @Inject constructor(
         }
 
         arguments.forEach {
-            val argumentDescriptionKey = MessageFormat.format(ARGUMENT_DESCRIPTION_KEY, command.getName(), it.name)
+            val argumentDescriptionKey = MessageFormat.format(ARGUMENT_DESCRIPTION_KEY, command.name, it.name)
             val argumentDescription = this.translator.trans(argumentDescriptionKey)
 
             val requirementKey = when {
