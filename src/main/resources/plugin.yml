@@ -1,5 +1,5 @@
 name: ShareControl
-main: ru.h1karo.sharecontrol.ShareControl
+main: ${mainClass}
 version: '${project.version.full}'
 authors:
   - h1karo
