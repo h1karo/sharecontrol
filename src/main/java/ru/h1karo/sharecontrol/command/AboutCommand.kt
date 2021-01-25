@@ -30,7 +30,7 @@ import ru.h1karo.sharecontrol.command.style.OutputStyle
 
 class AboutCommand @Inject constructor(
     private val plugin: Plugin,
-    override val parent: ShareControlCommand
+    override val parent: PluginCommand
 ) : Command() {
     override val name: String = NAME
 

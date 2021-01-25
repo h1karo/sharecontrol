@@ -29,12 +29,12 @@ import ru.h1karo.sharecontrol.i18n.TranslatorInterface
 class ListCommand @Inject constructor(
     private val commandProviders: Collection<@JvmSuppressWildcards Provider<@JvmSuppressWildcards CommandInterface>>,
     translator: TranslatorInterface,
-    override val parent: ShareControlCommand
+    override val parent: PluginCommand
 ) : AbstractListCommand(translator) {
     override val priority: Int = 900
 
     override fun provideCommands(): List<CommandInterface> = this.commandProviders
         .map { it.get() }
         .sorted()
-        .filter { it is ShareControlCommand || it.getFirstParent() is ShareControlCommand }
+        .filter { it is PluginCommand || it.getFirstParent() is PluginCommand }
 }

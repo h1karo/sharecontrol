@@ -30,7 +30,7 @@ import ru.h1karo.sharecontrol.init.Initializer
 
 class ReloadCommand @Inject constructor(
     private val initializer: Initializer,
-    override val parent: ShareControlCommand
+    override val parent: PluginCommand
 ) : Command() {
     override val name: String = NAME
 

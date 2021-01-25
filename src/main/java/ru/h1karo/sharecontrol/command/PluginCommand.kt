@@ -24,15 +24,18 @@ package ru.h1karo.sharecontrol.command
 
 import com.google.inject.Inject
 import com.google.inject.Provider
+import com.google.inject.name.Named
 import ru.h1karo.sharecontrol.command.exception.CommandArgumentException
 import ru.h1karo.sharecontrol.command.exception.CommandNotFoundException
 import ru.h1karo.sharecontrol.command.input.InputInterface
 import ru.h1karo.sharecontrol.command.output.OutputInterface
+import ru.h1karo.sharecontrol.module.PluginModule
 
-class ShareControlCommand @Inject constructor(
+class PluginCommand @Inject constructor(
+    @Named(PluginModule.NAME) pluginName: String,
     private val listCommandProvider: Provider<ListCommand>
 ) : RootCommand() {
-    override val name: String = "sharecontrol"
+    override val name: String = pluginName.toLowerCase()
 
     override val priority: Int = 1000
 
