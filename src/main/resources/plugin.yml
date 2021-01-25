@@ -3,7 +3,6 @@ main: ${mainClass}
 version: '${project.version.full}'
 authors:
   - h1karo
-softdepend: [Essentials, WorldEdit]
 description: Manage the cross-mode play
 website: http://dev.bukkit.org/bukkit-plugins/sharecontrol/
 commands:
