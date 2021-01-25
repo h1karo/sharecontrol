@@ -35,21 +35,27 @@ import java.text.MessageFormat
 
 class ListCommand @Inject constructor(
     private val commandProviders: Collection<@JvmSuppressWildcards Provider<@JvmSuppressWildcards CommandInterface>>,
-    private val translator: TranslatorInterface
-) : Command(
-    NAME,
-    linkedSetOf(
-        IntegerArgument(
-            PAGE_ARGUMENT,
-            defaultValue = 1,
-            description = MessageFormat.format(Argument.DESCRIPTION_KEY, NAME, PAGE_ARGUMENT)
+    private val translator: TranslatorInterface,
+    override val parent: ShareControlCommand
+) : Command() {
+    override val name: String = NAME
+
+    override val priority: Int = 900
+
+    init {
+        this.definition.addArgument(
+            IntegerArgument(
+                PAGE_ARGUMENT,
+                defaultValue = 1,
+                description = MessageFormat.format(Argument.DESCRIPTION_KEY, NAME, PAGE_ARGUMENT)
+            )
         )
-    )
-) {
+    }
+
     override fun execute(input: InputInterface, output: OutputInterface): Boolean {
         val style = OutputStyle(output)
         val page = input.getArgument(PAGE_ARGUMENT) as Int
-        val commands = this.commandProviders.map { it.get() }
+        val commands = this.provideCommands()
         val items = commands.map { this.getListItem(it) }
 
         try {
@@ -69,8 +75,13 @@ class ListCommand @Inject constructor(
     private fun getListItem(command: CommandInterface): String {
         val description = this.translator.trans(command.getDescription())
 
-        return this.translator.trans("list.format", listOf(command.serialize(), description))
+        return this.translator.trans("list.format", listOf(command.getSyntax(), description))
     }
+
+    private fun provideCommands() = this.commandProviders
+        .map { it.get() }
+        .sorted()
+        .filter { it is ShareControlCommand || it.getFirstParent() is ShareControlCommand }
 
     companion object {
         const val NAME = "list"

@@ -22,4 +22,9 @@
 
 package ru.h1karo.sharecontrol.command.exception
 
-open class CommandArgumentException(message: String) : Exception(message)
+import ru.h1karo.sharecontrol.command.CommandInterface
+
+open class CommandArgumentException(
+    val command: CommandInterface,
+    message: String
+) : Exception(message)

@@ -22,6 +22,12 @@
 
 package ru.h1karo.sharecontrol.command.exception
 
-class NotEnoughArgumentException(missedArguments: Set<String>) : CommandArgumentException(
+import ru.h1karo.sharecontrol.command.CommandInterface
+
+class NotEnoughArgumentException(
+    command: CommandInterface,
+    missedArguments: Set<String>
+) : CommandArgumentException(
+    command,
     "There are not enough arguments for this command. Missed arguments: %s.".format(missedArguments.joinToString(", "))
 )

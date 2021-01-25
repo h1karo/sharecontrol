@@ -22,6 +22,12 @@
 
 package ru.h1karo.sharecontrol.command.exception
 
-class InvalidArgumentException(argument: String) : CommandArgumentException(
+import ru.h1karo.sharecontrol.command.CommandInterface
+
+class InvalidArgumentException(
+    command: CommandInterface,
+    argument: String
+) : CommandArgumentException(
+    command,
     "Invalid argument type with name %s.".format(argument)
 )

@@ -22,33 +22,26 @@
 
 package ru.h1karo.sharecontrol.command
 
-import ru.h1karo.sharecontrol.command.input.InputDefinition
+import com.google.inject.Inject
+import com.google.inject.Provider
+import ru.h1karo.sharecontrol.command.exception.CommandArgumentException
+import ru.h1karo.sharecontrol.command.exception.CommandNotFoundException
 import ru.h1karo.sharecontrol.command.input.InputInterface
-import ru.h1karo.sharecontrol.command.input.argument.Argument
 import ru.h1karo.sharecontrol.command.output.OutputInterface
 
-interface CommandInterface : Comparable<CommandInterface> {
-    val name: String
+class ShareControlCommand @Inject constructor(
+    private val listCommandProvider: Provider<ListCommand>
+) : RootCommand() {
+    override val name: String = "sharecontrol"
 
-    val parent: CommandInterface?
+    override val priority: Int = 1000
 
-    val definition: InputDefinition
-
-    val priority: Int
-
-    fun getFullName(): String
-
-    fun getFirstParent(): CommandInterface?
-
-    fun getDescription(): String
-
-    fun getArguments(): List<Argument<*>>
-
-    fun run(input: InputInterface, output: OutputInterface): Boolean
-
-    fun getSyntax(): String
-
-    companion object {
-        const val COMMAND_CHAR = "/"
+    override fun execute(input: InputInterface, output: OutputInterface): Boolean {
+        return try {
+            val command = this.listCommandProvider.get()
+            command.run(input, output)
+        } catch (e: CommandArgumentException) {
+            throw CommandNotFoundException(emptyList())
+        }
     }
 }

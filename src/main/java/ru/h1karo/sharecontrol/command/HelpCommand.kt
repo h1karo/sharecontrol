@@ -34,23 +34,33 @@ import java.text.MessageFormat
 
 class HelpCommand @Inject constructor(
     private val commandProviders: Collection<@JvmSuppressWildcards Provider<@JvmSuppressWildcards CommandInterface>>,
-    private val translator: TranslatorInterface
-) : Command(
-    NAME,
-    linkedSetOf(
-        ListStringArgument(
-            COMMAND_ARGUMENT,
-            true,
-            description = MessageFormat.format(Argument.DESCRIPTION_KEY, NAME, COMMAND_ARGUMENT)
+    private val translator: TranslatorInterface,
+    override val parent: ShareControlCommand
+) : Command() {
+    override val name: String = NAME
+    override val priority: Int = 800
+
+    init {
+        this.definition.addArgument(
+            ListStringArgument(
+                COMMAND_ARGUMENT,
+                true,
+                description = MessageFormat.format(Argument.DESCRIPTION_KEY, NAME, COMMAND_ARGUMENT)
+            )
         )
-    )
-) {
+    }
+
     override fun execute(input: InputInterface, output: OutputInterface): Boolean {
         val style = OutputStyle(output)
         val commandList = input.getArgument(COMMAND_ARGUMENT) as List<*>
 
         val joined = commandList.joinToString(" ")
-        val commands = this.provideCommands().filter { it.getName().equals(joined, true) }
+        val commands = this.provideCommands().filter {
+            val name = it.getFullName()
+                .removePrefix(this.parent.getFullName())
+                .trim(' ')
+            name.equals(joined, true)
+        }
 
         style.write("help.title")
         if (commands.isEmpty()) {
@@ -60,12 +70,14 @@ class HelpCommand @Inject constructor(
 
         if (commands.size > 1) {
             style.write("help.many.title")
-            commands.forEachIndexed { index, command -> style.write("help.many.list", setOf(index, command.getName())) }
+            commands.forEachIndexed { index, command -> style.write("help.many.list", setOf(index, command.name)) }
             return true
         }
 
         val command = commands.first()
-        style.write("help.command", setOf(command.serialize()))
+        style.write("help.command", setOf(command.getSyntax()))
+        val description = this.translator.trans(command.getDescription())
+        style.write("help.description", setOf(description))
 
         val arguments = command.getArguments()
         if (arguments.isNotEmpty()) {
@@ -73,11 +85,8 @@ class HelpCommand @Inject constructor(
         }
 
         arguments.forEach {
-            val nameKey = MessageFormat.format(ARGUMENT_NAME_KEY, command.getName(), it.name)
-            val name = this.translator.trans(nameKey)
-
-            val descriptionKey = MessageFormat.format(ARGUMENT_DESCRIPTION_KEY, command.getName(), it.name)
-            val description = this.translator.trans(descriptionKey)
+            val argumentDescriptionKey = MessageFormat.format(ARGUMENT_DESCRIPTION_KEY, command.name, it.name)
+            val argumentDescription = this.translator.trans(argumentDescriptionKey)
 
             val requirementKey = when {
                 it.isRequired -> REQUIRED_ARGUMENT_KEY
@@ -85,13 +94,16 @@ class HelpCommand @Inject constructor(
             }
             val requirement = this.translator.trans(requirementKey)
 
-            style.write("help.arguments.list", setOf(name, description, requirement))
+            style.write("help.arguments.list", setOf(it.name, argumentDescription, requirement))
         }
 
         return true
     }
 
-    private fun provideCommands() = this.commandProviders.map { it.get() }
+    private fun provideCommands() = this.commandProviders
+        .map { it.get() }
+        .sorted()
+        .filter { it.getFirstParent() is ShareControlCommand }
 
     companion object {
         const val NAME = "help"

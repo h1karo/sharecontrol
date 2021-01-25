@@ -46,6 +46,8 @@ class InputDefinition {
 
     fun hasArgument(index: Int): Boolean = this.getValues().size > index && index > 0
 
+    fun addArgument(vararg arguments: Argument<*>) = arguments.forEach { this.addArgument(it) }
+
     fun addArgument(argument: Argument<*>) {
         if (this.hasArgument(argument.name)) {
             throw IllegalArgumentException("An argument with name `%s` already exists.".format(argument.name))

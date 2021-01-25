@@ -22,33 +22,6 @@
 
 package ru.h1karo.sharecontrol.command
 
-import ru.h1karo.sharecontrol.command.input.InputDefinition
-import ru.h1karo.sharecontrol.command.input.InputInterface
-import ru.h1karo.sharecontrol.command.input.argument.Argument
-import ru.h1karo.sharecontrol.command.output.OutputInterface
-
-interface CommandInterface : Comparable<CommandInterface> {
-    val name: String
-
-    val parent: CommandInterface?
-
-    val definition: InputDefinition
-
-    val priority: Int
-
-    fun getFullName(): String
-
-    fun getFirstParent(): CommandInterface?
-
-    fun getDescription(): String
-
-    fun getArguments(): List<Argument<*>>
-
-    fun run(input: InputInterface, output: OutputInterface): Boolean
-
-    fun getSyntax(): String
-
-    companion object {
-        const val COMMAND_CHAR = "/"
-    }
+abstract class RootCommand : Command() {
+    final override val parent: CommandInterface? = null
 }

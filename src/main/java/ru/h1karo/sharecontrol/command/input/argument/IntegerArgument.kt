@@ -22,7 +22,7 @@
 
 package ru.h1karo.sharecontrol.command.input.argument
 
-import ru.h1karo.sharecontrol.command.exception.InvalidArgumentException
+import ru.h1karo.sharecontrol.command.exception.ArgumentTransformationException
 
 class IntegerArgument(
     name: String,
@@ -51,6 +51,6 @@ class IntegerArgument(
             return value.toInt()
         }
 
-        throw InvalidArgumentException(this.name)
+        throw ArgumentTransformationException(this.name, value)
     }
 }

@@ -22,7 +22,7 @@
 
 package ru.h1karo.sharecontrol.command.input.argument
 
-import ru.h1karo.sharecontrol.command.exception.InvalidArgumentException
+import ru.h1karo.sharecontrol.command.exception.ArgumentTransformationException
 
 class BooleanArgument(
     name: String,
@@ -43,6 +43,6 @@ class BooleanArgument(
             return value.toBoolean()
         }
 
-        throw InvalidArgumentException(this.name)
+        throw ArgumentTransformationException(this.name, value)
     }
 }

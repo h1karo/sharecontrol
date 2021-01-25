@@ -13,42 +13,14 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with ShareControl. If not, see <https://www.gnu.org/licenses/>.
- *
+ *  
  * @copyright Copyright (c) 2020 ShareControl
  * @author Oleg Kozlov <h1karo@outlook.com>
  * @license GNU General Public License v3.0
  * @link https://github.com/h1karo/sharecontrol
  */
 
-package ru.h1karo.sharecontrol.command
+package ru.h1karo.sharecontrol.command.exception
 
-import ru.h1karo.sharecontrol.command.input.InputDefinition
-import ru.h1karo.sharecontrol.command.input.InputInterface
-import ru.h1karo.sharecontrol.command.input.argument.Argument
-import ru.h1karo.sharecontrol.command.output.OutputInterface
-
-interface CommandInterface : Comparable<CommandInterface> {
-    val name: String
-
-    val parent: CommandInterface?
-
-    val definition: InputDefinition
-
-    val priority: Int
-
-    fun getFullName(): String
-
-    fun getFirstParent(): CommandInterface?
-
-    fun getDescription(): String
-
-    fun getArguments(): List<Argument<*>>
-
-    fun run(input: InputInterface, output: OutputInterface): Boolean
-
-    fun getSyntax(): String
-
-    companion object {
-        const val COMMAND_CHAR = "/"
-    }
-}
+class ArgumentTransformationException(val argument: String, val value: Any?) :
+    Exception("Error on transform the argument value.")

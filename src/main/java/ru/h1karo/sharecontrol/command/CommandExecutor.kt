@@ -44,8 +44,8 @@ class CommandExecutor @Inject constructor(
 
     private fun findCompletes(arguments: List<String>): List<String> {
         val joined = arguments.joinToString(" ")
-        val commands = this.commands.filter { it.getName().startsWith(joined) }
-        val names = commands.map { it.getName() }
+        val commands = this.commands.filter { it.name.startsWith(joined) }
+        val names = commands.map { it.name }
         val prefix = arguments.dropLast(1).joinToString(" ")
         return names.map { it.removePrefix(prefix).trim() }
     }
@@ -53,41 +53,35 @@ class CommandExecutor @Inject constructor(
     override fun onCommand(sender: CommandSender, bukkitCommand: BukkitCommand, alias: String, arguments: Array<out String>): Boolean {
         val command: CommandInterface
         val output = this.outputFactory.build(sender)
-
-        try {
-            command = this.getCommand(arguments.toList())
-        } catch (e: CommandNotFoundException) {
-            output.write("commands._not-found")
-            return true
-        }
-
-        val input = this.inputFactory.build(command, arguments.toList())
+        val inputArguments = listOf(bukkitCommand.name, *arguments)
 
         return try {
+            command = this.getCommand(inputArguments)
+
+            val input = this.inputFactory.build(command, inputArguments)
             command.run(input, output)
+        } catch (e: CommandNotFoundException) {
+            output.write("commands._not-found")
+            true
         } catch (e: CommandArgumentException) {
-            output.write("commands._syntax", setOf(command.serialize()))
+            output.write("commands._syntax", setOf(e.command.getSyntax()))
             true
         }
     }
 
     @Throws(CommandNotFoundException::class)
-    private fun getCommand(arguments: List<String>): CommandInterface {
-        if (arguments.isEmpty()) {
-            return this.commands.find { it.getName() == "list" }!!
-        }
+    private fun getCommand(input: List<String>): CommandInterface {
+        val joined = input.joinToString(" ")
+        val commands = this.commands.filter { it.getFullName().equals(joined, true) }
 
-        val joined = arguments.joinToString(" ")
-        val commands = this.commands.filter { it.getName().equals(joined, true) }
-
-        if (commands.isEmpty() && arguments.size > 1) {
-            return this.getCommand(arguments.dropLast(1))
+        if (commands.isEmpty() && input.size > 1) {
+            return this.getCommand(input.dropLast(1))
         }
 
         if (commands.size == 1) {
             return commands.first()
         }
 
-        throw CommandNotFoundException(arguments.toList())
+        throw CommandNotFoundException(input)
     }
 }

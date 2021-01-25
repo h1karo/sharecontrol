@@ -22,6 +22,7 @@
 
 package ru.h1karo.sharecontrol.command.input.argument
 
+import ru.h1karo.sharecontrol.command.exception.ArgumentTransformationException
 import java.text.MessageFormat
 
 abstract class Argument<T>(
@@ -33,7 +34,7 @@ abstract class Argument<T>(
 ) {
     val isOptional = !this.isRequired
 
-    @Throws(NullPointerException::class)
+    @Throws(ArgumentTransformationException::class, NullPointerException::class)
     abstract fun transform(value: Any?): T
 
     fun serialize(): String {

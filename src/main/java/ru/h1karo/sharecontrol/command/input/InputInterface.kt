@@ -22,11 +22,12 @@
 
 package ru.h1karo.sharecontrol.command.input
 
+import ru.h1karo.sharecontrol.command.CommandInterface
 import ru.h1karo.sharecontrol.command.exception.NotEnoughArgumentException
 import java.util.LinkedList
 
 interface InputInterface {
-    fun bind(definition: InputDefinition)
+    fun bind(command: CommandInterface)
 
     @Throws(NotEnoughArgumentException::class)
     fun validate()

@@ -29,22 +29,29 @@ import ru.h1karo.sharecontrol.command.input.argument.Argument
 import ru.h1karo.sharecontrol.command.output.OutputInterface
 import java.text.MessageFormat
 
-abstract class Command(
-    private val name: String,
-    arguments: LinkedHashSet<Argument<*>> = linkedSetOf(),
-    private val description: String = MessageFormat.format(DESCRIPTION_KEY, name),
-) : CommandInterface {
-    private val definition = InputDefinition(arguments)
+abstract class Command : CommandInterface {
+    override val definition = InputDefinition()
 
-    override fun getName(): String = this.name
+    override val parent: CommandInterface? = null
 
-    override fun getDescription(): String = this.description
+    override val priority: Int = 0
+
+    override fun getFirstParent(): CommandInterface? {
+        var parent = this.parent
+        while (parent?.parent != null) {
+            parent = parent.parent
+        }
+
+        return parent
+    }
+
+    override fun getDescription(): String = MessageFormat.format(DESCRIPTION_KEY, this.name)
 
     override fun getArguments(): List<Argument<*>> = this.definition.getValues()
 
     @Throws(CommandArgumentException::class)
     override fun run(input: InputInterface, output: OutputInterface): Boolean {
-        input.bind(this.definition)
+        input.bind(this)
         input.validate()
 
         return this.execute(input, output)
@@ -52,15 +59,35 @@ abstract class Command(
 
     protected abstract fun execute(input: InputInterface, output: OutputInterface): Boolean
 
-    override fun serialize(): String {
-        return setOf("/sc", this.name)
-            .plus(this.definition.getValues().map { it.serialize() })
+    override fun getSyntax(): String {
+        val command = setOf(this.getFullName())
+            .plus(this.getArguments().map { it.serialize() })
             .joinToString(" ")
+        return CommandInterface.COMMAND_CHAR + command
+    }
+
+    override fun getFullName(): String =
+        setOf(this.getPrefix(), this.name)
+            .joinToString(" ")
+            .trim(' ')
+
+    private fun getPrefix(): String {
+        var parent = this.parent
+        val parts = LinkedHashSet<String>()
+        while (parent !== null) {
+            parts.add(parent.name)
+            parent = parent.parent
+        }
+
+        return parts.reversed().joinToString(" ")
+    }
+
+    final override fun compareTo(other: CommandInterface): Int {
+        return other.priority - this.priority
     }
 
     companion object {
         const val DESCRIPTION_KEY = "commands.{0}.description"
-        const val ARGUMENT_NAME_KEY = "commands.{0}.arguments.{1}.name"
-        const val ARGUMENT_DESCRIPTION_KEY = "commands.{0}.arguments.{1}.description"
+        const val ARGUMENT_DESCRIPTION_KEY = "commands.{0}.arguments.{1}"
     }
 }
