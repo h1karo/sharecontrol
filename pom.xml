@@ -33,7 +33,7 @@
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 
         <spigot.version>1.15.2-R0.1-SNAPSHOT</spigot.version>
-        <guice.version>4.2.3</guice.version>
+        <guice.version>5.0.0</guice.version>
         <kotlin.version>1.4.30</kotlin.version>
         <annotations.version>20.1.0</annotations.version>
         <compiler.version>3.8.1</compiler.version>
