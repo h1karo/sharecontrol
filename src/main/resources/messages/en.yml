@@ -46,3 +46,5 @@ about:
   version: '§7The version: §9{0}§7.'
   author: '§7The author: §9{0}§7.'
   website: '§7The website: §9{0}§7.'
+update:
+  latest: 'You are using the latest version of the plugin.'
