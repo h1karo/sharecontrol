@@ -36,6 +36,15 @@ abstract class Command : CommandInterface {
 
     override val priority: Int = 0
 
+    override fun getFullPath(): Set<String> {
+        if (this.parent === null) {
+            return setOf(this.name)
+        }
+
+        val parentPath = this.parent!!.getFullPath().toTypedArray()
+        return setOf(*parentPath, this.name)
+    }
+
     override fun getFirstParent(): CommandInterface? {
         var parent = this.parent
         while (parent?.parent != null) {
@@ -64,22 +73,6 @@ abstract class Command : CommandInterface {
             .plus(this.getArguments().map { it.serialize() })
             .joinToString(" ")
         return CommandInterface.COMMAND_CHAR + command
-    }
-
-    override fun getFullName(): String =
-        setOf(this.getPrefix(), this.name)
-            .joinToString(" ")
-            .trim(' ')
-
-    private fun getPrefix(): String {
-        var parent = this.parent
-        val parts = LinkedHashSet<String>()
-        while (parent !== null) {
-            parts.add(parent.name)
-            parent = parent.parent
-        }
-
-        return parts.reversed().joinToString(" ")
     }
 
     final override fun compareTo(other: CommandInterface): Int {

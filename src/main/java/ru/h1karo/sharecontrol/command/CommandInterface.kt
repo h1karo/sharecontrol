@@ -36,7 +36,9 @@ interface CommandInterface : Comparable<CommandInterface> {
 
     val priority: Int
 
-    fun getFullName(): String
+    fun getFullName(): String = this.getFullPath().joinToString(" ")
+
+    fun getFullPath(): Set<String>
 
     fun getFirstParent(): CommandInterface?
 
