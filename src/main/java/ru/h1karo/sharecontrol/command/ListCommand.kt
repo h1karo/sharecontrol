@@ -36,5 +36,5 @@ class ListCommand @Inject constructor(
     override fun provideCommands(): List<CommandInterface> = this.commandProviders
         .map { it.get() }
         .sorted()
-        .filter { it is PluginCommand || it.getFirstParent() is PluginCommand }
+        .filter { it is RootCommand || it.getFirstParent() is RootCommand }
 }
