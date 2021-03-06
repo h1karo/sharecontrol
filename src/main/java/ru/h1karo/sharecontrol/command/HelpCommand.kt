@@ -85,7 +85,8 @@ class HelpCommand @Inject constructor(
         }
 
         arguments.forEach {
-            val argumentDescriptionKey = MessageFormat.format(ARGUMENT_DESCRIPTION_KEY, command.name, it.name)
+            val commandPath = command.getFullPath().joinToString(CHILDREN_DELIMITER)
+            val argumentDescriptionKey = MessageFormat.format(ARGUMENT_DESCRIPTION_KEY, commandPath, it.name)
             val argumentDescription = this.translator.trans(argumentDescriptionKey)
 
             val requirementKey = when {
