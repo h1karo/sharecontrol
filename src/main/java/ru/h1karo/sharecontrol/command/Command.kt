@@ -54,7 +54,7 @@ abstract class Command : CommandInterface {
         return parent
     }
 
-    override fun getDescription(): String = MessageFormat.format(DESCRIPTION_KEY, this.name)
+    override fun getDescription(): String = MessageFormat.format(DESCRIPTION_KEY, this.getFullPath().joinToString(CHILDREN_DELIMITER))
 
     override fun getArguments(): List<Argument<*>> = this.definition.getValues()
 
@@ -81,6 +81,7 @@ abstract class Command : CommandInterface {
 
     companion object {
         const val DESCRIPTION_KEY = "commands.{0}.description"
+        const val CHILDREN_DELIMITER = ".children."
         const val ARGUMENT_DESCRIPTION_KEY = "commands.{0}.arguments.{1}"
     }
 }

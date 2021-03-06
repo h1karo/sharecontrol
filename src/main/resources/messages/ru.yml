@@ -6,18 +6,19 @@ commands:
   _syntax: '§7Синтаксис: §9{0}'
   sharecontrol:
     description: 'Основная команда плагина'
-  list:
-    description: 'Показать список команд'
-    arguments:
-      page: 'Номер страницы'
-  help:
-    description: 'Показать информацию о команде'
-    arguments:
-      command: 'Запрашиваемая команда'
-  reload:
-    description: 'Перезагрузить плагин'
-  about:
-    description: 'О плагине'
+    children:
+      list:
+        description: 'Показать список команд'
+        arguments:
+          page: 'Номер страницы'
+      help:
+        description: 'Показать информацию о команде'
+        arguments:
+          command: 'Запрашиваемая команда'
+      reload:
+        description: 'Перезагрузить плагин'
+      about:
+        description: 'О плагине'
 list:
   format: '§9{0}§f - §7{1}'
   title: '§9>>> §9§lShare§f§lControl §9>§7 Список команд §f{0}§7/§f{1}'

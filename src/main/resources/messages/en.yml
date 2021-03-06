@@ -6,18 +6,19 @@ commands:
   _syntax: '§7Syntax: §9{0}§7.'
   sharecontrol:
     description: 'The main plugin command'
-  list:
-    description: 'Show the command list'
-    arguments:
-      page: 'The page number'
-  help:
-    description: 'Show command details'
-    arguments:
-      command: 'The target command'
-  reload:
-    description: 'Reload the plugin'
-  about:
-    description: 'About the plugin'
+    children:
+      list:
+        description: 'Show the command list'
+        arguments:
+          page: 'The page number'
+      help:
+        description: 'Show command details'
+        arguments:
+          command: 'The target command'
+      reload:
+        description: 'Reload the plugin'
+      about:
+        description: 'About the plugin'
 list:
   format: '§9{0}§f - §7{1}'
   title: '§9>>> §9§lShare§f§lControl §9>§7 The list of commands §f{0}§7/§f{1}'
