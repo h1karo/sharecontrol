@@ -19,6 +19,11 @@ commands:
         description: 'Reload the plugin'
       about:
         description: 'About the plugin'
+      update:
+        description: 'Show the update command list'
+        children:
+          check:
+            description: 'Check for updates'
 list:
   format: '§9{0}§f - §7{1}'
   title: '§9>>> §9§lShare§f§lControl §9>§7 The list of commands §f{0}§7/§f{1}'
@@ -48,3 +53,5 @@ about:
   website: '§7The website: §9{0}§7.'
 update:
   latest: 'You are using the latest version of the plugin.'
+  new-version: '§7A new version of the plugin has been found: §9{0}§7.'
+  download: '§7You can download the update at this link: §9{0}§7.'

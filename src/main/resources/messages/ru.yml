@@ -19,6 +19,11 @@ commands:
         description: 'Перезагрузить плагин'
       about:
         description: 'О плагине'
+      update:
+        description: 'Показать список команд обновления'
+        children:
+          check:
+            description: 'Проверить наличие обновлений'
 list:
   format: '§9{0}§f - §7{1}'
   title: '§9>>> §9§lShare§f§lControl §9>§7 Список команд §f{0}§7/§f{1}'
@@ -48,3 +53,5 @@ about:
   website: '§7Сайт: §9{0}§7.'
 update:
   latest: 'Вы используете последнюю версию плагина.'
+  new-version: '§7Обнаружена новая версия плагина: §9{0}§7.'
+  download: '§7Её можно скачать по ссылке: §9{0}§7.'
