@@ -27,6 +27,7 @@ import org.bukkit.event.HandlerList
 import org.bukkit.plugin.Plugin
 import ru.h1karo.sharecontrol.console.BlockStyle
 import ru.h1karo.sharecontrol.listener.Listener
+import ru.h1karo.sharecontrol.listener.OnDemandListener
 
 class ListenerInitializer @Inject constructor(
     console: BlockStyle,
@@ -35,10 +36,19 @@ class ListenerInitializer @Inject constructor(
 ) : AbstractInitializer(console) {
     override fun initialize() {
         val pluginManager = this.plugin.server.pluginManager
-        this.listeners.forEach { pluginManager.registerEvents(it, plugin) }
+        this.getListeners().forEach { pluginManager.registerEvents(it, plugin) }
     }
 
     override fun terminate() {
-        this.listeners.forEach { HandlerList.unregisterAll(it) }
+        this.getListeners().forEach { HandlerList.unregisterAll(it) }
+    }
+
+    private fun getListeners(): Collection<Listener> {
+        return this.listeners.filter {
+            return@filter when (it) {
+                is OnDemandListener -> it.isEnabled()
+                else -> true
+            }
+        }
     }
 }
