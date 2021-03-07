@@ -53,5 +53,5 @@ about:
   website: '§7The website: §9{0}§7.'
 update:
   latest: 'You are using the latest version of the plugin.'
-  new-version: '§7A new version of the plugin has been found: §9{0}§7.'
+  new-version: '§7A new version of §9ShareControl§7 has been found: §9{0}§7.'
   download: '§7You can download the update at this link: §9{0}§7.'
