@@ -44,9 +44,13 @@ class TranslatableMessenger @Inject constructor(
         return try {
             this.translator.trans(message, parameters)
         } catch (e: I18nException) {
-            this.findTranslationKeys(message)
-                .map { key -> Pair(MessageFormat.format(KEY_FORMAT, key), this.translator.trans(key)) }
-                .fold(message, { translated, pair -> translated.replace(pair.first, pair.second) })
+            val keys = this.findTranslationKeys(message)
+            if (keys.isEmpty()) {
+                throw e
+            }
+
+            val replacePairs = keys.map { key -> Pair(MessageFormat.format(KEY_FORMAT, key), this.translator.trans(key)) }
+            replacePairs.fold(message, { translated, pair -> translated.replace(pair.first, pair.second) })
         }
     }
 
