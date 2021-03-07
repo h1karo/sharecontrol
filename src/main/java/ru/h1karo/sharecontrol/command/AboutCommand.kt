@@ -23,25 +23,30 @@
 package ru.h1karo.sharecontrol.command
 
 import com.google.inject.Inject
-import com.google.inject.Provider
-import ru.h1karo.sharecontrol.command.exception.CommandArgumentException
-import ru.h1karo.sharecontrol.command.exception.CommandNotFoundException
+import org.bukkit.plugin.Plugin
 import ru.h1karo.sharecontrol.command.input.InputInterface
 import ru.h1karo.sharecontrol.command.output.OutputInterface
+import ru.h1karo.sharecontrol.command.style.OutputStyle
 
-class ShareControlCommand @Inject constructor(
-    private val listCommandProvider: Provider<ListCommand>
-) : RootCommand() {
-    override val name: String = "sharecontrol"
-
-    override val priority: Int = 1000
+class AboutCommand @Inject constructor(
+    private val plugin: Plugin,
+    override val parent: PluginCommand
+) : Command() {
+    override val name: String = NAME
 
     override fun execute(input: InputInterface, output: OutputInterface): Boolean {
-        return try {
-            val command = this.listCommandProvider.get()
-            command.run(input, output)
-        } catch (e: CommandArgumentException) {
-            throw CommandNotFoundException(emptyList())
-        }
+        val style = OutputStyle(output)
+        val description = plugin.description
+
+        style.write("about.title")
+        style.write("about.version", listOf(description.version))
+        style.write("about.author", listOf(description.authors.first()))
+        style.write("about.website", listOf(description.website ?: "n/a"))
+
+        return true
+    }
+
+    companion object {
+        private const val NAME = "about"
     }
 }

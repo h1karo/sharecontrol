@@ -22,35 +22,20 @@
 
 package ru.h1karo.sharecontrol.command
 
-import ru.h1karo.sharecontrol.command.input.InputDefinition
-import ru.h1karo.sharecontrol.command.input.InputInterface
-import ru.h1karo.sharecontrol.command.input.argument.Argument
-import ru.h1karo.sharecontrol.command.output.OutputInterface
+import com.google.inject.Inject
+import com.google.inject.Provider
+import ru.h1karo.sharecontrol.i18n.TranslatorInterface
 
-interface CommandInterface : Comparable<CommandInterface> {
-    val name: String
+class UpdateCommand @Inject constructor(
+    override val parent: PluginCommand,
+    translator: TranslatorInterface,
+    private val checkUpdateCommandProvider: Provider<CheckUpdateCommand>
+) : AbstractListCommand(translator) {
+    override val name: String = NAME
 
-    val parent: CommandInterface?
-
-    val definition: InputDefinition
-
-    val priority: Int
-
-    fun getFullName(): String = this.getFullPath().joinToString(" ")
-
-    fun getFullPath(): Set<String>
-
-    fun getFirstParent(): CommandInterface?
-
-    fun getDescription(): String
-
-    fun getArguments(): List<Argument<*>>
-
-    fun run(input: InputInterface, output: OutputInterface): Boolean
-
-    fun getSyntax(): String
+    override fun provideCommands(): List<CommandInterface> = listOf(this.checkUpdateCommandProvider.get())
 
     companion object {
-        const val COMMAND_CHAR = "/"
+        private const val NAME = "update"
     }
 }

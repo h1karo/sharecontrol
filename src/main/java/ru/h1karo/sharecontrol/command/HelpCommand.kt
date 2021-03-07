@@ -35,7 +35,7 @@ import java.text.MessageFormat
 class HelpCommand @Inject constructor(
     private val commandProviders: Collection<@JvmSuppressWildcards Provider<@JvmSuppressWildcards CommandInterface>>,
     private val translator: TranslatorInterface,
-    override val parent: ShareControlCommand
+    override val parent: PluginCommand
 ) : Command() {
     override val name: String = NAME
     override val priority: Int = 800
@@ -85,7 +85,8 @@ class HelpCommand @Inject constructor(
         }
 
         arguments.forEach {
-            val argumentDescriptionKey = MessageFormat.format(ARGUMENT_DESCRIPTION_KEY, command.name, it.name)
+            val commandPath = command.getFullPath().joinToString(CHILDREN_DELIMITER)
+            val argumentDescriptionKey = MessageFormat.format(ARGUMENT_DESCRIPTION_KEY, commandPath, it.name)
             val argumentDescription = this.translator.trans(argumentDescriptionKey)
 
             val requirementKey = when {
@@ -103,7 +104,7 @@ class HelpCommand @Inject constructor(
     private fun provideCommands() = this.commandProviders
         .map { it.get() }
         .sorted()
-        .filter { it.getFirstParent() is ShareControlCommand }
+        .filter { it.getFirstParent() is RootCommand }
 
     companion object {
         const val NAME = "help"

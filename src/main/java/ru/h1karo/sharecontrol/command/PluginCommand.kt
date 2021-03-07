@@ -22,35 +22,29 @@
 
 package ru.h1karo.sharecontrol.command
 
-import ru.h1karo.sharecontrol.command.input.InputDefinition
+import com.google.inject.Inject
+import com.google.inject.Provider
+import com.google.inject.name.Named
+import ru.h1karo.sharecontrol.command.exception.CommandArgumentException
+import ru.h1karo.sharecontrol.command.exception.CommandNotFoundException
 import ru.h1karo.sharecontrol.command.input.InputInterface
-import ru.h1karo.sharecontrol.command.input.argument.Argument
 import ru.h1karo.sharecontrol.command.output.OutputInterface
+import ru.h1karo.sharecontrol.module.PluginModule
 
-interface CommandInterface : Comparable<CommandInterface> {
-    val name: String
+class PluginCommand @Inject constructor(
+    @Named(PluginModule.NAME) pluginName: String,
+    private val listCommandProvider: Provider<ListCommand>
+) : RootCommand() {
+    override val name: String = pluginName.toLowerCase()
 
-    val parent: CommandInterface?
+    override val priority: Int = 1000
 
-    val definition: InputDefinition
-
-    val priority: Int
-
-    fun getFullName(): String = this.getFullPath().joinToString(" ")
-
-    fun getFullPath(): Set<String>
-
-    fun getFirstParent(): CommandInterface?
-
-    fun getDescription(): String
-
-    fun getArguments(): List<Argument<*>>
-
-    fun run(input: InputInterface, output: OutputInterface): Boolean
-
-    fun getSyntax(): String
-
-    companion object {
-        const val COMMAND_CHAR = "/"
+    override fun execute(input: InputInterface, output: OutputInterface): Boolean {
+        return try {
+            val command = this.listCommandProvider.get()
+            command.run(input, output)
+        } catch (e: CommandArgumentException) {
+            throw CommandNotFoundException(emptyList())
+        }
     }
 }

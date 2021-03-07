@@ -22,35 +22,34 @@
 
 package ru.h1karo.sharecontrol.command
 
-import ru.h1karo.sharecontrol.command.input.InputDefinition
+import com.google.inject.Inject
 import ru.h1karo.sharecontrol.command.input.InputInterface
-import ru.h1karo.sharecontrol.command.input.argument.Argument
 import ru.h1karo.sharecontrol.command.output.OutputInterface
+import ru.h1karo.sharecontrol.command.style.OutputStyle
+import ru.h1karo.sharecontrol.updater.VersionProvider
 
-interface CommandInterface : Comparable<CommandInterface> {
-    val name: String
+class CheckUpdateCommand @Inject constructor(
+    override val parent: UpdateCommand,
+    private val versionProvider: VersionProvider
+) : Command() {
+    override val name: String = NAME
 
-    val parent: CommandInterface?
+    override fun execute(input: InputInterface, output: OutputInterface): Boolean {
+        val style = OutputStyle(output)
 
-    val definition: InputDefinition
+        val version = this.versionProvider.find()
+        if (version === null) {
+            style.success("\${update.latest}")
+            return true
+        }
 
-    val priority: Int
+        style.write("update.new-version", setOf(version.name))
+        style.write("update.download", setOf(version.link))
 
-    fun getFullName(): String = this.getFullPath().joinToString(" ")
-
-    fun getFullPath(): Set<String>
-
-    fun getFirstParent(): CommandInterface?
-
-    fun getDescription(): String
-
-    fun getArguments(): List<Argument<*>>
-
-    fun run(input: InputInterface, output: OutputInterface): Boolean
-
-    fun getSyntax(): String
+        return true
+    }
 
     companion object {
-        const val COMMAND_CHAR = "/"
+        private const val NAME = "check"
     }
 }

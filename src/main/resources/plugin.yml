@@ -1,10 +1,9 @@
 name: ShareControl
-main: ru.h1karo.sharecontrol.ShareControl
+main: ${mainClass}
 version: '${project.version.full}'
 authors:
   - h1karo
-softdepend: [Essentials, WorldEdit]
-description: Control mode of creativity.
+description: Manage the cross-mode play
 website: http://dev.bukkit.org/bukkit-plugins/sharecontrol/
 commands:
    sharecontrol:

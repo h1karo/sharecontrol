@@ -30,11 +30,20 @@ import ru.h1karo.sharecontrol.command.output.OutputInterface
 import java.text.MessageFormat
 
 abstract class Command : CommandInterface {
-    override val definition = InputDefinition()
+    final override val definition = InputDefinition()
 
     override val parent: CommandInterface? = null
 
     override val priority: Int = 0
+
+    override fun getFullPath(): Set<String> {
+        if (this.parent === null) {
+            return setOf(this.name)
+        }
+
+        val parentPath = this.parent!!.getFullPath().toTypedArray()
+        return setOf(*parentPath, this.name)
+    }
 
     override fun getFirstParent(): CommandInterface? {
         var parent = this.parent
@@ -45,7 +54,7 @@ abstract class Command : CommandInterface {
         return parent
     }
 
-    override fun getDescription(): String = MessageFormat.format(DESCRIPTION_KEY, this.name)
+    override fun getDescription(): String = MessageFormat.format(DESCRIPTION_KEY, this.getFullPath().joinToString(CHILDREN_DELIMITER))
 
     override fun getArguments(): List<Argument<*>> = this.definition.getValues()
 
@@ -66,28 +75,13 @@ abstract class Command : CommandInterface {
         return CommandInterface.COMMAND_CHAR + command
     }
 
-    override fun getFullName(): String =
-        setOf(this.getPrefix(), this.name)
-            .joinToString(" ")
-            .trim(' ')
-
-    private fun getPrefix(): String {
-        var parent = this.parent
-        val parts = LinkedHashSet<String>()
-        while (parent !== null) {
-            parts.add(parent.name)
-            parent = parent.parent
-        }
-
-        return parts.reversed().joinToString(" ")
-    }
-
     final override fun compareTo(other: CommandInterface): Int {
         return other.priority - this.priority
     }
 
     companion object {
         const val DESCRIPTION_KEY = "commands.{0}.description"
+        const val CHILDREN_DELIMITER = ".children."
         const val ARGUMENT_DESCRIPTION_KEY = "commands.{0}.arguments.{1}"
     }
 }

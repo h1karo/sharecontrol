@@ -6,16 +6,24 @@ commands:
   _syntax: '§7Syntax: §9{0}§7.'
   sharecontrol:
     description: 'The main plugin command'
-  list:
-    description: 'Show the command list'
-    arguments:
-      page: 'The page number'
-  help:
-    description: 'Show command details'
-    arguments:
-      command: 'The target command'
-  reload:
-    description: 'Reload the plugin'
+    children:
+      list:
+        description: 'Show the command list'
+        arguments:
+          page: 'The page number'
+      help:
+        description: 'Show command details'
+        arguments:
+          command: 'The target command'
+      reload:
+        description: 'Reload the plugin'
+      about:
+        description: 'About the plugin'
+      update:
+        description: 'Show the update command list'
+        children:
+          check:
+            description: 'Check for updates'
 list:
   format: '§9{0}§f - §7{1}'
   title: '§9>>> §9§lShare§f§lControl §9>§7 The list of commands §f{0}§7/§f{1}'
@@ -38,3 +46,12 @@ help:
     title: '§7Several commands were found by request, please select one.'
     list: '§7{0}. §9{1}§7.'
   not-found: '§cNo command found by request.'
+about:
+  title: '§9>>> §9§lShare§f§lControl §9>§7 About'
+  version: '§7The version: §9{0}§7.'
+  author: '§7The author: §9{0}§7.'
+  website: '§7The website: §9{0}§7.'
+update:
+  latest: 'You are using the latest version of the plugin.'
+  new-version: '§7A new version of the plugin has been found: §9{0}§7.'
+  download: '§7You can download the update at this link: §9{0}§7.'
