@@ -32,6 +32,7 @@ import ru.h1karo.sharecontrol.module.CommandModule
 import ru.h1karo.sharecontrol.module.DatabaseModule
 import ru.h1karo.sharecontrol.module.I18nModule
 import ru.h1karo.sharecontrol.module.InitializationModule
+import ru.h1karo.sharecontrol.module.ListenerModule
 import ru.h1karo.sharecontrol.module.MessengerModule
 import ru.h1karo.sharecontrol.module.PluginModule
 import ru.h1karo.sharecontrol.module.UpdaterModule
@@ -45,7 +46,8 @@ class ShareControl : JavaPlugin(), Listener {
         I18nModule(),
         MessengerModule(),
         CommandModule(),
-        UpdaterModule()
+        UpdaterModule(),
+        ListenerModule(),
     )
     private val initializer: Initializer = injector.getInstance(Initializer::class.java)
 
