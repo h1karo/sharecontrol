@@ -42,6 +42,7 @@ class UpdaterListener @Inject constructor(
 
     @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
     fun onPlayerJoin(event: PlayerJoinEvent) {
+        // @todo permission check
         val version = this.versionProvider.find() ?: return
 
         this.messenger.send(event.player) {
