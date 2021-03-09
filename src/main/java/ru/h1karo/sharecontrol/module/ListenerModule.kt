@@ -20,11 +20,12 @@
  * @link https://github.com/h1karo/sharecontrol
  */
 
-package ru.h1karo.sharecontrol.messenger
+package ru.h1karo.sharecontrol.module
 
-interface Messenger {
-    fun send(recipient: Any, message: String, parameters: Collection<Any> = emptySet())
+import ru.h1karo.sharecontrol.listener.Listener
 
-    fun send(recipient: Any, callback: (StatefulMessenger) -> Unit) =
-        callback { message: String, parameters: Collection<Any> -> this.send(recipient, message, parameters) }
+class ListenerModule : AbstractModule() {
+    override fun configure() {
+        this.bindSet(Listener::class.java)
+    }
 }

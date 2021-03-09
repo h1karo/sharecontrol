@@ -13,18 +13,15 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with ShareControl. If not, see <https://www.gnu.org/licenses/>.
- *
+ *  
  * @copyright Copyright (c) 2020 ShareControl
  * @author Oleg Kozlov <h1karo@outlook.com>
  * @license GNU General Public License v3.0
  * @link https://github.com/h1karo/sharecontrol
  */
 
-package ru.h1karo.sharecontrol.messenger
+package ru.h1karo.sharecontrol.listener
 
-interface Messenger {
-    fun send(recipient: Any, message: String, parameters: Collection<Any> = emptySet())
+import org.bukkit.event.Listener as BukkitListener
 
-    fun send(recipient: Any, callback: (StatefulMessenger) -> Unit) =
-        callback { message: String, parameters: Collection<Any> -> this.send(recipient, message, parameters) }
-}
+interface Listener : BukkitListener

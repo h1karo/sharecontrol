@@ -20,11 +20,8 @@
  * @link https://github.com/h1karo/sharecontrol
  */
 
-package ru.h1karo.sharecontrol.messenger
+package ru.h1karo.sharecontrol.listener
 
-interface Messenger {
-    fun send(recipient: Any, message: String, parameters: Collection<Any> = emptySet())
-
-    fun send(recipient: Any, callback: (StatefulMessenger) -> Unit) =
-        callback { message: String, parameters: Collection<Any> -> this.send(recipient, message, parameters) }
+interface OnDemandListener : Listener {
+    fun isEnabled(): Boolean
 }

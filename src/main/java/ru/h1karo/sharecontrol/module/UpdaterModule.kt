@@ -28,12 +28,15 @@ import com.google.inject.Provides
 import com.google.inject.name.Named
 import ru.h1karo.sharecontrol.configuration.ParameterContainer
 import ru.h1karo.sharecontrol.configuration.plugin.Updater
+import ru.h1karo.sharecontrol.updater.CacheableProvider
 import ru.h1karo.sharecontrol.updater.SpigotMcProvider
 import ru.h1karo.sharecontrol.updater.VersionProvider
 
 class UpdaterModule : AbstractModule() {
-    override fun configure() {
-        this.bind(VersionProvider::class.java).to(SpigotMcProvider::class.java)
+    @Provides
+    fun getVersionProvider(injector: Injector): VersionProvider {
+        val provider = injector.getInstance(SpigotMcProvider::class.java)
+        return CacheableProvider(provider)
     }
 
     @Provides
