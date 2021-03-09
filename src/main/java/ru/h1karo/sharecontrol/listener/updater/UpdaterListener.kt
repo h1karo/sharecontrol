@@ -44,7 +44,9 @@ class UpdaterListener @Inject constructor(
     fun onPlayerJoin(event: PlayerJoinEvent) {
         val version = this.versionProvider.find() ?: return
 
-        this.messenger.send(event.player, "update.new-version", setOf(version.name))
-        this.messenger.send(event.player, "update.download", setOf(version.link))
+        this.messenger.send(event.player) {
+            it.send("update.new-version", setOf(version.name))
+            it.send("update.download", setOf(version.link))
+        }
     }
 }
