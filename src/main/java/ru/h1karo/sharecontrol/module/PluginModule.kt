@@ -28,6 +28,7 @@ import com.google.inject.Provides
 import com.google.inject.name.Named
 import com.google.inject.name.Names
 import org.bukkit.plugin.Plugin
+import org.bukkit.plugin.PluginManager
 import org.bukkit.plugin.java.JavaPlugin
 import ru.h1karo.sharecontrol.ShareControl
 import ru.h1karo.sharecontrol.file.reader.DelegatingReader
@@ -96,6 +97,11 @@ class PluginModule(private val plugin: ShareControl) : AbstractModule() {
     @Named(BUKKIT_VERSION)
     fun getBukkitVersion(): String {
         return this.plugin.server.bukkitVersion
+    }
+
+    @Provides
+    fun getPluginManager(): PluginManager {
+        return this.plugin.server.pluginManager
     }
 
     companion object {
