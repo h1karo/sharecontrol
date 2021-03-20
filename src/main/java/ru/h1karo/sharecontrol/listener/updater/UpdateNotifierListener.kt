@@ -30,22 +30,29 @@ import org.bukkit.event.player.PlayerJoinEvent
 import ru.h1karo.sharecontrol.listener.OnDemandListener
 import ru.h1karo.sharecontrol.messenger.Messenger
 import ru.h1karo.sharecontrol.module.UpdaterModule
+import ru.h1karo.sharecontrol.permission.PermissionManager
+import ru.h1karo.sharecontrol.permission.UpdateNotifyPermission
 import ru.h1karo.sharecontrol.updater.VersionProvider
 
-class UpdaterListener @Inject constructor(
+class UpdateNotifierListener @Inject constructor(
     @Named(UpdaterModule.UPDATER_ENABLED)
     private val isUpdaterEnabled: Boolean,
     private val versionProvider: VersionProvider,
+    private val permissionManager: PermissionManager,
     private val messenger: Messenger,
 ) : OnDemandListener {
     override fun isEnabled(): Boolean = this.isUpdaterEnabled
 
     @EventHandler(priority = EventPriority.MONITOR, ignoreCancelled = true)
     fun onPlayerJoin(event: PlayerJoinEvent) {
-        // @todo permission check
+        val player = event.player
+        if (!this.permissionManager.granted(player, UpdateNotifyPermission)) {
+            return
+        }
+
         val version = this.versionProvider.find() ?: return
 
-        this.messenger.send(event.player) {
+        this.messenger.send(player) {
             it.send("update.new-version", setOf(version.name))
             it.send("update.download", setOf(version.link))
         }
