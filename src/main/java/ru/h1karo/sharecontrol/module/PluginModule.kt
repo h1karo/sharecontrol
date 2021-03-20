@@ -28,12 +28,15 @@ import com.google.inject.Provides
 import com.google.inject.name.Named
 import com.google.inject.name.Names
 import org.bukkit.plugin.Plugin
+import org.bukkit.plugin.PluginManager
 import org.bukkit.plugin.java.JavaPlugin
 import ru.h1karo.sharecontrol.ShareControl
 import ru.h1karo.sharecontrol.file.reader.DelegatingReader
 import ru.h1karo.sharecontrol.file.reader.Reader
 import ru.h1karo.sharecontrol.file.writer.DelegatingWriter
 import ru.h1karo.sharecontrol.file.writer.Writer
+import ru.h1karo.sharecontrol.permission.PermissionManager
+import ru.h1karo.sharecontrol.permission.PermissionManagerInterface
 import java.io.File
 
 class PluginModule(private val plugin: ShareControl) : AbstractModule() {
@@ -41,6 +44,7 @@ class PluginModule(private val plugin: ShareControl) : AbstractModule() {
         this.bind(ShareControl::class.java).toInstance(this.plugin)
         this.bind(JavaPlugin::class.java).to(ShareControl::class.java)
         this.bind(Plugin::class.java).to(ShareControl::class.java)
+        this.bind(PermissionManagerInterface::class.java).to(PermissionManager::class.java)
         this.bindReaders()
         this.bindWriters()
     }
@@ -58,19 +62,19 @@ class PluginModule(private val plugin: ShareControl) : AbstractModule() {
     @Provides
     @Named(NAME)
     fun getPluginName(): String {
-        return plugin.name
+        return this.plugin.name
     }
 
     @Provides
     @Named(VERSION)
     fun getPluginVersion(): String {
-        return plugin.description.version
+        return this.plugin.description.version
     }
 
     @Provides
     @Named(DIRECTORY)
     fun getPluginDirectory(): File {
-        return plugin.dataFolder
+        return this.plugin.dataFolder
     }
 
     @Provides
@@ -89,13 +93,18 @@ class PluginModule(private val plugin: ShareControl) : AbstractModule() {
     @Provides
     @Named(SERVER_VERSION)
     fun getServerVersion(): String {
-        return plugin.server.version
+        return this.plugin.server.version
     }
 
     @Provides
     @Named(BUKKIT_VERSION)
     fun getBukkitVersion(): String {
-        return plugin.server.bukkitVersion
+        return this.plugin.server.bukkitVersion
+    }
+
+    @Provides
+    fun getPluginManager(): PluginManager {
+        return this.plugin.server.pluginManager
     }
 
     companion object {
