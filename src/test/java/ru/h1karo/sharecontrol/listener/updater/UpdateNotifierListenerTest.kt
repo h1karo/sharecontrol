@@ -23,6 +23,10 @@
 package ru.h1karo.sharecontrol.listener.updater
 
 import com.nhaarman.mockitokotlin2.any
+import com.nhaarman.mockitokotlin2.atLeastOnce
+import com.nhaarman.mockitokotlin2.mock
+import com.nhaarman.mockitokotlin2.times
+import com.nhaarman.mockitokotlin2.verify
 import org.bukkit.entity.Player
 import org.bukkit.event.player.PlayerJoinEvent
 import org.junit.jupiter.api.DisplayName
@@ -30,10 +34,6 @@ import org.junit.jupiter.api.Test
 import org.mockito.Mockito.`when`
 import org.mockito.Mockito.anyCollection
 import org.mockito.Mockito.anyString
-import org.mockito.Mockito.atLeastOnce
-import org.mockito.Mockito.mock
-import org.mockito.Mockito.times
-import org.mockito.Mockito.verify
 import ru.h1karo.sharecontrol.messenger.Messenger
 import ru.h1karo.sharecontrol.messenger.StatefulMessenger
 import ru.h1karo.sharecontrol.permission.PermissionManagerInterface
@@ -46,7 +46,7 @@ internal class UpdateNotifierListenerTest {
     fun noPermission() {
         val manager = this.createPermissionManager(false)
         val provider = this.createProvider()
-        val messenger = mock(Messenger::class.java)
+        val messenger = mock<Messenger>()
 
         this.dispatch(provider, manager, messenger)
 
@@ -59,7 +59,7 @@ internal class UpdateNotifierListenerTest {
     fun noVersion() {
         val manager = this.createPermissionManager(true)
         val provider = this.createProvider()
-        val messenger = mock(Messenger::class.java)
+        val messenger = mock<Messenger>()
 
         this.dispatch(provider, manager, messenger)
 
@@ -72,7 +72,7 @@ internal class UpdateNotifierListenerTest {
     fun onVersionFound() {
         val manager = this.createPermissionManager(true)
         val provider = this.createProvider(Version("3.0.0", "some-link"))
-        val messenger = mock(Messenger::class.java)
+        val messenger = mock<Messenger>()
 
         this.dispatch(provider, manager, messenger)
 
@@ -83,21 +83,21 @@ internal class UpdateNotifierListenerTest {
     private fun dispatch(provider: VersionProvider, manager: PermissionManagerInterface, messenger: Messenger) {
         val listener = UpdateNotifierListener(true, provider, manager, messenger)
 
-        val player = mock(Player::class.java)
+        val player = mock<Player>()
         val event = PlayerJoinEvent(player, "joined")
 
         listener.onPlayerJoin(event)
     }
 
     private fun createPermissionManager(granted: Boolean): PermissionManagerInterface {
-        val manager = mock(PermissionManagerInterface::class.java)
+        val manager = mock<PermissionManagerInterface>()
         `when`(manager.granted(any(), any())).thenReturn(granted)
 
         return manager
     }
 
     private fun createProvider(version: Version? = null): VersionProvider {
-        val provider = mock(VersionProvider::class.java)
+        val provider = mock<VersionProvider>()
         `when`(provider.find()).thenReturn(version)
 
         return provider
