@@ -35,6 +35,8 @@ import ru.h1karo.sharecontrol.file.reader.DelegatingReader
 import ru.h1karo.sharecontrol.file.reader.Reader
 import ru.h1karo.sharecontrol.file.writer.DelegatingWriter
 import ru.h1karo.sharecontrol.file.writer.Writer
+import ru.h1karo.sharecontrol.permission.PermissionManager
+import ru.h1karo.sharecontrol.permission.PermissionManagerInterface
 import java.io.File
 
 class PluginModule(private val plugin: ShareControl) : AbstractModule() {
@@ -42,6 +44,7 @@ class PluginModule(private val plugin: ShareControl) : AbstractModule() {
         this.bind(ShareControl::class.java).toInstance(this.plugin)
         this.bind(JavaPlugin::class.java).to(ShareControl::class.java)
         this.bind(Plugin::class.java).to(ShareControl::class.java)
+        this.bind(PermissionManagerInterface::class.java).to(PermissionManager::class.java)
         this.bindReaders()
         this.bindWriters()
     }

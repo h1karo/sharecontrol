@@ -22,30 +22,8 @@
 
 package ru.h1karo.sharecontrol.permission
 
-import com.google.inject.Inject
-import com.google.inject.Singleton
 import org.bukkit.entity.Player
-import org.bukkit.plugin.PluginManager
-import ru.h1karo.sharecontrol.Resettable
 
-@Singleton
-class PermissionManager @Inject constructor(
-    private val pluginManager: PluginManager
-) : PermissionManagerInterface, Resettable {
-    private val permissions: MutableCollection<Permission> = mutableSetOf()
-
-    override fun granted(player: Player, permission: Permission): Boolean {
-        if (!this.permissions.contains(permission)) {
-            this.register(permission)
-        }
-
-        return player.hasPermission(permission.toBukkit())
-    }
-
-    private fun register(permission: Permission) {
-        this.pluginManager.addPermission(permission.toBukkit())
-        this.permissions.add(permission)
-    }
-
-    override fun clear() = this.permissions.clear()
+interface PermissionManagerInterface {
+    fun granted(player: Player, permission: Permission): Boolean
 }

@@ -30,7 +30,7 @@ import org.bukkit.event.player.PlayerJoinEvent
 import ru.h1karo.sharecontrol.listener.OnDemandListener
 import ru.h1karo.sharecontrol.messenger.Messenger
 import ru.h1karo.sharecontrol.module.UpdaterModule
-import ru.h1karo.sharecontrol.permission.PermissionManager
+import ru.h1karo.sharecontrol.permission.PermissionManagerInterface
 import ru.h1karo.sharecontrol.permission.UpdateNotifyPermission
 import ru.h1karo.sharecontrol.updater.VersionProvider
 
@@ -38,7 +38,7 @@ class UpdateNotifierListener @Inject constructor(
     @Named(UpdaterModule.UPDATER_ENABLED)
     private val isUpdaterEnabled: Boolean,
     private val versionProvider: VersionProvider,
-    private val permissionManager: PermissionManager,
+    private val permissionManager: PermissionManagerInterface,
     private val messenger: Messenger,
 ) : OnDemandListener {
     override fun isEnabled(): Boolean = this.isUpdaterEnabled
