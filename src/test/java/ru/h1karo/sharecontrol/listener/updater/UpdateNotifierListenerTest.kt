@@ -30,10 +30,12 @@ import org.junit.jupiter.api.Test
 import org.mockito.Mockito.`when`
 import org.mockito.Mockito.anyCollection
 import org.mockito.Mockito.anyString
+import org.mockito.Mockito.atLeastOnce
 import org.mockito.Mockito.mock
 import org.mockito.Mockito.times
 import org.mockito.Mockito.verify
 import ru.h1karo.sharecontrol.messenger.Messenger
+import ru.h1karo.sharecontrol.messenger.StatefulMessenger
 import ru.h1karo.sharecontrol.permission.PermissionManagerInterface
 import ru.h1karo.sharecontrol.updater.Version
 import ru.h1karo.sharecontrol.updater.VersionProvider
@@ -63,6 +65,19 @@ internal class UpdateNotifierListenerTest {
 
         verify(provider, times(1)).find()
         verify(messenger, times(0)).send(any(), anyString(), anyCollection())
+    }
+
+    @Test
+    @DisplayName("Messages when version available")
+    fun onVersionFound() {
+        val manager = this.createPermissionManager(true)
+        val provider = this.createProvider(Version("3.0.0", "some-link"))
+        val messenger = mock(Messenger::class.java)
+
+        this.dispatch(provider, manager, messenger)
+
+        verify(provider, times(1)).find()
+        verify(messenger, atLeastOnce()).send(any(), any<(StatefulMessenger) -> Unit>())
     }
 
     private fun dispatch(provider: VersionProvider, manager: PermissionManagerInterface, messenger: Messenger) {
