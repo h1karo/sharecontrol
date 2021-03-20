@@ -42,6 +42,16 @@ open class Permission(
 
     fun toBukkit(): BukkitPermission = BukkitPermission(this.getPath(), this.default)
 
+    override fun equals(other: Any?): Boolean {
+        if (other !is Permission) {
+            return false
+        }
+
+        return this.getPath() === other.getPath()
+    }
+
+    override fun hashCode(): Int = 31 * this.getPath().hashCode()
+
     companion object {
         private const val PERMISSION_SEPARATOR = "."
     }
