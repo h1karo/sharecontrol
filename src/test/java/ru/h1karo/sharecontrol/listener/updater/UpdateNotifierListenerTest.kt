@@ -46,15 +46,32 @@ internal class UpdateNotifierListenerTest {
         val provider = this.createProvider()
         val messenger = mock(Messenger::class.java)
 
+        this.dispatch(provider, manager, messenger)
+
+        verify(provider, times(0)).find()
+        verify(messenger, times(0)).send(any(), anyString(), anyCollection())
+    }
+
+    @Test
+    @DisplayName("No messages when no version")
+    fun noVersion() {
+        val manager = this.createPermissionManager(true)
+        val provider = this.createProvider()
+        val messenger = mock(Messenger::class.java)
+
+        this.dispatch(provider, manager, messenger)
+
+        verify(provider, times(1)).find()
+        verify(messenger, times(0)).send(any(), anyString(), anyCollection())
+    }
+
+    private fun dispatch(provider: VersionProvider, manager: PermissionManagerInterface, messenger: Messenger) {
         val listener = UpdateNotifierListener(true, provider, manager, messenger)
 
         val player = mock(Player::class.java)
         val event = PlayerJoinEvent(player, "joined")
 
         listener.onPlayerJoin(event)
-
-        verify(provider, times(0)).find()
-        verify(messenger, times(0)).send(any(), anyString(), anyCollection())
     }
 
     private fun createPermissionManager(granted: Boolean): PermissionManagerInterface {
