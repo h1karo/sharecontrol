@@ -48,6 +48,11 @@ abstract class YamlConfiguration {
     }
 
     fun initialize(): YamlConfiguration {
+        val parent = this.file.parentFile
+        if (!parent.exists() && !parent.mkdirs()) {
+            throw FileSystemException(parent, reason = "Unable to create directory")
+        }
+
         if (!this.file.exists()) {
             this.file.createNewFile()
         }
