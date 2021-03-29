@@ -62,13 +62,13 @@ abstract class YamlConfiguration(folder: File, path: String) {
     }
 
     private fun initializeEntry(entry: Entry) {
-        val has = this.config.contains(entry.getPath())
+        val hasEntry = this.config.contains(entry.getPath())
 
-        if (!has && entry is Parameter<*>) {
+        if (!hasEntry && entry is Parameter<*>) {
             this.config.set(entry.getPath(), entry.getDefault().getValue())
         }
 
-        if (has && entry is VerifiableParameter<*>) {
+        if (hasEntry && entry is VerifiableParameter<*>) {
             val value = this.config.getString(entry.getPath())
             if (!entry.verify(value)) {
                 throw InvalidValueException(entry, value)
