@@ -32,20 +32,10 @@ import java.io.File
 import java.io.FileWriter
 import org.bukkit.configuration.file.YamlConfiguration as BukkitYamlConfiguration
 
-abstract class YamlConfiguration {
-    private val file: File
-    private val config: BukkitYamlConfiguration = BukkitYamlConfiguration()
-    private val commenter: YamlCommenter
-
-    constructor(folder: File, path: String) {
-        this.file = File(folder, path)
-        this.commenter = YamlCommenter()
-    }
-
-    constructor(file: File) {
-        this.file = file
-        this.commenter = YamlCommenter()
-    }
+abstract class YamlConfiguration(folder: File, path: String) {
+    private val file = File(folder, path)
+    private val config = BukkitYamlConfiguration()
+    private val commenter = YamlCommenter()
 
     fun initialize(): YamlConfiguration {
         val parent = this.file.parentFile
