@@ -43,8 +43,8 @@ abstract class YamlConfiguration(folder: File, path: String) {
             throw FileSystemException(parent, reason = "Unable to create directory")
         }
 
-        if (!this.file.exists()) {
-            this.file.createNewFile()
+        if (!this.file.exists() && !this.file.createNewFile()) {
+            throw FileSystemException(this.file, reason = "Unable to create a config file")
         }
 
         this.config.load(file)
