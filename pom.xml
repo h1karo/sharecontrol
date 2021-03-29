@@ -58,6 +58,20 @@
         <maven.compiler.target>1.8</maven.compiler.target>
     </properties>
 
+    <profiles>
+        <profile>
+            <id>version build without git</id>
+            <activation>
+                <file>
+                    <missing>.git</missing>
+                </file>
+            </activation>
+            <properties>
+                <git.commit.id.describe-short>no-git</git.commit.id.describe-short>
+            </properties>
+        </profile>
+    </profiles>
+
     <repositories>
         <repository>
             <id>spigotmc-repo</id>
@@ -178,6 +192,7 @@
                                 <filter>
                                     <artifact>*:*</artifact>
                                     <excludes>
+                                        <exclude>module-info.class</exclude>
                                         <exclude>META-INF/maven/</exclude>
                                         <exclude>META-INF/LICENSE</exclude>
                                         <exclude>META-INF/*.MF</exclude>
