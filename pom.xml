@@ -37,7 +37,7 @@
         <kotlin.version>1.5.20</kotlin.version>
         <compiler.version>3.8.1</compiler.version>
         <shade.version>3.2.4</shade.version>
-        <git-commit.version>4.0.5</git-commit.version>
+        <git-commit.version>4.9.10</git-commit.version>
 
         <guice.version>5.0.1</guice.version>
         <annotations.version>21.0.1</annotations.version>
