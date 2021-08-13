@@ -40,7 +40,7 @@
         <git-commit.version>4.0.5</git-commit.version>
 
         <guice.version>5.0.1</guice.version>
-        <annotations.version>21.0.1</annotations.version>
+        <annotations.version>22.0.0</annotations.version>
         <semver.version>1.1.1</semver.version>
         <reflections.version>0.9.12</reflections.version>
         <commons-io.version>2.10.0</commons-io.version>
