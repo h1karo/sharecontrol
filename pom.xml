@@ -34,22 +34,22 @@
 
         <spigot.version>1.15.2-R0.1-SNAPSHOT</spigot.version>
 
-        <kotlin.version>1.5.30</kotlin.version>
+        <kotlin.version>1.6.21</kotlin.version>
         <compiler.version>3.8.1</compiler.version>
         <shade.version>3.2.4</shade.version>
         <git-commit.version>4.9.10</git-commit.version>
 
-        <guice.version>5.0.1</guice.version>
+        <guice.version>5.1.0</guice.version>
         <annotations.version>22.0.0</annotations.version>
         <semver.version>1.1.1</semver.version>
-        <reflections.version>0.9.12</reflections.version>
+        <reflections.version>0.10.2</reflections.version>
         <commons-io.version>2.11.0</commons-io.version>
         <icu4j.version>67.1</icu4j.version>
         <gson.version>2.9.0</gson.version>
 
-        <ktlint-plugin.version>1.10.2</ktlint-plugin.version>
+        <ktlint-plugin.version>1.13.1</ktlint-plugin.version>
 
-        <junit.version>5.7.2</junit.version>
+        <junit.version>5.8.2</junit.version>
         <mockito.version>4.5.0</mockito.version>
         <mockito-kotlin.version>2.2.0</mockito-kotlin.version>
         <surefire.version>3.0.0-M5</surefire.version>
