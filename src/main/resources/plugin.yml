@@ -5,6 +5,7 @@ authors:
   - h1karo
 description: Manage the cross-mode play
 website: http://dev.bukkit.org/bukkit-plugins/sharecontrol/
+api-version: 1.19
 commands:
    sharecontrol:
       description: Principal command of plugin
