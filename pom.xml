@@ -92,7 +92,7 @@
     </scm>
 
     <build>
-        <finalName>${project.artifactId}</finalName>
+        <finalName>${project.artifactId}-${project.version.full}</finalName>
 
         <resources>
             <resource>
