@@ -47,7 +47,7 @@ class ShareControl : JavaPlugin(), Listener {
         MessengerModule(),
         CommandModule(),
         UpdaterModule(),
-        ListenerModule(),
+        ListenerModule()
     )
     private val initializer: Initializer = injector.getInstance(Initializer::class.java)
 

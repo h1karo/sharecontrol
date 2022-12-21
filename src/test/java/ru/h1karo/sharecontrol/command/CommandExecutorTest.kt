@@ -68,13 +68,13 @@ internal class CommandExecutorTest {
                 this.createCommand(setOf(COMMAND_NAME)),
                 this.createCommand(setOf(COMMAND_NAME, "help")),
                 this.createCommand(setOf(COMMAND_NAME, "list")),
-                this.createCommand(setOf(COMMAND_NAME, "update", "check")),
+                this.createCommand(setOf(COMMAND_NAME, "update", "check"))
             )
 
             return setOf(
                 Arguments.of(commands, arrayOf("lis"), listOf("list")),
                 Arguments.of(commands, arrayOf("h"), listOf("help")),
-                Arguments.of(commands, arrayOf("update", "c"), listOf("check")),
+                Arguments.of(commands, arrayOf("update", "c"), listOf("check"))
             )
         }
 

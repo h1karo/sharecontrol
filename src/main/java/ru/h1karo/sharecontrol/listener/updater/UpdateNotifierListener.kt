@@ -39,7 +39,7 @@ class UpdateNotifierListener @Inject constructor(
     private val isUpdaterEnabled: Boolean,
     private val versionProvider: VersionProvider,
     private val permissionManager: PermissionManagerInterface,
-    private val messenger: Messenger,
+    private val messenger: Messenger
 ) : OnDemandListener {
     override fun isEnabled(): Boolean = this.isUpdaterEnabled
 

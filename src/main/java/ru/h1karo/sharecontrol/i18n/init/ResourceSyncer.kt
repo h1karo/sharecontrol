@@ -40,7 +40,7 @@ class ResourceSyncer @Inject constructor(
     private val directory: File,
     private val resourceManager: ResourceManager,
     private val reader: Reader,
-    private val writer: Writer,
+    private val writer: Writer
 ) {
     fun sync() {
         if (!this.directory.exists()) {

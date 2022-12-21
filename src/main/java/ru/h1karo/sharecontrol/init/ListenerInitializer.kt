@@ -32,7 +32,7 @@ import ru.h1karo.sharecontrol.listener.OnDemandListener
 class ListenerInitializer @Inject constructor(
     console: BlockStyle,
     private val plugin: Plugin,
-    private val listeners: Set<Listener>,
+    private val listeners: Set<Listener>
 ) : AbstractInitializer(console) {
     override fun initialize() {
         val pluginManager = this.plugin.server.pluginManager

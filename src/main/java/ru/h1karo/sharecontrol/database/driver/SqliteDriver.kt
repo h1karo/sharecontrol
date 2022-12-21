@@ -31,9 +31,8 @@ import java.sql.DriverManager
 @Sqlite
 class SqliteDriver : AbstractDriver("org.sqlite.JDBC") {
     override fun connect(config: Configuration): Connection {
-        try {
-
-            return DriverManager.getConnection("jdbc:${config.getDsn()}")
+        return try {
+            DriverManager.getConnection("jdbc:${config.getDsn()}")
         } catch (e: Exception) {
             throw DriverException("Error on connect to SQLite: ${e.message}", e)
         }

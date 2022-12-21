@@ -31,9 +31,9 @@ import org.bukkit.entity.Player
 import org.bukkit.event.player.PlayerJoinEvent
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
-import org.mockito.Mockito.`when`
 import org.mockito.Mockito.anyCollection
 import org.mockito.Mockito.anyString
+import org.mockito.Mockito.`when`
 import ru.h1karo.sharecontrol.messenger.Messenger
 import ru.h1karo.sharecontrol.messenger.StatefulMessenger
 import ru.h1karo.sharecontrol.permission.PermissionManagerInterface
