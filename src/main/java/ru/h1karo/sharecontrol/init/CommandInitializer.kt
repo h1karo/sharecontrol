@@ -35,7 +35,7 @@ class CommandInitializer @Inject constructor(
     console: BlockStyle
 ) : AbstractInitializer(console) {
     override fun initialize() {
-        val commandName = this.plugin.name.toLowerCase()
+        val commandName = this.plugin.name.lowercase()
         this.plugin.getCommand(commandName)?.setExecutor(this.executor)
     }
 

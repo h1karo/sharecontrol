@@ -35,7 +35,7 @@ class PluginCommand @Inject constructor(
     @Named(PluginModule.NAME) pluginName: String,
     private val listCommandProvider: Provider<ListCommand>
 ) : RootCommand() {
-    override val name: String = pluginName.toLowerCase()
+    override val name: String = pluginName.lowercase()
 
     override val priority: Int = 1000
 

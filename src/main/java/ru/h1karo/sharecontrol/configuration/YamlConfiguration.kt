@@ -49,10 +49,9 @@ abstract class YamlConfiguration(folder: File, path: String) {
 
         this.config.load(file)
 
-        val headerSet = this.getHeader()
-        if (headerSet !== null) {
-            val header = headerSet.joinToString(System.lineSeparator())
-            this.config.options().header(header + System.lineSeparator())
+        val header = this.getHeader()
+        if (header !== null) {
+            this.config.options().setHeader(header)
         }
 
         this.getEntries().forEach { this.initializeEntry(it) }
