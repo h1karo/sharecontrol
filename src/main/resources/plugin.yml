@@ -4,7 +4,7 @@ version: '${project.version.full}'
 authors:
   - h1karo
 description: Manage the cross-mode play
-website: http://dev.bukkit.org/bukkit-plugins/sharecontrol/
+website: https://github.com/h1karo/sharecontrol
 api-version: 1.19
 commands:
    sharecontrol:
