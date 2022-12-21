@@ -54,8 +54,8 @@
         <mockito-kotlin.version>2.2.0</mockito-kotlin.version>
         <surefire.version>3.0.0-M7</surefire.version>
 
-        <maven.compiler.source>1.8</maven.compiler.source>
-        <maven.compiler.target>1.8</maven.compiler.target>
+        <maven.compiler.source>17</maven.compiler.source>
+        <maven.compiler.target>17</maven.compiler.target>
     </properties>
 
     <profiles>
