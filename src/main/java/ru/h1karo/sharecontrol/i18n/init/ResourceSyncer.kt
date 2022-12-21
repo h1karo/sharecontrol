@@ -27,6 +27,8 @@ import com.google.inject.Inject
 import com.google.inject.name.Named
 import org.apache.commons.io.FilenameUtils
 import org.reflections.Reflections
+import org.reflections.scanners.Scanners
+import org.reflections.util.ConfigurationBuilder
 import ru.h1karo.sharecontrol.ShareControl
 import ru.h1karo.sharecontrol.file.reader.Reader
 import ru.h1karo.sharecontrol.file.writer.Writer
@@ -47,15 +49,21 @@ class ResourceSyncer @Inject constructor(
             this.directory.mkdirs()
         }
 
-        this.findResources().forEach { syncResource(it) }
+        this.findResources().forEach { this.syncResource(it) }
     }
 
     private fun findResources(): Iterable<String> {
-        val formatPatternPart = MESSAGES_FORMATS.joinToString("|", "(", ")")
-        val pattern = Pattern.compile("^" + this.directory.name + ".*" + formatPatternPart + "$")
-        val reflections = Reflections(ShareControl::class.java.`package`.name)
+        val reflections = Reflections(
+            ConfigurationBuilder()
+                .forPackage(ShareControl::class.java.`package`.name)
+                .setScanners(Scanners.Resources)
+        )
 
-        return reflections.getResources(pattern)
+        val formatPatternPart = MESSAGES_FORMATS.joinToString("|", "(", ")")
+        val pattern = Pattern.compile(".*\\.$formatPatternPart$")
+        val resources = reflections.getResources(pattern)
+
+        return resources.filter { it.startsWith(directory.name) }
     }
 
     private fun syncResource(path: String) {
