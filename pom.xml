@@ -32,7 +32,7 @@
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
         <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
 
-        <spigot.version>1.15.2-R0.1-SNAPSHOT</spigot.version>
+        <spigot.version>1.19.3-R0.1-SNAPSHOT</spigot.version>
 
         <kotlin.version>1.7.10</kotlin.version>
         <compiler.version>3.10.1</compiler.version>
