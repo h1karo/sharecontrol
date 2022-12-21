@@ -11,21 +11,21 @@ This is the official repository of ShareControl Minecraft server plugin. The rep
 
 ## Requirements
 
-1. Java 8+
+1. Java 17+
 2. Compatible core (see [below](#server-cores-support-table))
 
 ### Server cores support table
 
-| Core name | Support versions |
-| :--- | :---: |
-| Bukkit | 1.15-1.15.2 |
-| Spigot | 1.15-1.15.2 |
-| PaperSpigot | 1.15-1.15.2 |
+| Core name   | Support versions |
+|:------------|:----------------:|
+| Bukkit      |   1.19-1.19.3    |
+| Spigot      |   1.19-1.19.3    |
+| PaperSpigot |   1.19-1.19.3    |
 
 ## Installation
 
 1. Download the executable plugin file (ShareControl.jar).   
-   You can download the latest version directly from [Github](https://github.com/h1karo/sharecontrol/releases/latest/download/ShareControl.jar).
+   You can download the latest version directly from [GitHub](https://github.com/h1karo/sharecontrol/releases/latest/download/ShareControl.jar).
 2. Move downloaded file into plugins directory of your server (`/plugins/` by default).
 3. Start up (or fully restart) server.
 4. Configure the plugin via `/plugins/ShareControl/config.yaml` file (see section [Configuration](#configuration)).
