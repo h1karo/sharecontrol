@@ -40,8 +40,8 @@ class CompatibilityValidator @Inject constructor(
     private fun getSupportInterval(version: String): List<SemVer> {
         // todo remove hard code with version support provider
         return listOf(
-            SemVer(1, 15),
-            SemVer(1, 15, 2)
+            SemVer(1, 19),
+            SemVer(1, 19, 3)
         )
     }
 }
