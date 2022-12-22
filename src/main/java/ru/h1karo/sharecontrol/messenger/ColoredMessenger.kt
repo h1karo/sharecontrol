@@ -37,6 +37,6 @@ class ColoredMessenger @Inject constructor(
     }
 
     companion object {
-        private const val COLOR_CHAR = ChatColor.COLOR_CHAR
+        private const val COLOR_CHAR = '&'
     }
 }
