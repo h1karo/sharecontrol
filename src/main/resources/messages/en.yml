@@ -30,16 +30,16 @@ commands:
             description: 'check for updates'
 list:
   format: '§9{0}§f - §7{1}'
-  header: '§9>>> §9§lShare§f§lControl §9>§7 The list of commands §f{0}§7/§f{1}'
+  header: '§8>>> §9§lShare§f§lControl §9>§7 The list of commands §f{0}§7/§f{1}'
   empty: '§7This page is empty'
-  footer: '§9> §7Run §9{0}§7 to go to the next page'
+  footer: '§8> §7Run §9{0}§7 to go to the next page'
 reload:
   success: '§2✓§8 Plugin reloaded successfully.'
   error: >-
     §cAn error occurred while trying to reload the plugin.
     §7The error was saved in the log file.
 help:
-  header: '§9>>> §9§lShare§f§lControl §9>§7 The command helper'
+  header: '§8>>> §9§lShare§f§lControl §9>§7 The command helper'
   command: '§7The syntax: §9{0}§7.'
   description: '§7The description: §f{0}§7.'
   arguments:
@@ -52,7 +52,7 @@ help:
     list: '§7{0}. §9{1}§7.'
   not-found: '§cNo command found by request.'
 about:
-  header: '§9>>> §9§lShare§f§lControl §9>§7 About'
+  header: '§8>>> §9§lShare§f§lControl §9>§7 About'
   version: '§7The version: §9{0}§7.'
   author: '§7The author: §9{0}§7.'
   website: '§7The website: §9{0}§7.'
