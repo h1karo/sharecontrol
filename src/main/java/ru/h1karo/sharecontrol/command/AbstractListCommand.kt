@@ -58,10 +58,10 @@ abstract class AbstractListCommand @Inject constructor(
             val paginator = style.createPaginator()
             val pagination = paginator.paginate(items.toList(), page, LIMIT - 1)
 
-            output.write("list.title", listOf(page, pagination.getLastPageNumber()))
+            output.write("list.header", listOf(page, pagination.getLastPageNumber()))
             pagination.getItems().forEach { output.write(it) }
         } catch (e: PageNumberOutOfRangeException) {
-            output.write("list.title", listOf(e.page, e.maxPage))
+            output.write("list.header", listOf(e.page, e.maxPage))
             output.write("list.empty")
         }
 

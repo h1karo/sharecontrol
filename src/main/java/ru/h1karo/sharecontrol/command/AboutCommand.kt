@@ -38,7 +38,7 @@ class AboutCommand @Inject constructor(
         val style = OutputStyle(output)
         val description = plugin.description
 
-        style.write("about.title")
+        style.write("about.header")
         style.write("about.version", listOf(description.version))
         style.write("about.author", listOf(description.authors.first()))
         style.write("about.website", listOf(description.website ?: "n/a"))

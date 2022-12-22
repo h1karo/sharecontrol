@@ -62,14 +62,14 @@ class HelpCommand @Inject constructor(
             name.equals(joined, true)
         }
 
-        style.write("help.title")
+        style.write("help.header")
         if (commands.isEmpty()) {
             style.write("help.not-found")
             return true
         }
 
         if (commands.size > 1) {
-            style.write("help.many.title")
+            style.write("help.many.message")
             commands.forEachIndexed { index, command -> style.write("help.many.list", setOf(index, command.name)) }
             return true
         }
