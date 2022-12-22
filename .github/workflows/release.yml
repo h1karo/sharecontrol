@@ -41,7 +41,7 @@ jobs:
         run: mvn -B ktlint:check
 
       - name: Build with Maven
-        run: mvn -B clean package
+        run: mvn -B clean package -Djar.finalName=ShareControl
 
       - name: Attach the test report
         if: ${{ always() }}
