@@ -25,6 +25,7 @@ package ru.h1karo.sharecontrol.messenger
 import com.google.inject.Inject
 import org.bukkit.ChatColor
 import ru.h1karo.sharecontrol.messenger.format.MessageFormatter
+import java.util.regex.Pattern
 
 class ColoredMessenger @Inject constructor(
     private val messenger: Messenger,
@@ -32,11 +33,32 @@ class ColoredMessenger @Inject constructor(
 ) : Messenger {
     override fun send(recipient: Any, message: String, parameters: Collection<Any>) {
         val formatted = this.formatter.format(message, parameters)
-        val colored = ChatColor.translateAlternateColorCodes(COLOR_CHAR, formatted)
+        val colored = this.colorize(formatted)
         this.messenger.send(recipient, colored)
+    }
+
+    private fun colorize(message: String): String {
+        var target = message
+        val matcher = HEX_PATTERN.matcher(message)
+        while (matcher.find()) {
+            val hexCode = matcher.group()
+            val hexColor = hexCode.removePrefix("&")
+            val chatColor = this.createChatColor(hexColor)
+
+            target = target.replace(hexCode, chatColor)
+        }
+
+        return ChatColor.translateAlternateColorCodes(COLOR_CHAR, target)
+    }
+
+    private fun createChatColor(hexColor: String): String {
+        val colorChars = hexColor.replace("#", "x").toCharArray()
+
+        return colorChars.joinToString("") { String(charArrayOf(COLOR_CHAR, it)) }
     }
 
     companion object {
         private const val COLOR_CHAR = '&'
+        private val HEX_PATTERN = Pattern.compile("&#[0-9a-fA-F]{6}")
     }
 }
