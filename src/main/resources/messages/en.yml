@@ -32,6 +32,7 @@ list:
   format: '§9{0}§f - §7{1}'
   header: '§9>>> §9§lShare§f§lControl §9>§7 The list of commands §f{0}§7/§f{1}'
   empty: '§7This page is empty'
+  footer: '§9> §7Run §9{0}§7 to go to the next page'
 reload:
   success: '§2✓§8 Plugin reloaded successfully.'
   error: >-

@@ -75,6 +75,13 @@ abstract class Command : CommandInterface {
         return CommandInterface.COMMAND_CHAR + command
     }
 
+    fun getCommand(arguments: Map<String, *>): String {
+        val command = setOf(this.getFullName())
+            .plus(this.getArguments().map { arguments[it.name].toString() })
+            .joinToString(" ")
+        return CommandInterface.COMMAND_CHAR + command
+    }
+
     final override fun compareTo(other: CommandInterface): Int {
         return compareValuesBy(this, other, { it.priority }, { it.getFullName() })
     }
