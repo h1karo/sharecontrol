@@ -52,7 +52,7 @@ class I18nInitializer @Inject constructor(
         this.translator.setLocale(locale)
         this.initLocale(locale)
 
-        this.send("Locale detected: §7%s§8 (§9%s§8)".format(locale.name, locale.abbr))
+        this.info("Locale detected: §7%s§8 (§9%s§8)".format(locale.name, locale.abbr))
         this.success("Internationalization component loaded.")
     }
 
