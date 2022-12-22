@@ -40,6 +40,9 @@ abstract class AbstractInitializer(protected val console: BlockStyle) : Initiali
     protected fun warning(message: String, parameters: Set<String> = emptySet()) =
         this.console.warning(recipient, message, parameters)
 
+    protected fun info(message: String, parameters: Set<String> = emptySet()) =
+        this.console.info(recipient, message, parameters)
+
     protected fun start() = this.console.sendTitledLine(recipient)
     protected fun end() = this.console.sendLine(recipient)
 

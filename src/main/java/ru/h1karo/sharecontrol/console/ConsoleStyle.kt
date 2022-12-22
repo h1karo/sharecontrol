@@ -37,6 +37,9 @@ open class ConsoleStyle @Inject constructor(private val messenger: Messenger) : 
     fun warning(recipient: Any, message: String, parameters: Collection<Any> = emptySet()) =
         this.send(recipient, "§6!§e $message", parameters)
 
+    fun info(recipient: Any, message: String, parameters: Collection<Any> = emptySet()) =
+        this.send(recipient, "§9i§8 $message", parameters)
+
     override fun send(recipient: Any, message: String, parameters: Collection<Any>) =
         this.messenger.send(recipient, message, parameters)
 }
