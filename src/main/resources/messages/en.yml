@@ -8,7 +8,7 @@ commands:
     description: 'The main plugin command'
     children:
       list:
-        description: 'Show the command list'
+        description: 'Show list of commands'
         arguments:
           page: 'The page number'
       help:
@@ -20,8 +20,12 @@ commands:
       about:
         description: 'About the plugin'
       update:
-        description: 'Show the update command list'
+        description: 'Control plugin updates'
         children:
+          list:
+            description: 'Show list of update commands'
+            arguments:
+              page: 'The page number'
           check:
             description: 'Check for updates'
 list:

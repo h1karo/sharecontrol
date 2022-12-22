@@ -20,8 +20,12 @@ commands:
       about:
         description: 'О плагине'
       update:
-        description: 'Показать список команд обновления'
+        description: 'Управление обновлением плагина'
         children:
+          list:
+            description: 'Показать список команд обновления'
+            arguments:
+              page: 'Номер страницы'
           check:
             description: 'Проверить наличие обновлений'
 list:
