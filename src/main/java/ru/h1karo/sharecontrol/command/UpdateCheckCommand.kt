@@ -23,15 +23,33 @@
 package ru.h1karo.sharecontrol.command
 
 import com.google.inject.Inject
-import com.google.inject.Provider
-import ru.h1karo.sharecontrol.i18n.TranslatorInterface
+import ru.h1karo.sharecontrol.command.input.InputInterface
+import ru.h1karo.sharecontrol.command.output.OutputInterface
+import ru.h1karo.sharecontrol.command.style.OutputStyle
+import ru.h1karo.sharecontrol.updater.VersionProvider
 
-class ListUpdateCommand @Inject constructor(
+class UpdateCheckCommand @Inject constructor(
     override val parent: UpdateCommand,
-    translator: TranslatorInterface,
-    private val checkUpdateCommandProvider: Provider<CheckUpdateCommand>
-) : AbstractListCommand(translator) {
-    override val priority: Int = -10
+    private val versionProvider: VersionProvider
+) : Command() {
+    override val name: String = NAME
 
-    override fun provideCommands(): List<CommandInterface> = listOf(this, this.checkUpdateCommandProvider.get())
+    override fun execute(input: InputInterface, output: OutputInterface): Boolean {
+        val style = OutputStyle(output)
+
+        val version = this.versionProvider.find()
+        if (version === null) {
+            style.success("\${update.latest}")
+            return true
+        }
+
+        style.write("update.new-version", setOf(version.name))
+        style.write("update.download", setOf(version.link))
+
+        return true
+    }
+
+    companion object {
+        private const val NAME = "check"
+    }
 }

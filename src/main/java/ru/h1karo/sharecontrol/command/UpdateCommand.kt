@@ -27,7 +27,7 @@ import com.google.inject.Provider
 
 class UpdateCommand @Inject constructor(
     override val parent: PluginCommand,
-    listCommandProvider: Provider<ListUpdateCommand>
+    listCommandProvider: Provider<UpdateListCommand>
 ) : AbstractRedirectCommand(listCommandProvider) {
     override val name: String = NAME
 
