@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with ShareControl. If not, see <https://www.gnu.org/licenses/>.
  *
- * @copyright Copyright (c) 2020 ShareControl
+ * @copyright Copyright (c) 2022 ShareControl
  * @author Oleg Kozlov <h1karo@outlook.com>
  * @license GNU General Public License v3.0
  * @link https://github.com/h1karo/sharecontrol
@@ -27,35 +27,41 @@ import com.google.inject.Inject
 import com.google.inject.name.Named
 import org.apache.commons.io.FilenameUtils
 import org.reflections.Reflections
-import org.reflections.scanners.ResourcesScanner
+import org.reflections.scanners.Scanners
+import org.reflections.util.ConfigurationBuilder
+import ru.h1karo.sharecontrol.ShareControl
 import ru.h1karo.sharecontrol.file.reader.Reader
 import ru.h1karo.sharecontrol.file.writer.Writer
 import ru.h1karo.sharecontrol.module.I18nModule
 import ru.h1karo.sharecontrol.resource.ResourceManager
 import java.io.File
+import java.util.regex.Pattern
 
 class ResourceSyncer @Inject constructor(
     @Named(I18nModule.MESSAGES_DIRECTORY)
     private val directory: File,
     private val resourceManager: ResourceManager,
     private val reader: Reader,
-    private val writer: Writer,
+    private val writer: Writer
 ) {
     fun sync() {
         if (!this.directory.exists()) {
             this.directory.mkdirs()
         }
 
-        this.findResources().forEach { syncResource(it) }
+        this.findResources().forEach { this.syncResource(it) }
     }
 
-    private fun findResources(): List<String> {
-        val reflections = Reflections(ResourcesScanner())
-        val resources = reflections.getResources { filename ->
-            MESSAGES_FORMATS.any { format ->
-                filename.endsWith(format)
-            }
-        }
+    private fun findResources(): Iterable<String> {
+        val reflections = Reflections(
+            ConfigurationBuilder()
+                .forPackage(ShareControl::class.java.`package`.name)
+                .setScanners(Scanners.Resources)
+        )
+
+        val formatPatternPart = MESSAGES_FORMATS.joinToString("|", "(", ")")
+        val pattern = Pattern.compile(".*\\.$formatPatternPart$")
+        val resources = reflections.getResources(pattern)
 
         return resources.filter { it.startsWith(directory.name) }
     }

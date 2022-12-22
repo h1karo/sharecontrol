@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with ShareControl. If not, see <https://www.gnu.org/licenses/>.
  *
- * @copyright Copyright (c) 2020 ShareControl
+ * @copyright Copyright (c) 2022 ShareControl
  * @author Oleg Kozlov <h1karo@outlook.com>
  * @license GNU General Public License v3.0
  * @link https://github.com/h1karo/sharecontrol
@@ -40,8 +40,8 @@ class CompatibilityValidator @Inject constructor(
     private fun getSupportInterval(version: String): List<SemVer> {
         // todo remove hard code with version support provider
         return listOf(
-            SemVer(1, 15),
-            SemVer(1, 15, 2)
+            SemVer(1, 19),
+            SemVer(1, 19, 3)
         )
     }
 }

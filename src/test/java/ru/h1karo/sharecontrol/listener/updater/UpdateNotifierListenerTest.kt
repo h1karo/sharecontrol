@@ -13,8 +13,8 @@
  *
  * You should have received a copy of the GNU General Public License
  * along with ShareControl. If not, see <https://www.gnu.org/licenses/>.
- *  
- * @copyright Copyright (c) 2020 ShareControl
+ *
+ * @copyright Copyright (c) 2022 ShareControl
  * @author Oleg Kozlov <h1karo@outlook.com>
  * @license GNU General Public License v3.0
  * @link https://github.com/h1karo/sharecontrol
@@ -31,9 +31,9 @@ import org.bukkit.entity.Player
 import org.bukkit.event.player.PlayerJoinEvent
 import org.junit.jupiter.api.DisplayName
 import org.junit.jupiter.api.Test
-import org.mockito.Mockito.`when`
 import org.mockito.Mockito.anyCollection
 import org.mockito.Mockito.anyString
+import org.mockito.Mockito.`when`
 import ru.h1karo.sharecontrol.messenger.Messenger
 import ru.h1karo.sharecontrol.messenger.StatefulMessenger
 import ru.h1karo.sharecontrol.permission.PermissionManagerInterface

@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with ShareControl. If not, see <https://www.gnu.org/licenses/>.
  *
- * @copyright Copyright (c) 2020 ShareControl
+ * @copyright Copyright (c) 2022 ShareControl
  * @author Oleg Kozlov <h1karo@outlook.com>
  * @license GNU General Public License v3.0
  * @link https://github.com/h1karo/sharecontrol
@@ -52,7 +52,7 @@ class I18nInitializer @Inject constructor(
         this.translator.setLocale(locale)
         this.initLocale(locale)
 
-        this.send("Locale detected: §7%s§8 (§9%s§8)".format(locale.name, locale.abbr))
+        this.info("Locale detected: §7%s§8 (§9%s§8)".format(locale.name, locale.abbr))
         this.success("Internationalization component loaded.")
     }
 

@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with ShareControl. If not, see <https://www.gnu.org/licenses/>.
  *
- * @copyright Copyright (c) 2020 ShareControl
+ * @copyright Copyright (c) 2022 ShareControl
  * @author Oleg Kozlov <h1karo@outlook.com>
  * @license GNU General Public License v3.0
  * @link https://github.com/h1karo/sharecontrol
@@ -36,6 +36,9 @@ open class ConsoleStyle @Inject constructor(private val messenger: Messenger) : 
 
     fun warning(recipient: Any, message: String, parameters: Collection<Any> = emptySet()) =
         this.send(recipient, "§6!§e $message", parameters)
+
+    fun info(recipient: Any, message: String, parameters: Collection<Any> = emptySet()) =
+        this.send(recipient, "§9i§8 $message", parameters)
 
     override fun send(recipient: Any, message: String, parameters: Collection<Any>) =
         this.messenger.send(recipient, message, parameters)

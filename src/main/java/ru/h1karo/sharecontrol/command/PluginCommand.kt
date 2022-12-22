@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with ShareControl. If not, see <https://www.gnu.org/licenses/>.
  *
- * @copyright Copyright (c) 2020 ShareControl
+ * @copyright Copyright (c) 2022 ShareControl
  * @author Oleg Kozlov <h1karo@outlook.com>
  * @license GNU General Public License v3.0
  * @link https://github.com/h1karo/sharecontrol
@@ -35,7 +35,7 @@ class PluginCommand @Inject constructor(
     @Named(PluginModule.NAME) pluginName: String,
     private val listCommandProvider: Provider<ListCommand>
 ) : RootCommand() {
-    override val name: String = pluginName.toLowerCase()
+    override val name: String = pluginName.lowercase()
 
     override val priority: Int = 1000
 

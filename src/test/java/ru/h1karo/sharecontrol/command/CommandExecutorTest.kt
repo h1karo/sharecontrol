@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with ShareControl. If not, see <https://www.gnu.org/licenses/>.
  *
- * @copyright Copyright (c) 2020 ShareControl
+ * @copyright Copyright (c) 2022 ShareControl
  * @author Oleg Kozlov <h1karo@outlook.com>
  * @license GNU General Public License v3.0
  * @link https://github.com/h1karo/sharecontrol
@@ -68,13 +68,13 @@ internal class CommandExecutorTest {
                 this.createCommand(setOf(COMMAND_NAME)),
                 this.createCommand(setOf(COMMAND_NAME, "help")),
                 this.createCommand(setOf(COMMAND_NAME, "list")),
-                this.createCommand(setOf(COMMAND_NAME, "update", "check")),
+                this.createCommand(setOf(COMMAND_NAME, "update", "check"))
             )
 
             return setOf(
                 Arguments.of(commands, arrayOf("lis"), listOf("list")),
                 Arguments.of(commands, arrayOf("h"), listOf("help")),
-                Arguments.of(commands, arrayOf("update", "c"), listOf("check")),
+                Arguments.of(commands, arrayOf("update", "c"), listOf("check"))
             )
         }
 

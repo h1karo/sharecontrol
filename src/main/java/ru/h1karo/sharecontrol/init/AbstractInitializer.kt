@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with ShareControl. If not, see <https://www.gnu.org/licenses/>.
  *
- * @copyright Copyright (c) 2020 ShareControl
+ * @copyright Copyright (c) 2022 ShareControl
  * @author Oleg Kozlov <h1karo@outlook.com>
  * @license GNU General Public License v3.0
  * @link https://github.com/h1karo/sharecontrol
@@ -39,6 +39,9 @@ abstract class AbstractInitializer(protected val console: BlockStyle) : Initiali
 
     protected fun warning(message: String, parameters: Set<String> = emptySet()) =
         this.console.warning(recipient, message, parameters)
+
+    protected fun info(message: String, parameters: Set<String> = emptySet()) =
+        this.console.info(recipient, message, parameters)
 
     protected fun start() = this.console.sendTitledLine(recipient)
     protected fun end() = this.console.sendLine(recipient)

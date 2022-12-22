@@ -14,7 +14,7 @@
  * You should have received a copy of the GNU General Public License
  * along with ShareControl. If not, see <https://www.gnu.org/licenses/>.
  *
- * @copyright Copyright (c) 2020 ShareControl
+ * @copyright Copyright (c) 2022 ShareControl
  * @author Oleg Kozlov <h1karo@outlook.com>
  * @license GNU General Public License v3.0
  * @link https://github.com/h1karo/sharecontrol
@@ -31,9 +31,8 @@ import java.sql.DriverManager
 @Sqlite
 class SqliteDriver : AbstractDriver("org.sqlite.JDBC") {
     override fun connect(config: Configuration): Connection {
-        try {
-
-            return DriverManager.getConnection("jdbc:${config.getDsn()}")
+        return try {
+            DriverManager.getConnection("jdbc:${config.getDsn()}")
         } catch (e: Exception) {
             throw DriverException("Error on connect to SQLite: ${e.message}", e)
         }
