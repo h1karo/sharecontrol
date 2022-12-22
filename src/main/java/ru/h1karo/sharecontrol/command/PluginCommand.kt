@@ -37,7 +37,7 @@ class PluginCommand @Inject constructor(
 ) : RootCommand() {
     override val name: String = pluginName.lowercase()
 
-    override val priority: Int = 1000
+    override val priority: Int = -100
 
     override fun execute(input: InputInterface, output: OutputInterface): Boolean {
         return try {

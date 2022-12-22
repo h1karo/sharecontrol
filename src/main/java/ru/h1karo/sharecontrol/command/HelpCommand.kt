@@ -38,7 +38,7 @@ class HelpCommand @Inject constructor(
     override val parent: PluginCommand
 ) : Command() {
     override val name: String = NAME
-    override val priority: Int = 800
+    override val priority: Int = -80
 
     init {
         this.definition.addArgument(

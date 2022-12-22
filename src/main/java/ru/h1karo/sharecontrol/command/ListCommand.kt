@@ -31,10 +31,9 @@ class ListCommand @Inject constructor(
     translator: TranslatorInterface,
     override val parent: PluginCommand
 ) : AbstractListCommand(translator) {
-    override val priority: Int = 900
+    override val priority: Int = -90
 
     override fun provideCommands(): List<CommandInterface> = this.commandProviders
         .map { it.get() }
         .sorted()
-        .filter { it is RootCommand || it.parent is RootCommand }
 }
