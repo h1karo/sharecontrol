@@ -48,6 +48,6 @@ class Paginator : PaginatorInterface {
     }
 
     companion object {
-        private const val LINE_LENGTH = ChatPaginator.GUARANTEED_NO_WRAP_CHAT_PAGE_WIDTH
+        private const val LINE_LENGTH = ChatPaginator.AVERAGE_CHAT_PAGE_WIDTH
     }
 }
