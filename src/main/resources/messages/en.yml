@@ -5,29 +5,29 @@ commands:
   _not-found: '§cCommand not found.'
   _syntax: '§7Syntax: §9{0}§7.'
   sharecontrol:
-    description: 'The main plugin command'
+    description: 'the main plugin command'
     children:
       list:
-        description: 'Show list of commands'
+        description: 'show list of commands'
         arguments:
-          page: 'The page number'
+          page: 'the page number'
       help:
-        description: 'Show command details'
+        description: 'show command details'
         arguments:
-          command: 'The target command'
+          command: 'the target command'
       reload:
-        description: 'Reload the plugin'
+        description: 'reload the plugin'
       about:
-        description: 'About the plugin'
+        description: 'get info about the plugin'
       update:
-        description: 'Control plugin updates'
+        description: 'control plugin updates'
         children:
           list:
-            description: 'Show list of update commands'
+            description: 'show list of update commands'
             arguments:
-              page: 'The page number'
+              page: 'the page number'
           check:
-            description: 'Check for updates'
+            description: 'check for updates'
 list:
   format: '§9{0}§f - §7{1}'
   header: '§9>>> §9§lShare§f§lControl §9>§7 The list of commands §f{0}§7/§f{1}'

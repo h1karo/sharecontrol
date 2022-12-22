@@ -5,29 +5,29 @@ commands:
   _not-found: '§cКоманда не найдена.'
   _syntax: '§7Синтаксис: §9{0}'
   sharecontrol:
-    description: 'Основная команда плагина'
+    description: 'основная команда плагина'
     children:
       list:
-        description: 'Показать список команд'
+        description: 'показать список команд'
         arguments:
-          page: 'Номер страницы'
+          page: 'номер страницы'
       help:
-        description: 'Показать информацию о команде'
+        description: 'показать информацию о команде'
         arguments:
-          command: 'Запрашиваемая команда'
+          command: 'запрашиваемая команда'
       reload:
-        description: 'Перезагрузить плагин'
+        description: 'перезагрузить плагин'
       about:
-        description: 'О плагине'
+        description: 'информация о плагине'
       update:
-        description: 'Управление обновлением плагина'
+        description: 'управление обновлением плагина'
         children:
           list:
-            description: 'Показать список команд обновления'
+            description: 'показать список команд обновления'
             arguments:
-              page: 'Номер страницы'
+              page: 'номер страницы'
           check:
-            description: 'Проверить наличие обновлений'
+            description: 'проверить наличие обновлений'
 list:
   format: '§9{0}§f - §7{1}'
   header: '§9>>> §9§lShare§f§lControl §9>§7 Список команд §f{0}§7/§f{1}'
