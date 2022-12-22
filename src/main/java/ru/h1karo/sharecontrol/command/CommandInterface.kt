@@ -40,8 +40,6 @@ interface CommandInterface : Comparable<CommandInterface> {
 
     fun getFullPath(): Set<String>
 
-    fun getFirstParent(): CommandInterface?
-
     fun getDescription(): String
 
     fun getArguments(): List<Argument<*>>

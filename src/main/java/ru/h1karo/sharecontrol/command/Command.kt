@@ -45,15 +45,6 @@ abstract class Command : CommandInterface {
         return setOf(*parentPath, this.name)
     }
 
-    override fun getFirstParent(): CommandInterface? {
-        var parent = this.parent
-        while (parent?.parent != null) {
-            parent = parent.parent
-        }
-
-        return parent
-    }
-
     override fun getDescription(): String = MessageFormat.format(DESCRIPTION_KEY, this.getFullPath().joinToString(CHILDREN_DELIMITER))
 
     override fun getArguments(): List<Argument<*>> = this.definition.getValues()
