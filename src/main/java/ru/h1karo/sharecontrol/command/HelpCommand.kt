@@ -104,7 +104,7 @@ class HelpCommand @Inject constructor(
     private fun provideCommands() = this.commandProviders
         .map { it.get() }
         .sorted()
-        .filter { it.getFirstParent() is RootCommand }
+        .filter { it.parent !== null }
 
     companion object {
         const val NAME = "help"
