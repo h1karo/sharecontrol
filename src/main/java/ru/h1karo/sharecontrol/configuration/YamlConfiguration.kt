@@ -27,7 +27,6 @@ import ru.h1karo.sharecontrol.configuration.entry.Parameter
 import ru.h1karo.sharecontrol.configuration.entry.ParameterValue
 import ru.h1karo.sharecontrol.configuration.entry.VerifiableParameter
 import ru.h1karo.sharecontrol.configuration.exception.InvalidValueException
-import ru.h1karo.sharecontrol.yaml.YamlCommenter
 import java.io.File
 import java.io.FileWriter
 import org.bukkit.configuration.file.YamlConfiguration as BukkitYamlConfiguration
@@ -35,7 +34,6 @@ import org.bukkit.configuration.file.YamlConfiguration as BukkitYamlConfiguratio
 abstract class YamlConfiguration(folder: File, path: String) {
     private val file = File(folder, path)
     private val config = BukkitYamlConfiguration()
-    private val commenter = YamlCommenter()
 
     fun initialize(): YamlConfiguration {
         val parent = this.file.parentFile
@@ -65,6 +63,7 @@ abstract class YamlConfiguration(folder: File, path: String) {
 
         if (!hasEntry && entry is Parameter<*>) {
             this.config.set(entry.getPath(), entry.getDefault().getValue())
+            this.config.setComments(entry.getPath(), entry.getDescription())
         }
 
         if (hasEntry && entry is VerifiableParameter<*>) {
@@ -89,7 +88,6 @@ abstract class YamlConfiguration(folder: File, path: String) {
     }
 
     private fun save() {
-        val content = commenter.include(this.config.saveToString(), this.getEntries())
-        FileWriter(this.file).use { it.write(content) }
+        FileWriter(this.file).use { it.write(this.config.saveToString()) }
     }
 }
