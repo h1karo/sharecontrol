@@ -26,5 +26,5 @@ interface Messenger {
     fun send(recipient: Any, message: String, parameters: Collection<Any> = emptySet())
 
     fun send(recipient: Any, callback: (StatefulMessenger) -> Unit) =
-        callback { message: String, parameters: Collection<Any> -> this.send(recipient, message, parameters) }
+        callback { message, parameters -> this.send(recipient, message, parameters) }
 }

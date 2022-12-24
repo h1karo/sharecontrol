@@ -1,62 +1,62 @@
 name: English
 no-permission:
-  command: '§cYou are not allowed to use this command.'
+  command: '&cYou are not allowed to use this command.'
 commands:
-  _not-found: '§cCommand not found.'
-  _syntax: '§7Syntax: §9{0}§7.'
+  _not-found: '&cCommand not found.'
+  _syntax: '&7Syntax: &9{0}&7.'
   sharecontrol:
-    description: 'The main plugin command'
+    description: 'the main plugin command'
     children:
       list:
-        description: 'Show list of commands'
+        description: 'show list of commands'
         arguments:
-          page: 'The page number'
+          page: 'the page number'
       help:
-        description: 'Show command details'
+        description: 'show command details'
         arguments:
-          command: 'The target command'
+          command: 'the target command'
       reload:
-        description: 'Reload the plugin'
+        description: 'reload the plugin'
       about:
-        description: 'About the plugin'
+        description: 'get info about the plugin'
       update:
-        description: 'Control plugin updates'
+        description: 'control plugin updates'
         children:
           list:
-            description: 'Show list of update commands'
+            description: 'show list of update commands'
             arguments:
-              page: 'The page number'
+              page: 'the page number'
           check:
-            description: 'Check for updates'
+            description: 'check for updates'
 list:
-  format: '§9{0}§f - §7{1}'
-  header: '§9>>> §9§lShare§f§lControl §9>§7 The list of commands §f{0}§7/§f{1}'
-  empty: '§7This page is empty'
-  footer: '§9> §7Run §9{0}§7 to go to the next page'
+  format: '&9{0}&f - &7{1}'
+  header: '&8>>> &9&lShare&f&lControl &9>&7 The list of commands &f{0}&7/&f{1}'
+  empty: '&7This page is empty'
+  footer: '&8> &7Run &9{0}&7 to go to the next page'
 reload:
-  success: '§2✓§8 Plugin reloaded successfully.'
+  success: '&2✓&8 Plugin reloaded successfully.'
   error: >-
-    §cAn error occurred while trying to reload the plugin.
-    §7The error was saved in the log file.
+    &cAn error occurred while trying to reload the plugin.
+    &7The error was saved in the log file.
 help:
-  header: '§9>>> §9§lShare§f§lControl §9>§7 The command helper'
-  command: '§7The syntax: §9{0}§7.'
-  description: '§7The description: §f{0}§7.'
+  header: '&8>>> &9&lShare&f&lControl &9>&7 The command helper'
+  command: '&7The syntax: &9{0}&7.'
+  description: '&7The description: &f{0}&7.'
   arguments:
-    title: '§7The command arguments:'
-    list: '§9{0}§7 - §f{1}§7 [{2}].'
-    required: '§crequired§7'
-    optional: '§aoptional§7'
+    title: '&7The command arguments:'
+    list: '&9{0}&7 - &f{1}&7 [{2}].'
+    required: '&crequired&7'
+    optional: '&aoptional&7'
   many:
-    message: '§7Several commands were found by request, please select one.'
-    list: '§7{0}. §9{1}§7.'
-  not-found: '§cNo command found by request.'
+    message: '&7Several commands were found by request, please select one.'
+    list: '&7{0}. &9{1}&7.'
+  not-found: '&cNo command found by request.'
 about:
-  header: '§9>>> §9§lShare§f§lControl §9>§7 About'
-  version: '§7The version: §9{0}§7.'
-  author: '§7The author: §9{0}§7.'
-  website: '§7The website: §9{0}§7.'
+  header: '&8>>> &9&lShare&f&lControl &9>&7 About'
+  version: '&7The version: &9{0}&7.'
+  author: '&7The author: &9{0}&7.'
+  website: '&7The website: &9{0}&7.'
 update:
   latest: 'You are using the latest version of the plugin.'
-  new-version: '§7A new version of §9ShareControl§7 has been found: §9{0}§7.'
-  download: '§7You can download the update at this link: §9{0}§7.'
+  new-version: '&7A new version of &9ShareControl&7 has been found: &9{0}&7.'
+  download: '&7You can download the update at this link: &9{0}&7.'

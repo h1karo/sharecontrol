@@ -41,14 +41,14 @@ class BlockStyle @Inject constructor(
     private fun getPluginTitle(): String = listOf(this.pluginName, this.pluginVersion).joinToString(" ")
 
     private fun getLine(): String {
-        return "§8" + LINE_CHAR.repeat(LINE_LENGTH)
+        return "&8" + LINE_CHAR.repeat(LINE_LENGTH)
     }
 
     private fun getTitledLine(): String {
         val title = getPluginTitle()
         val lineLength = LINE_LENGTH - title.length - 2
         val semiLine = LINE_CHAR.repeat(lineLength / 2)
-        return "§8$semiLine §9$title §8$semiLine"
+        return "&8$semiLine &9$title &8$semiLine"
     }
 
     companion object {

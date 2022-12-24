@@ -20,20 +20,24 @@
  * @link https://github.com/h1karo/sharecontrol
  */
 
-package ru.h1karo.sharecontrol.messenger
+package ru.h1karo.sharecontrol.messenger.color
 
 import com.google.inject.Inject
-import ru.h1karo.sharecontrol.messenger.color.ColorizerInterface
-import ru.h1karo.sharecontrol.messenger.format.MessageFormatter
+import com.google.inject.name.Named
+import net.swiftzer.semver.SemVer
+import ru.h1karo.sharecontrol.module.PluginModule
 
-class ColoredMessenger @Inject constructor(
-    private val messenger: Messenger,
-    private val colorizer: ColorizerInterface,
-    private val formatter: MessageFormatter
-) : Messenger {
-    override fun send(recipient: Any, message: String, parameters: Collection<Any>) {
-        val formatted = this.formatter.format(message, parameters)
-        val colored = this.colorizer.colorize(formatted)
-        this.messenger.send(recipient, colored)
+class ColorizerFactory @Inject constructor(
+    @Named(PluginModule.BUKKIT_VERSION)
+    private val bukkitVersion: String
+) : ColorizerFactoryInterface {
+    override fun build(): ColorizerInterface {
+        val coreVersion = SemVer.parse(this.bukkitVersion)
+        val colorizer = Colorizer()
+
+        return when {
+            coreVersion >= SemVer(1, 16) -> RgbColorizer(colorizer)
+            else -> colorizer
+        }
     }
 }

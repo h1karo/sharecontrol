@@ -20,20 +20,12 @@
  * @link https://github.com/h1karo/sharecontrol
  */
 
-package ru.h1karo.sharecontrol.messenger
+package ru.h1karo.sharecontrol.messenger.color
 
-import com.google.inject.Inject
-import ru.h1karo.sharecontrol.messenger.color.ColorizerInterface
-import ru.h1karo.sharecontrol.messenger.format.MessageFormatter
+interface ColorizerInterface {
+    fun colorize(message: String): String
 
-class ColoredMessenger @Inject constructor(
-    private val messenger: Messenger,
-    private val colorizer: ColorizerInterface,
-    private val formatter: MessageFormatter
-) : Messenger {
-    override fun send(recipient: Any, message: String, parameters: Collection<Any>) {
-        val formatted = this.formatter.format(message, parameters)
-        val colored = this.colorizer.colorize(formatted)
-        this.messenger.send(recipient, colored)
+    companion object {
+        const val COLOR_CHAR = '&'
     }
 }
