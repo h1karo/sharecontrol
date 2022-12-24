@@ -26,8 +26,10 @@ import ru.h1karo.sharecontrol.configuration.entry.ParameterValue
 import ru.h1karo.sharecontrol.database.annotation.Mysql
 import ru.h1karo.sharecontrol.database.annotation.Sqlite
 
-enum class DatabaseType(private val value: String, private val annotation: Class<out Annotation>) :
-    ParameterValue<String> {
+enum class DatabaseType(
+    private val value: String,
+    private val annotation: Class<out Annotation>
+) : ParameterValue<String> {
     MySQL("mysql", Mysql::class.java),
     SQLite("sqlite", Sqlite::class.java);
 
