@@ -40,6 +40,7 @@ class ChainInitializer @Inject constructor(
             initializers.forEach { it.initialize() }
         } catch (e: FixableException) {
             this.error("Fix it and reload the plugin with &9{0}&c command.", setOf("/sc reload"))
+            throw e
         } catch (e: Exception) {
             this.handleException(e)
         } finally {
