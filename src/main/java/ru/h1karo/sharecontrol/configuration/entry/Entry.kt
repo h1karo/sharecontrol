@@ -24,4 +24,6 @@ package ru.h1karo.sharecontrol.configuration.entry
 
 interface Entry {
     fun getPath(): String
+
+    fun isHidden(): Boolean = false
 }

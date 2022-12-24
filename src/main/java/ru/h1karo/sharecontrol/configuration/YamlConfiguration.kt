@@ -62,7 +62,7 @@ abstract class YamlConfiguration(folder: File, path: String) {
     private fun initializeEntry(entry: Entry) {
         val hasEntry = this.config.contains(entry.getPath())
 
-        if (!hasEntry && entry is Parameter<*>) {
+        if (!hasEntry && entry is Parameter<*> && !entry.isHidden()) {
             this.config.set(entry.getPath(), entry.getDefault().getValue())
         }
 
