@@ -41,7 +41,6 @@ class I18nInitializer @Inject constructor(
 ) : AbstractInitializer(console) {
     override fun initialize() {
         this.syncer.sync()
-        this.translator.clear()
 
         this.finder.find().forEach {
             this.translator.addResource(it)
@@ -60,7 +59,5 @@ class I18nInitializer @Inject constructor(
         locale.name = this.translator.trans("name", emptySet(), locale)
     }
 
-    override fun terminate() {
-        this.translator.clear()
-    }
+    override fun terminate() {}
 }
