@@ -22,14 +22,11 @@
 
 package ru.h1karo.sharecontrol.updater.provider
 
-import com.google.inject.Inject
-import com.google.inject.name.Named
-import ru.h1karo.sharecontrol.module.PluginModule
 import ru.h1karo.sharecontrol.updater.Version
 import ru.h1karo.sharecontrol.updater.exception.UnexpectedValueException
 import java.text.MessageFormat
 
-class SpigotMcProvider @Inject constructor(@Named(PluginModule.VERSION) version: String) : HttpProvider(version) {
+class SpigotMcProvider(version: String) : HttpProvider(version) {
     override fun getUrl(): String = MessageFormat.format(URL_PATTERN, PLUGIN_ID)
 
     override fun getVersionFromJson(map: Map<*, *>): Version {

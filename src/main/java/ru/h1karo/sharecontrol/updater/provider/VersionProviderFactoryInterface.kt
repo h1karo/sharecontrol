@@ -22,24 +22,6 @@
 
 package ru.h1karo.sharecontrol.updater.provider
 
-import ru.h1karo.sharecontrol.updater.Version
-import java.text.MessageFormat
-
-class GithubProvider(version: String) : HttpProvider(version) {
-    override fun getUrl(): String = MessageFormat.format(URL_PATTERN, OWNER, REPOSITORY)
-
-    override fun getVersionFromJson(map: Map<*, *>): Version {
-        val name = map["tag_name"] as String
-        val assets = map["assets"] as List<*>
-        val asset = assets.first() as Map<*, *>
-        val link = asset["browser_download_url"] as String
-
-        return Version(name.removePrefix("v"), link)
-    }
-
-    companion object {
-        const val URL_PATTERN = "https://api.github.com/repos/{0}/{1}/releases/latest"
-        const val OWNER = "h1karo"
-        const val REPOSITORY = "sharecontrol"
-    }
+interface VersionProviderFactoryInterface {
+    fun build(): VersionProvider
 }

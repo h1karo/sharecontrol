@@ -22,24 +22,22 @@
 
 package ru.h1karo.sharecontrol.updater.provider
 
-import ru.h1karo.sharecontrol.updater.Version
-import java.text.MessageFormat
+import com.google.inject.Inject
+import com.google.inject.name.Named
+import ru.h1karo.sharecontrol.module.PluginModule
+import ru.h1karo.sharecontrol.module.UpdaterModule
+import ru.h1karo.sharecontrol.updater.Provider
 
-class GithubProvider(version: String) : HttpProvider(version) {
-    override fun getUrl(): String = MessageFormat.format(URL_PATTERN, OWNER, REPOSITORY)
-
-    override fun getVersionFromJson(map: Map<*, *>): Version {
-        val name = map["tag_name"] as String
-        val assets = map["assets"] as List<*>
-        val asset = assets.first() as Map<*, *>
-        val link = asset["browser_download_url"] as String
-
-        return Version(name.removePrefix("v"), link)
-    }
-
-    companion object {
-        const val URL_PATTERN = "https://api.github.com/repos/{0}/{1}/releases/latest"
-        const val OWNER = "h1karo"
-        const val REPOSITORY = "sharecontrol"
+class VersionProviderFactory @Inject constructor(
+    @Named(PluginModule.VERSION)
+    private val version: String,
+    @Named(UpdaterModule.PROVIDER)
+    private val type: Provider
+) : VersionProviderFactoryInterface {
+    override fun build(): VersionProvider {
+        return when (this.type) {
+            Provider.SpigotMC -> SpigotMcProvider(this.version)
+            Provider.GitHub -> GithubProvider(this.version)
+        }
     }
 }

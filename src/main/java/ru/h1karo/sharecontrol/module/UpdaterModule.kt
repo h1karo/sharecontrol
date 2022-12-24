@@ -28,6 +28,8 @@ import com.google.inject.Provides
 import com.google.inject.name.Named
 import ru.h1karo.sharecontrol.configuration.ParameterContainer
 import ru.h1karo.sharecontrol.configuration.plugin.updater.UpdaterEnabled
+import ru.h1karo.sharecontrol.configuration.plugin.updater.UpdaterProvider
+import ru.h1karo.sharecontrol.updater.Provider
 import ru.h1karo.sharecontrol.updater.provider.CacheableProvider
 import ru.h1karo.sharecontrol.updater.provider.SpigotMcProvider
 import ru.h1karo.sharecontrol.updater.provider.VersionProvider
@@ -46,7 +48,15 @@ class UpdaterModule : AbstractModule() {
         return parameterContainer.get(UpdaterEnabled).getValue()
     }
 
+    @Provides
+    @Named(PROVIDER)
+    fun getUpdaterProvider(injector: Injector): Provider {
+        val container = injector.getInstance(ParameterContainer::class.java)
+        return container.get(UpdaterProvider) as Provider
+    }
+
     companion object {
-        const val UPDATER_ENABLED = "updater-enabled"
+        const val UPDATER_ENABLED = "updaterEnabled"
+        const val PROVIDER = "updaterProvider"
     }
 }
