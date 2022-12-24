@@ -22,9 +22,10 @@
 
 package ru.h1karo.sharecontrol.updater.provider
 
+import ru.h1karo.sharecontrol.Resettable
 import ru.h1karo.sharecontrol.updater.Version
 
-class CacheableProvider(private val provider: VersionProvider) : VersionProvider {
+class CacheableProvider(private val provider: VersionProvider) : VersionProvider, Resettable {
     private var version: Version? = null
 
     override fun find(): Version? {
@@ -33,5 +34,9 @@ class CacheableProvider(private val provider: VersionProvider) : VersionProvider
         }
 
         return this.version
+    }
+
+    override fun clear() {
+        this.version = null
     }
 }
