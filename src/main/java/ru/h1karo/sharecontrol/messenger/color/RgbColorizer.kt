@@ -22,11 +22,10 @@
 
 package ru.h1karo.sharecontrol.messenger.color
 
-import com.google.inject.Inject
 import ru.h1karo.sharecontrol.messenger.color.ColorizerInterface.Companion.COLOR_CHAR
 import java.util.regex.Pattern
 
-class RgbColorizer @Inject constructor(
+class RgbColorizer(
     private val colorizer: ColorizerInterface
 ) : ColorizerInterface {
     override fun colorize(message: String): String {

@@ -29,6 +29,9 @@ import ru.h1karo.sharecontrol.messenger.ColoredMessenger
 import ru.h1karo.sharecontrol.messenger.DelegatingMessenger
 import ru.h1karo.sharecontrol.messenger.Messenger
 import ru.h1karo.sharecontrol.messenger.TranslatableMessenger
+import ru.h1karo.sharecontrol.messenger.color.ColorizerFactory
+import ru.h1karo.sharecontrol.messenger.color.ColorizerFactoryInterface
+import ru.h1karo.sharecontrol.messenger.color.ColorizerInterface
 import ru.h1karo.sharecontrol.messenger.format.IcuMessageFormatter
 import ru.h1karo.sharecontrol.messenger.format.MessageFormatter
 import ru.h1karo.sharecontrol.messenger.transport.Transport
@@ -38,6 +41,7 @@ class MessengerModule : AbstractModule() {
         this.bindSet(Transport::class.java)
         this.bind(MessageFormatter::class.java).to(IcuMessageFormatter::class.java)
         this.bind(Messenger::class.java).to(TranslatableMessenger::class.java)
+        this.bind(ColorizerFactoryInterface::class.java).to(ColorizerFactory::class.java)
     }
 
     @Provides
@@ -52,7 +56,15 @@ class MessengerModule : AbstractModule() {
     fun getColoredMessenger(injector: Injector): ColoredMessenger {
         return ColoredMessenger(
             injector.getInstance(DelegatingMessenger::class.java),
+            injector.getInstance(ColorizerInterface::class.java),
             injector.getInstance(MessageFormatter::class.java)
         )
+    }
+
+    @Provides
+    fun getColorizer(injector: Injector): ColorizerInterface {
+        val factory = injector.getInstance(ColorizerFactoryInterface::class.java)
+
+        return factory.build()
     }
 }
