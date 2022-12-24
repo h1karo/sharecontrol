@@ -27,7 +27,7 @@ import com.google.inject.Injector
 import com.google.inject.Provides
 import com.google.inject.name.Named
 import ru.h1karo.sharecontrol.configuration.ParameterContainer
-import ru.h1karo.sharecontrol.configuration.plugin.Updater
+import ru.h1karo.sharecontrol.configuration.plugin.updater.UpdaterEnabled
 import ru.h1karo.sharecontrol.updater.CacheableProvider
 import ru.h1karo.sharecontrol.updater.SpigotMcProvider
 import ru.h1karo.sharecontrol.updater.VersionProvider
@@ -43,7 +43,7 @@ class UpdaterModule : AbstractModule() {
     @Named(UPDATER_ENABLED)
     fun isUpdaterEnabled(injector: Injector): Boolean {
         val parameterContainer = injector.getInstance(ParameterContainer::class.java)
-        return parameterContainer.get(Updater).getValue()
+        return parameterContainer.get(UpdaterEnabled).getValue()
     }
 
     companion object {

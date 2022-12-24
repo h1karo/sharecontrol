@@ -28,7 +28,7 @@ import com.google.inject.name.Named
 import ru.h1karo.sharecontrol.configuration.entry.Entry
 import ru.h1karo.sharecontrol.configuration.plugin.ChatPrefix
 import ru.h1karo.sharecontrol.configuration.plugin.Locale
-import ru.h1karo.sharecontrol.configuration.plugin.Updater
+import ru.h1karo.sharecontrol.configuration.plugin.updater.UpdaterEnabled
 import ru.h1karo.sharecontrol.configuration.plugin.database.Host
 import ru.h1karo.sharecontrol.configuration.plugin.database.Name
 import ru.h1karo.sharecontrol.configuration.plugin.database.Password
@@ -56,7 +56,7 @@ class PluginConfiguration @Inject constructor(
     )
 
     override fun getEntries(): Set<Entry> =
-        setOf(Locale, Updater, ChatPrefix).plus(DATABASE_ENTRIES)
+        setOf(Locale, UpdaterEnabled, ChatPrefix).plus(DATABASE_ENTRIES)
 
     companion object {
         val DATABASE_ENTRIES = setOf(Type, Path, Host, Port, Name, Username, Password)
