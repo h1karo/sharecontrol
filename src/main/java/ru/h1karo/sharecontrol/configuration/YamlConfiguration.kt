@@ -22,6 +22,7 @@
 
 package ru.h1karo.sharecontrol.configuration
 
+import ru.h1karo.sharecontrol.configuration.entry.DescribedEntry
 import ru.h1karo.sharecontrol.configuration.entry.Entry
 import ru.h1karo.sharecontrol.configuration.entry.Parameter
 import ru.h1karo.sharecontrol.configuration.entry.ParameterValue
@@ -63,6 +64,9 @@ abstract class YamlConfiguration(folder: File, path: String) {
 
         if (!hasEntry && entry is Parameter<*>) {
             this.config.set(entry.getPath(), entry.getDefault().getValue())
+        }
+
+        if (entry is DescribedEntry) {
             this.config.setComments(entry.getPath(), entry.getDescription())
         }
 
