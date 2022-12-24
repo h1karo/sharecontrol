@@ -20,7 +20,9 @@
  * @link https://github.com/h1karo/sharecontrol
  */
 
-package ru.h1karo.sharecontrol.updater
+package ru.h1karo.sharecontrol.updater.provider
+
+import ru.h1karo.sharecontrol.updater.Version
 
 class CacheableProvider(private val provider: VersionProvider) : VersionProvider {
     private var version: Version? = null

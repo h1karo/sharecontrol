@@ -32,7 +32,7 @@ import ru.h1karo.sharecontrol.messenger.Messenger
 import ru.h1karo.sharecontrol.module.UpdaterModule
 import ru.h1karo.sharecontrol.permission.PermissionManagerInterface
 import ru.h1karo.sharecontrol.permission.UpdateNotifyPermission
-import ru.h1karo.sharecontrol.updater.VersionProvider
+import ru.h1karo.sharecontrol.updater.provider.VersionProvider
 
 class UpdateNotifierListener @Inject constructor(
     @Named(UpdaterModule.UPDATER_ENABLED)

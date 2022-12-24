@@ -27,7 +27,7 @@ import com.google.inject.Singleton
 import com.google.inject.name.Named
 import ru.h1karo.sharecontrol.console.BlockStyle
 import ru.h1karo.sharecontrol.module.UpdaterModule
-import ru.h1karo.sharecontrol.updater.VersionProvider
+import ru.h1karo.sharecontrol.updater.provider.VersionProvider
 
 @Singleton
 class UpdaterInitializer @Inject constructor(

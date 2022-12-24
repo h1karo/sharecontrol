@@ -26,7 +26,7 @@ import com.google.inject.Inject
 import ru.h1karo.sharecontrol.command.input.InputInterface
 import ru.h1karo.sharecontrol.command.output.OutputInterface
 import ru.h1karo.sharecontrol.command.style.OutputStyle
-import ru.h1karo.sharecontrol.updater.VersionProvider
+import ru.h1karo.sharecontrol.updater.provider.VersionProvider
 
 class UpdateCheckCommand @Inject constructor(
     override val parent: UpdateCommand,

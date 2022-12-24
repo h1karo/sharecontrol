@@ -28,9 +28,9 @@ import com.google.inject.Provides
 import com.google.inject.name.Named
 import ru.h1karo.sharecontrol.configuration.ParameterContainer
 import ru.h1karo.sharecontrol.configuration.plugin.updater.UpdaterEnabled
-import ru.h1karo.sharecontrol.updater.CacheableProvider
-import ru.h1karo.sharecontrol.updater.SpigotMcProvider
-import ru.h1karo.sharecontrol.updater.VersionProvider
+import ru.h1karo.sharecontrol.updater.provider.CacheableProvider
+import ru.h1karo.sharecontrol.updater.provider.SpigotMcProvider
+import ru.h1karo.sharecontrol.updater.provider.VersionProvider
 
 class UpdaterModule : AbstractModule() {
     @Provides

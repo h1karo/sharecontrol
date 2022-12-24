@@ -20,11 +20,12 @@
  * @link https://github.com/h1karo/sharecontrol
  */
 
-package ru.h1karo.sharecontrol.updater
+package ru.h1karo.sharecontrol.updater.provider
 
 import com.google.inject.Inject
 import com.google.inject.name.Named
 import ru.h1karo.sharecontrol.module.PluginModule
+import ru.h1karo.sharecontrol.updater.Version
 import java.text.MessageFormat
 
 class GithubProvider @Inject constructor(@Named(PluginModule.VERSION) version: String) : HttpProvider(version) {
