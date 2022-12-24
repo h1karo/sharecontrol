@@ -31,14 +31,26 @@ import ru.h1karo.sharecontrol.configuration.plugin.updater.UpdaterEnabled
 import ru.h1karo.sharecontrol.configuration.plugin.updater.UpdaterProvider
 import ru.h1karo.sharecontrol.updater.Provider
 import ru.h1karo.sharecontrol.updater.provider.CacheableProvider
-import ru.h1karo.sharecontrol.updater.provider.SpigotMcProvider
+import ru.h1karo.sharecontrol.updater.provider.CacheableVersionProviderFactory
 import ru.h1karo.sharecontrol.updater.provider.VersionProvider
+import ru.h1karo.sharecontrol.updater.provider.VersionProviderFactory
+import ru.h1karo.sharecontrol.updater.provider.VersionProviderFactoryInterface
 
 class UpdaterModule : AbstractModule() {
+    override fun configure() {
+        this.bind(VersionProviderFactoryInterface::class.java).to(CacheableVersionProviderFactory::class.java)
+    }
+
+    @Provides
+    fun getCacheableVersionProviderFactory(injector: Injector): CacheableVersionProviderFactory {
+        val factory = injector.getInstance(VersionProviderFactory::class.java)
+        return CacheableVersionProviderFactory(factory)
+    }
+
     @Provides
     fun getVersionProvider(injector: Injector): VersionProvider {
-        val provider = injector.getInstance(SpigotMcProvider::class.java)
-        return CacheableProvider(provider)
+        val factory = injector.getInstance(VersionProviderFactoryInterface::class.java)
+        return factory.build()
     }
 
     @Provides
