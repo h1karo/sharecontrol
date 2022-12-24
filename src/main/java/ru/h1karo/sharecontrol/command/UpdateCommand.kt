@@ -24,16 +24,12 @@ package ru.h1karo.sharecontrol.command
 
 import com.google.inject.Inject
 import com.google.inject.Provider
-import ru.h1karo.sharecontrol.i18n.TranslatorInterface
 
 class UpdateCommand @Inject constructor(
     override val parent: PluginCommand,
-    translator: TranslatorInterface,
-    private val checkUpdateCommandProvider: Provider<CheckUpdateCommand>
-) : AbstractListCommand(translator) {
+    listCommandProvider: Provider<UpdateListCommand>
+) : AbstractRedirectCommand(listCommandProvider) {
     override val name: String = NAME
-
-    override fun provideCommands(): List<CommandInterface> = listOf(this.checkUpdateCommandProvider.get())
 
     companion object {
         private const val NAME = "update"

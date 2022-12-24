@@ -8,7 +8,7 @@ commands:
     description: 'The main plugin command'
     children:
       list:
-        description: 'Show the command list'
+        description: 'Show list of commands'
         arguments:
           page: 'The page number'
       help:
@@ -20,21 +20,26 @@ commands:
       about:
         description: 'About the plugin'
       update:
-        description: 'Show the update command list'
+        description: 'Control plugin updates'
         children:
+          list:
+            description: 'Show list of update commands'
+            arguments:
+              page: 'The page number'
           check:
             description: 'Check for updates'
 list:
   format: '§9{0}§f - §7{1}'
-  title: '§9>>> §9§lShare§f§lControl §9>§7 The list of commands §f{0}§7/§f{1}'
+  header: '§9>>> §9§lShare§f§lControl §9>§7 The list of commands §f{0}§7/§f{1}'
   empty: '§7This page is empty'
+  footer: '§9> §7Run §9{0}§7 to go to the next page'
 reload:
   success: '§2✓§8 Plugin reloaded successfully.'
   error: >-
     §cAn error occurred while trying to reload the plugin.
     §7The error was saved in the log file.
 help:
-  title: '§9>>> §9§lShare§f§lControl §9>§7 The command helper'
+  header: '§9>>> §9§lShare§f§lControl §9>§7 The command helper'
   command: '§7The syntax: §9{0}§7.'
   description: '§7The description: §f{0}§7.'
   arguments:
@@ -43,11 +48,11 @@ help:
     required: '§crequired§7'
     optional: '§aoptional§7'
   many:
-    title: '§7Several commands were found by request, please select one.'
+    message: '§7Several commands were found by request, please select one.'
     list: '§7{0}. §9{1}§7.'
   not-found: '§cNo command found by request.'
 about:
-  title: '§9>>> §9§lShare§f§lControl §9>§7 About'
+  header: '§9>>> §9§lShare§f§lControl §9>§7 About'
   version: '§7The version: §9{0}§7.'
   author: '§7The author: §9{0}§7.'
   website: '§7The website: §9{0}§7.'

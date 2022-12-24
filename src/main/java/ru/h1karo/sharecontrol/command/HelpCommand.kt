@@ -38,7 +38,7 @@ class HelpCommand @Inject constructor(
     override val parent: PluginCommand
 ) : Command() {
     override val name: String = NAME
-    override val priority: Int = 800
+    override val priority: Int = -80
 
     init {
         this.definition.addArgument(
@@ -62,14 +62,14 @@ class HelpCommand @Inject constructor(
             name.equals(joined, true)
         }
 
-        style.write("help.title")
+        style.write("help.header")
         if (commands.isEmpty()) {
             style.write("help.not-found")
             return true
         }
 
         if (commands.size > 1) {
-            style.write("help.many.title")
+            style.write("help.many.message")
             commands.forEachIndexed { index, command -> style.write("help.many.list", setOf(index, command.name)) }
             return true
         }
@@ -104,7 +104,7 @@ class HelpCommand @Inject constructor(
     private fun provideCommands() = this.commandProviders
         .map { it.get() }
         .sorted()
-        .filter { it.getFirstParent() is RootCommand }
+        .filter { it.parent !== null }
 
     companion object {
         const val NAME = "help"

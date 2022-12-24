@@ -28,7 +28,7 @@ import ru.h1karo.sharecontrol.command.output.OutputInterface
 import ru.h1karo.sharecontrol.command.style.OutputStyle
 import ru.h1karo.sharecontrol.updater.VersionProvider
 
-class CheckUpdateCommand @Inject constructor(
+class UpdateCheckCommand @Inject constructor(
     override val parent: UpdateCommand,
     private val versionProvider: VersionProvider
 ) : Command() {

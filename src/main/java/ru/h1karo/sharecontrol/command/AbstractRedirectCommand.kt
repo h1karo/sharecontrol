@@ -22,6 +22,21 @@
 
 package ru.h1karo.sharecontrol.command
 
-abstract class RootCommand : Command() {
-    final override val parent: CommandInterface? = null
+import com.google.inject.Provider
+import ru.h1karo.sharecontrol.command.exception.CommandArgumentException
+import ru.h1karo.sharecontrol.command.exception.CommandNotFoundException
+import ru.h1karo.sharecontrol.command.input.InputInterface
+import ru.h1karo.sharecontrol.command.output.OutputInterface
+
+abstract class AbstractRedirectCommand constructor(
+    private val commandProvider: Provider<out CommandInterface>
+) : Command() {
+    override fun execute(input: InputInterface, output: OutputInterface): Boolean {
+        return try {
+            val command = this.commandProvider.get()
+            command.run(input, output)
+        } catch (e: CommandArgumentException) {
+            throw CommandNotFoundException(emptyList())
+        }
+    }
 }

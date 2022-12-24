@@ -45,15 +45,6 @@ abstract class Command : CommandInterface {
         return setOf(*parentPath, this.name)
     }
 
-    override fun getFirstParent(): CommandInterface? {
-        var parent = this.parent
-        while (parent?.parent != null) {
-            parent = parent.parent
-        }
-
-        return parent
-    }
-
     override fun getDescription(): String = MessageFormat.format(DESCRIPTION_KEY, this.getFullPath().joinToString(CHILDREN_DELIMITER))
 
     override fun getArguments(): List<Argument<*>> = this.definition.getValues()
@@ -75,8 +66,15 @@ abstract class Command : CommandInterface {
         return CommandInterface.COMMAND_CHAR + command
     }
 
+    fun getCommand(arguments: Map<String, *>): String {
+        val command = setOf(this.getFullName())
+            .plus(this.getArguments().map { arguments[it.name].toString() })
+            .joinToString(" ")
+        return CommandInterface.COMMAND_CHAR + command
+    }
+
     final override fun compareTo(other: CommandInterface): Int {
-        return other.priority - this.priority
+        return compareValuesBy(this, other, { it.parent?.priority }, { it.priority }, { it.getFullName() })
     }
 
     companion object {

@@ -87,6 +87,10 @@ abstract class YamlConfiguration(folder: File, path: String) {
         return parameter.fromString(value.toString())
     }
 
+    fun <T> set(parameter: Parameter<T>, value: T) {
+        this.config.set(parameter.getPath(), value)
+    }
+
     private fun save() {
         FileWriter(this.file).use { it.write(this.config.saveToString()) }
     }
