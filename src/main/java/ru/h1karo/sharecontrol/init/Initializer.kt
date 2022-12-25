@@ -27,5 +27,7 @@ interface Initializer : Comparable<Initializer> {
 
     fun terminate(): Boolean = true
 
-    fun getPriority(): Int
+    fun getPriority(): Int = 1
+
+    override fun compareTo(other: Initializer): Int = compareValuesBy(other, this) { it.getPriority() }
 }

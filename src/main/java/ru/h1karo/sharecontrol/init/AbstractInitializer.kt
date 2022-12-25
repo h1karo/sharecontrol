@@ -46,10 +46,4 @@ abstract class AbstractInitializer(protected val console: BlockStyle) : Initiali
     protected fun start() = this.console.sendTitledLine(recipient)
 
     protected fun end() = this.console.sendLine(recipient)
-
-    override fun getPriority(): Int = 1
-
-    final override fun compareTo(other: Initializer): Int {
-        return other.getPriority() - this.getPriority()
-    }
 }
