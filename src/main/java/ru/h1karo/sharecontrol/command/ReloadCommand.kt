@@ -39,7 +39,7 @@ class ReloadCommand @Inject constructor(
 
         val reloaded = this.reload()
         if (!reloaded) {
-            style.error("reload.error")
+            style.error("\${reload.error}")
             return true
         }
 
