@@ -54,6 +54,7 @@ class ShareControl : JavaPlugin(), Listener {
     override fun onEnable() {
         this.initializer.initialize()
     }
+
     override fun onDisable() {
         this.initializer.terminate()
     }
