@@ -65,7 +65,7 @@ class Translator @Inject constructor(
     override fun addResource(resource: Resource) {
         val locale = resource.locale
 
-        this.resources.getOrPut(locale, { mutableSetOf() }).add(resource)
+        this.resources.getOrPut(locale) { mutableSetOf() }.add(resource)
         this.catalogues.remove(locale)
     }
 
@@ -85,10 +85,9 @@ class Translator @Inject constructor(
             throw CatalogueNotFoundException(locale)
         }
 
-        val catalogue = resources.fold(
-            MessageCatalogue(locale),
-            { acc, resource -> acc.addCatalogue(this.loader.load(resource)) }
-        )
+        val catalogue = resources
+            .map { this.loader.load(it) }
+            .fold(MessageCatalogue(locale), MessageCatalogue::addCatalogue)
         this.catalogues[locale] = catalogue
 
         return catalogue
