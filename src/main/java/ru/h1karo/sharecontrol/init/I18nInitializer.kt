@@ -42,6 +42,7 @@ class I18nInitializer @Inject constructor(
     override fun initialize(): Boolean {
         this.syncer.sync()
 
+        this.translator.clear()
         this.finder.find().forEach {
             this.translator.addResource(it)
             this.initLocale(it.locale)
