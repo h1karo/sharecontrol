@@ -74,7 +74,7 @@ abstract class Command : CommandInterface {
     }
 
     final override fun compareTo(other: CommandInterface): Int {
-        return compareValuesBy(this, other, { it.parent?.priority }, { it.priority }, { it.getFullName() })
+        return compareValuesBy(other, this, { it.parent?.priority }, { it.priority }, { it.getFullName() })
     }
 
     companion object {

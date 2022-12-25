@@ -33,5 +33,5 @@ class PluginCommand @Inject constructor(
 ) : AbstractRedirectCommand(listCommandProvider) {
     override val name: String = pluginName.lowercase()
 
-    override val priority: Int = -100
+    override val priority: Int = 100
 }
