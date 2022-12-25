@@ -23,30 +23,40 @@
 package ru.h1karo.sharecontrol.module
 
 import com.google.inject.AbstractModule
-import com.google.inject.Injector
 import com.google.inject.Provides
 import com.google.inject.name.Named
 import ru.h1karo.sharecontrol.configuration.ParameterContainer
-import ru.h1karo.sharecontrol.configuration.plugin.Updater
-import ru.h1karo.sharecontrol.updater.CacheableProvider
-import ru.h1karo.sharecontrol.updater.SpigotMcProvider
-import ru.h1karo.sharecontrol.updater.VersionProvider
+import ru.h1karo.sharecontrol.configuration.plugin.updater.UpdaterEnabled
+import ru.h1karo.sharecontrol.configuration.plugin.updater.UpdaterProvider
+import ru.h1karo.sharecontrol.updater.Provider
+import ru.h1karo.sharecontrol.updater.provider.VersionProvider
+import ru.h1karo.sharecontrol.updater.provider.VersionProviderFactory
+import ru.h1karo.sharecontrol.updater.provider.VersionProviderFactoryInterface
 
 class UpdaterModule : AbstractModule() {
+    override fun configure() {
+        this.bind(VersionProviderFactoryInterface::class.java).to(VersionProviderFactory::class.java)
+    }
+
     @Provides
-    fun getVersionProvider(injector: Injector): VersionProvider {
-        val provider = injector.getInstance(SpigotMcProvider::class.java)
-        return CacheableProvider(provider)
+    fun getVersionProvider(factory: VersionProviderFactoryInterface): VersionProvider {
+        return factory.build()
     }
 
     @Provides
     @Named(UPDATER_ENABLED)
-    fun isUpdaterEnabled(injector: Injector): Boolean {
-        val parameterContainer = injector.getInstance(ParameterContainer::class.java)
-        return parameterContainer.get(Updater).getValue()
+    fun isUpdaterEnabled(container: ParameterContainer): Boolean {
+        return container.get(UpdaterEnabled).getValue()
+    }
+
+    @Provides
+    @Named(PROVIDER)
+    fun getUpdaterProvider(container: ParameterContainer): Provider {
+        return container.get(UpdaterProvider) as Provider
     }
 
     companion object {
-        const val UPDATER_ENABLED = "updater-enabled"
+        const val UPDATER_ENABLED = "updaterEnabled"
+        const val PROVIDER = "updaterProvider"
     }
 }

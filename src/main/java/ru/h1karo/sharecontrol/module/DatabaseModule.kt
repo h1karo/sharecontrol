@@ -26,7 +26,6 @@ import com.google.inject.Injector
 import com.google.inject.Key
 import com.google.inject.Provides
 import com.google.inject.name.Named
-import com.google.inject.name.Names
 import ru.h1karo.sharecontrol.configuration.ParameterContainer
 import ru.h1karo.sharecontrol.configuration.plugin.database.Host
 import ru.h1karo.sharecontrol.configuration.plugin.database.Name
@@ -47,8 +46,7 @@ class DatabaseModule : AbstractModule() {
     }
 
     @Provides
-    fun getType(injector: Injector): DatabaseType {
-        val container = injector.getInstance(ParameterContainer::class.java)
+    fun getType(container: ParameterContainer): DatabaseType {
         return container.get(DatabaseTypeParameter) as DatabaseType
     }
 
@@ -66,11 +64,8 @@ class DatabaseModule : AbstractModule() {
 
     @Provides
     @Named(PATH)
-    fun getDatabasePath(injector: Injector): String {
-        val container = injector.getInstance(ParameterContainer::class.java)
+    fun getDatabasePath(container: ParameterContainer, @Named(PluginModule.DATA_DIRECTORY) directory: File): String {
         val path = container.get(Path).getValue()
-
-        val directory = injector.getInstance(Key.get(File::class.java, Names.named(PluginModule.DATA_DIRECTORY)))
         val file = File(directory, path)
 
         val parent = file.parentFile
@@ -83,36 +78,31 @@ class DatabaseModule : AbstractModule() {
 
     @Provides
     @Named(HOST)
-    fun getDatabaseHost(injector: Injector): String {
-        val container = injector.getInstance(ParameterContainer::class.java)
+    fun getDatabaseHost(container: ParameterContainer): String {
         return container.get(Host).getValue()
     }
 
     @Provides
     @Named(PORT)
-    fun getDatabasePort(injector: Injector): Int {
-        val container = injector.getInstance(ParameterContainer::class.java)
+    fun getDatabasePort(container: ParameterContainer): Int {
         return container.get(Port).getValue()
     }
 
     @Provides
     @Named(NAME)
-    fun getDatabaseName(injector: Injector): String {
-        val container = injector.getInstance(ParameterContainer::class.java)
+    fun getDatabaseName(container: ParameterContainer): String {
         return container.get(Name).getValue()
     }
 
     @Provides
     @Named(USERNAME)
-    fun getDatabaseUsername(injector: Injector): String {
-        val container = injector.getInstance(ParameterContainer::class.java)
+    fun getDatabaseUsername(container: ParameterContainer): String {
         return container.get(Username).getValue()
     }
 
     @Provides
     @Named(PASSWORD)
-    fun getDatabasePassword(injector: Injector): String {
-        val container = injector.getInstance(ParameterContainer::class.java)
+    fun getDatabasePassword(container: ParameterContainer): String {
         return container.get(Password).getValue()
     }
 

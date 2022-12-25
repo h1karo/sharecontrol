@@ -20,36 +20,21 @@
  * @link https://github.com/h1karo/sharecontrol
  */
 
-package ru.h1karo.sharecontrol.command
+package ru.h1karo.sharecontrol.updater
 
-import com.google.inject.Inject
-import ru.h1karo.sharecontrol.command.input.InputInterface
-import ru.h1karo.sharecontrol.command.output.OutputInterface
-import ru.h1karo.sharecontrol.init.Initializer
+import ru.h1karo.sharecontrol.configuration.entry.ParameterValue
 
-class ReloadCommand @Inject constructor(
-    private val initializer: Initializer,
-    override val parent: PluginCommand
-) : Command() {
-    override val name: String = NAME
+enum class Provider(
+    private val value: String
+) : ParameterValue<String> {
+    SpigotMC("spigotmc"),
+    GitHub("github");
 
-    override fun execute(input: InputInterface, output: OutputInterface): Boolean {
-        val reloaded = this.reload()
-        if (!reloaded) {
-            output.write("reload.error")
-            return true
-        }
-
-        output.write("reload.success")
-
-        return true
-    }
-
-    private fun reload(): Boolean {
-        return this.initializer.terminate() && this.initializer.initialize()
-    }
+    override fun getValue(): String = this.value
 
     companion object {
-        const val NAME = "reload"
+        @Throws(IllegalArgumentException::class)
+        fun fromValue(value: String): Provider = values().find { it.value == value }
+            ?: throw IllegalArgumentException("A version provider not found for `%s`.".format(value))
     }
 }

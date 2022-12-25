@@ -25,8 +25,7 @@ package ru.h1karo.sharecontrol.command
 import com.google.inject.Inject
 import ru.h1karo.sharecontrol.command.input.InputInterface
 import ru.h1karo.sharecontrol.command.output.OutputInterface
-import ru.h1karo.sharecontrol.command.style.OutputStyle
-import ru.h1karo.sharecontrol.updater.VersionProvider
+import ru.h1karo.sharecontrol.updater.provider.VersionProvider
 
 class UpdateCheckCommand @Inject constructor(
     override val parent: UpdateCommand,
@@ -35,16 +34,14 @@ class UpdateCheckCommand @Inject constructor(
     override val name: String = NAME
 
     override fun execute(input: InputInterface, output: OutputInterface): Boolean {
-        val style = OutputStyle(output)
-
         val version = this.versionProvider.find()
         if (version === null) {
-            style.success("\${update.latest}")
+            output.write("update.latest")
             return true
         }
 
-        style.write("update.new-version", setOf(version.name))
-        style.write("update.download", setOf(version.link))
+        output.write("update.new-version", setOf(version.name))
+        output.write("update.download", setOf(version.link))
 
         return true
     }

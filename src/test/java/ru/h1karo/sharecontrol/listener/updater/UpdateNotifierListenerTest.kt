@@ -38,7 +38,7 @@ import ru.h1karo.sharecontrol.messenger.Messenger
 import ru.h1karo.sharecontrol.messenger.StatefulMessenger
 import ru.h1karo.sharecontrol.permission.PermissionManagerInterface
 import ru.h1karo.sharecontrol.updater.Version
-import ru.h1karo.sharecontrol.updater.VersionProvider
+import ru.h1karo.sharecontrol.updater.provider.VersionProvider
 
 internal class UpdateNotifierListenerTest {
     @Test

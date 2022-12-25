@@ -27,7 +27,7 @@ import com.google.inject.Singleton
 import com.google.inject.name.Named
 import ru.h1karo.sharecontrol.console.BlockStyle
 import ru.h1karo.sharecontrol.module.UpdaterModule
-import ru.h1karo.sharecontrol.updater.VersionProvider
+import ru.h1karo.sharecontrol.updater.provider.VersionProvider
 
 @Singleton
 class UpdaterInitializer @Inject constructor(
@@ -36,23 +36,23 @@ class UpdaterInitializer @Inject constructor(
     private val isUpdaterEnabled: Boolean,
     private val versionProvider: VersionProvider
 ) : AbstractInitializer(console) {
-    override fun initialize() {
+    override fun initialize(): Boolean {
         if (!this.isUpdaterEnabled) {
-            return
+            return true
         }
 
         val version = this.versionProvider.find()
         if (version === null) {
             this.success("You are using the latest version of the plugin.")
-            return
+            return true
         }
 
         this.send("&7A new version of the plugin has been found: &9{0}&7.", setOf(version.name))
         this.send(" &7You can download the update at this link:")
         this.send(" &9{0}&7.", setOf(version.link))
-    }
 
-    override fun terminate() {}
+        return true
+    }
 
     override fun getPriority(): Int = 50
 }

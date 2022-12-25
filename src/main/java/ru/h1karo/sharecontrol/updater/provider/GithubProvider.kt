@@ -20,20 +20,26 @@
  * @link https://github.com/h1karo/sharecontrol
  */
 
-package ru.h1karo.sharecontrol.command.style
+package ru.h1karo.sharecontrol.updater.provider
 
-import ru.h1karo.sharecontrol.command.output.OutputInterface
-import ru.h1karo.sharecontrol.command.pagination.PaginatorInterface
+import ru.h1karo.sharecontrol.updater.Version
+import java.text.MessageFormat
 
-interface StyleInterface : OutputInterface {
-    fun success(message: String, parameters: Collection<String> = emptySet()) =
-        this.write("&2✓&8 $message", parameters)
+class GithubProvider(version: String) : HttpProvider(version) {
+    override fun getUrl(): String = MessageFormat.format(URL_PATTERN, OWNER, REPOSITORY)
 
-    fun error(message: String, parameters: Collection<String> = emptySet()) =
-        this.write("&4✗&c $message", parameters)
+    override fun getVersionFromJson(map: Map<*, *>): Version {
+        val name = map["tag_name"] as String
+        val assets = map["assets"] as List<*>
+        val asset = assets.first() as Map<*, *>
+        val link = asset["browser_download_url"] as String
 
-    fun warning(message: String, parameters: Collection<String> = emptySet()) =
-        this.write("&6!&e $message", parameters)
+        return Version(name.removePrefix("v"), link)
+    }
 
-    fun createPaginator(): PaginatorInterface
+    companion object {
+        const val URL_PATTERN = "https://api.github.com/repos/{0}/{1}/releases/latest"
+        const val OWNER = "h1karo"
+        const val REPOSITORY = "sharecontrol"
+    }
 }

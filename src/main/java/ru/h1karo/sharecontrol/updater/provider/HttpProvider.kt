@@ -20,10 +20,11 @@
  * @link https://github.com/h1karo/sharecontrol
  */
 
-package ru.h1karo.sharecontrol.updater
+package ru.h1karo.sharecontrol.updater.provider
 
 import com.google.gson.Gson
 import net.swiftzer.semver.SemVer
+import ru.h1karo.sharecontrol.updater.Version
 import java.io.BufferedReader
 import java.io.InputStream
 import java.io.InputStreamReader

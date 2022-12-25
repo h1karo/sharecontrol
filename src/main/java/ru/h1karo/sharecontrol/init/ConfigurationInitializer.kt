@@ -34,10 +34,12 @@ class ConfigurationInitializer @Inject constructor(
     console: BlockStyle,
     private val pluginConfiguration: PluginConfiguration
 ) : AbstractInitializer(console) {
-    override fun initialize() {
-        try {
+    override fun initialize(): Boolean {
+        return try {
             this.pluginConfiguration.initialize()
             this.success("Configuration component loaded.")
+
+            true
         } catch (e: InvalidValueException) {
             val parameter = e.getParameter()
             val value = e.getInvalidValue().toString()
@@ -50,8 +52,6 @@ class ConfigurationInitializer @Inject constructor(
             throw FixableException(e)
         }
     }
-
-    override fun terminate() {}
 
     override fun getPriority(): Int = 100
 }

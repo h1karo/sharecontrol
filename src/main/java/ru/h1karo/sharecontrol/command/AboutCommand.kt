@@ -26,7 +26,6 @@ import com.google.inject.Inject
 import org.bukkit.plugin.Plugin
 import ru.h1karo.sharecontrol.command.input.InputInterface
 import ru.h1karo.sharecontrol.command.output.OutputInterface
-import ru.h1karo.sharecontrol.command.style.OutputStyle
 
 class AboutCommand @Inject constructor(
     private val plugin: Plugin,
@@ -35,13 +34,12 @@ class AboutCommand @Inject constructor(
     override val name: String = NAME
 
     override fun execute(input: InputInterface, output: OutputInterface): Boolean {
-        val style = OutputStyle(output)
         val description = plugin.description
 
-        style.write("about.header")
-        style.write("about.version", listOf(description.version))
-        style.write("about.author", listOf(description.authors.first()))
-        style.write("about.website", listOf(description.website ?: "n/a"))
+        output.write("about.header")
+        output.write("about.version", listOf(description.version))
+        output.write("about.author", listOf(description.authors.first()))
+        output.write("about.website", listOf(description.website ?: "n/a"))
 
         return true
     }

@@ -51,6 +51,11 @@ class ShareControl : JavaPlugin(), Listener {
     )
     private val initializer: Initializer = injector.getInstance(Initializer::class.java)
 
-    override fun onEnable() = this.initializer.initialize()
-    override fun onDisable() = this.initializer.terminate()
+    override fun onEnable() {
+        this.initializer.initialize()
+    }
+
+    override fun onDisable() {
+        this.initializer.terminate()
+    }
 }

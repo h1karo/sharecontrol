@@ -22,7 +22,6 @@
 
 package ru.h1karo.sharecontrol.module
 
-import com.google.inject.Injector
 import com.google.inject.Provides
 import ru.h1karo.sharecontrol.i18n.TranslatorInterface
 import ru.h1karo.sharecontrol.messenger.ColoredMessenger
@@ -45,26 +44,21 @@ class MessengerModule : AbstractModule() {
     }
 
     @Provides
-    fun getTranslatableMessenger(injector: Injector): TranslatableMessenger {
-        return TranslatableMessenger(
-            injector.getInstance(ColoredMessenger::class.java),
-            injector.getInstance(TranslatorInterface::class.java)
-        )
+    fun getTranslatableMessenger(messenger: ColoredMessenger, translator: TranslatorInterface): TranslatableMessenger {
+        return TranslatableMessenger(messenger, translator)
     }
 
     @Provides
-    fun getColoredMessenger(injector: Injector): ColoredMessenger {
-        return ColoredMessenger(
-            injector.getInstance(DelegatingMessenger::class.java),
-            injector.getInstance(ColorizerInterface::class.java),
-            injector.getInstance(MessageFormatter::class.java)
-        )
+    fun getColoredMessenger(
+        messenger: DelegatingMessenger,
+        colorizer: ColorizerInterface,
+        formatter: MessageFormatter
+    ): ColoredMessenger {
+        return ColoredMessenger(messenger, colorizer, formatter)
     }
 
     @Provides
-    fun getColorizer(injector: Injector): ColorizerInterface {
-        val factory = injector.getInstance(ColorizerFactoryInterface::class.java)
-
+    fun getColorizer(factory: ColorizerFactoryInterface): ColorizerInterface {
         return factory.build()
     }
 }

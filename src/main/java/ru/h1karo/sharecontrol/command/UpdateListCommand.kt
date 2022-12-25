@@ -31,7 +31,7 @@ class UpdateListCommand @Inject constructor(
     translator: TranslatorInterface,
     private val updateCheckCommandProvider: Provider<UpdateCheckCommand>
 ) : AbstractListCommand(translator) {
-    override val priority: Int = -10
+    override val priority: Int = 10
 
     override fun provideCommands(): List<CommandInterface> = listOf(this, this.updateCheckCommandProvider.get())
 }

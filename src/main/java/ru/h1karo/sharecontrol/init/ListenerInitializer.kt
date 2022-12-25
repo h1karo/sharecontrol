@@ -34,13 +34,17 @@ class ListenerInitializer @Inject constructor(
     private val plugin: Plugin,
     private val listeners: Set<Listener>
 ) : AbstractInitializer(console) {
-    override fun initialize() {
+    override fun initialize(): Boolean {
         val pluginManager = this.plugin.server.pluginManager
         this.getListeners().forEach { pluginManager.registerEvents(it, plugin) }
+
+        return true
     }
 
-    override fun terminate() {
+    override fun terminate(): Boolean {
         this.getListeners().forEach { HandlerList.unregisterAll(it) }
+
+        return true
     }
 
     private fun getListeners(): Collection<Listener> {

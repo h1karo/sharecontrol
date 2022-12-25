@@ -20,28 +20,30 @@
  * @link https://github.com/h1karo/sharecontrol
  */
 
-package ru.h1karo.sharecontrol.updater
+package ru.h1karo.sharecontrol.updater.provider
 
-import com.google.inject.Inject
-import com.google.inject.name.Named
-import ru.h1karo.sharecontrol.module.PluginModule
+import ru.h1karo.sharecontrol.updater.Version
+import ru.h1karo.sharecontrol.updater.exception.UnexpectedValueException
 import java.text.MessageFormat
 
-class GithubProvider @Inject constructor(@Named(PluginModule.VERSION) version: String) : HttpProvider(version) {
-    override fun getUrl(): String = MessageFormat.format(URL_PATTERN, OWNER, REPOSITORY)
+class SpigotMcProvider(version: String) : HttpProvider(version) {
+    override fun getUrl(): String = MessageFormat.format(URL_PATTERN, PLUGIN_ID)
 
     override fun getVersionFromJson(map: Map<*, *>): Version {
-        val name = map["tag_name"] as String
-        val assets = map["assets"] as List<*>
-        val asset = assets.first() as Map<*, *>
-        val link = asset["browser_download_url"] as String
+        if (!map.containsKey("id") || !map.containsKey("name")) {
+            throw UnexpectedValueException("Response doesn't contain `id` or `name` parameter.")
+        }
+
+        val versionId = map["id"] as Double
+        val name = map["name"] as String
+        val link = MessageFormat.format(DOWNLOAD_LINK_PATTERN, PLUGIN_ID, versionId.toInt())
 
         return Version(name.removePrefix("v"), link)
     }
 
     companion object {
-        const val URL_PATTERN = "https://api.github.com/repos/{0}/{1}/releases/latest"
-        const val OWNER = "h1karo"
-        const val REPOSITORY = "sharecontrol"
+        private const val URL_PATTERN = "https://api.spiget.org/v2/resources/{0,number,#}/versions/latest"
+        private const val DOWNLOAD_LINK_PATTERN = "https://api.spiget.org/v2/resources/{0,number,#}/versions/{1,number,#}/download"
+        private const val PLUGIN_ID = 9225
     }
 }

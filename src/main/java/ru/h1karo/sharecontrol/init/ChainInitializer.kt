@@ -32,29 +32,36 @@ class ChainInitializer @Inject constructor(
     console: BlockStyle,
     private val initializers: Set<@JvmSuppressWildcards Initializer>
 ) : AbstractInitializer(console) {
-    override fun initialize() {
-        try {
+    override fun initialize(): Boolean {
+        return try {
             val initializers = this.initializers.sorted()
 
             this.start()
             initializers.forEach { it.initialize() }
+
+            true
         } catch (e: FixableException) {
             this.error("Fix it and reload the plugin with &9{0}&c command.", setOf("/sc reload"))
+            false
         } catch (e: Exception) {
             this.handleException(e)
+            false
         } finally {
             this.end()
         }
     }
 
-    override fun terminate() {
-        try {
+    override fun terminate(): Boolean {
+        return try {
             val initializers = this.initializers.sorted().reversed()
 
             this.start()
             initializers.forEach { it.terminate() }
+
+            true
         } catch (e: Exception) {
             this.handleException(e)
+            false
         } finally {
             this.end()
         }

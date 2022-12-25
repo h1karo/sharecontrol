@@ -20,13 +20,8 @@
  * @link https://github.com/h1karo/sharecontrol
  */
 
-package ru.h1karo.sharecontrol.command.style
+package ru.h1karo.sharecontrol.updater.provider
 
-import ru.h1karo.sharecontrol.command.output.OutputInterface
-import ru.h1karo.sharecontrol.command.pagination.Paginator
-
-class OutputStyle(private val output: OutputInterface) : StyleInterface {
-    override fun write(message: String, parameters: Collection<Any>) = this.output.write(message, parameters)
-
-    override fun createPaginator(): Paginator = Paginator()
+interface VersionProviderFactoryInterface {
+    fun build(): VersionProvider
 }

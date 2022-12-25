@@ -35,9 +35,9 @@ list:
   footer: '&8> &7Run &9{0}&7 to go to the next page'
 reload:
   success: '&2✓&8 Plugin reloaded successfully.'
-  error: >-
-    &cAn error occurred while trying to reload the plugin.
-    &7The error was saved in the log file.
+  error: |
+    '&4✗ &cAn error occurred while trying to reload the plugin.'
+    '&7The error was saved in the log file.'
 help:
   header: '&8>>> &9&lShare&f&lControl &9>&7 The command helper'
   command: '&7The syntax: &9{0}&7.'
@@ -57,6 +57,6 @@ about:
   author: '&7The author: &9{0}&7.'
   website: '&7The website: &9{0}&7.'
 update:
-  latest: 'You are using the latest version of the plugin.'
+  latest: '&2✓&8 You are using the latest version of the plugin.'
   new-version: '&7A new version of &9ShareControl&7 has been found: &9{0}&7.'
   download: '&7You can download the update at this link: &9{0}&7.'

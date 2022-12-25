@@ -23,11 +23,8 @@
 package ru.h1karo.sharecontrol.module
 
 import com.google.inject.AbstractModule
-import com.google.inject.Injector
-import com.google.inject.Key
 import com.google.inject.Provides
 import com.google.inject.name.Named
-import com.google.inject.name.Names
 import ru.h1karo.sharecontrol.configuration.ParameterContainer
 import ru.h1karo.sharecontrol.i18n.FallbackTranslator
 import ru.h1karo.sharecontrol.i18n.FallbackTranslatorInterface
@@ -49,21 +46,18 @@ class I18nModule : AbstractModule() {
     }
 
     @Provides
-    fun getFallbackTranslator(injector: Injector): FallbackTranslator {
-        val translator = injector.getInstance(Translator::class.java)
+    fun getFallbackTranslator(translator: Translator): FallbackTranslator {
         return FallbackTranslator(translator)
     }
 
     @Provides
-    fun getLocale(injector: Injector): Locale {
-        val parameterContainer = injector.getInstance(ParameterContainer::class.java)
-        return parameterContainer.get(LocaleParameter) as Locale
+    fun getLocale(container: ParameterContainer): Locale {
+        return container.get(LocaleParameter) as Locale
     }
 
     @Provides
     @Named(MESSAGES_DIRECTORY)
-    fun getMessagesDirectory(injector: Injector): File {
-        val pluginDirectory = injector.getInstance(Key.get(File::class.java, Names.named(PluginModule.DIRECTORY)))
+    fun getMessagesDirectory(@Named(PluginModule.DIRECTORY) pluginDirectory: File): File {
         return File(pluginDirectory, MESSAGES_DIRECTORY_NAME)
     }
 

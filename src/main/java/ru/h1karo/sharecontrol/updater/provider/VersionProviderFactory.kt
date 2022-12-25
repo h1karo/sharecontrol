@@ -20,16 +20,24 @@
  * @link https://github.com/h1karo/sharecontrol
  */
 
-package ru.h1karo.sharecontrol.updater
+package ru.h1karo.sharecontrol.updater.provider
 
-class CacheableProvider(private val provider: VersionProvider) : VersionProvider {
-    private var version: Version? = null
+import com.google.inject.Inject
+import com.google.inject.name.Named
+import ru.h1karo.sharecontrol.module.PluginModule
+import ru.h1karo.sharecontrol.module.UpdaterModule
+import ru.h1karo.sharecontrol.updater.Provider
 
-    override fun find(): Version? {
-        if (this.version == null) {
-            this.version = this.provider.find()
+class VersionProviderFactory @Inject constructor(
+    @Named(PluginModule.VERSION)
+    private val version: String,
+    @Named(UpdaterModule.PROVIDER)
+    private val type: Provider
+) : VersionProviderFactoryInterface {
+    override fun build(): VersionProvider {
+        return when (this.type) {
+            Provider.SpigotMC -> SpigotMcProvider(this.version)
+            Provider.GitHub -> GithubProvider(this.version)
         }
-
-        return this.version
     }
 }

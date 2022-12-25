@@ -30,9 +30,9 @@ data class MessageCatalogue(val locale: Locale, val messages: Map<String, String
             throw InvalidCatalogueException("The catalogues cannot be merged because their locales are different.")
         }
 
-        val m = this.messages.toMutableMap()
-        m.putAll(catalogue.messages)
+        val messages = this.messages.toMutableMap()
+        messages.putAll(catalogue.messages)
 
-        return MessageCatalogue(this.locale, m.toMap())
+        return MessageCatalogue(this.locale, messages.toMap())
     }
 }

@@ -28,7 +28,6 @@ import ru.h1karo.sharecontrol.command.input.InputInterface
 import ru.h1karo.sharecontrol.command.input.argument.Argument
 import ru.h1karo.sharecontrol.command.input.argument.ListStringArgument
 import ru.h1karo.sharecontrol.command.output.OutputInterface
-import ru.h1karo.sharecontrol.command.style.OutputStyle
 import ru.h1karo.sharecontrol.i18n.TranslatorInterface
 import java.text.MessageFormat
 
@@ -38,7 +37,7 @@ class HelpCommand @Inject constructor(
     override val parent: PluginCommand
 ) : Command() {
     override val name: String = NAME
-    override val priority: Int = -80
+    override val priority: Int = 80
 
     init {
         this.definition.addArgument(
@@ -51,7 +50,6 @@ class HelpCommand @Inject constructor(
     }
 
     override fun execute(input: InputInterface, output: OutputInterface): Boolean {
-        val style = OutputStyle(output)
         val commandList = input.getArgument(COMMAND_ARGUMENT) as List<*>
 
         val joined = commandList.joinToString(" ")
@@ -62,26 +60,26 @@ class HelpCommand @Inject constructor(
             name.equals(joined, true)
         }
 
-        style.write("help.header")
+        output.write("help.header")
         if (commands.isEmpty()) {
-            style.write("help.not-found")
+            output.write("help.not-found")
             return true
         }
 
         if (commands.size > 1) {
-            style.write("help.many.message")
-            commands.forEachIndexed { index, command -> style.write("help.many.list", setOf(index, command.name)) }
+            output.write("help.many.message")
+            commands.forEachIndexed { index, command -> output.write("help.many.list", setOf(index, command.name)) }
             return true
         }
 
         val command = commands.first()
-        style.write("help.command", setOf(command.getSyntax()))
+        output.write("help.command", setOf(command.getSyntax()))
         val description = this.translator.trans(command.getDescription())
-        style.write("help.description", setOf(description))
+        output.write("help.description", setOf(description))
 
         val arguments = command.getArguments()
         if (arguments.isNotEmpty()) {
-            style.write("help.arguments.title")
+            output.write("help.arguments.title")
         }
 
         arguments.forEach {
@@ -95,7 +93,7 @@ class HelpCommand @Inject constructor(
             }
             val requirement = this.translator.trans(requirementKey)
 
-            style.write("help.arguments.list", setOf(it.name, argumentDescription, requirement))
+            output.write("help.arguments.list", setOf(it.name, argumentDescription, requirement))
         }
 
         return true
