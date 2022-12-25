@@ -30,21 +30,13 @@ import ru.h1karo.sharecontrol.configuration.ParameterContainer
 import ru.h1karo.sharecontrol.configuration.plugin.updater.UpdaterEnabled
 import ru.h1karo.sharecontrol.configuration.plugin.updater.UpdaterProvider
 import ru.h1karo.sharecontrol.updater.Provider
-import ru.h1karo.sharecontrol.updater.provider.CacheableProvider
-import ru.h1karo.sharecontrol.updater.provider.CacheableVersionProviderFactory
 import ru.h1karo.sharecontrol.updater.provider.VersionProvider
 import ru.h1karo.sharecontrol.updater.provider.VersionProviderFactory
 import ru.h1karo.sharecontrol.updater.provider.VersionProviderFactoryInterface
 
 class UpdaterModule : AbstractModule() {
     override fun configure() {
-        this.bind(VersionProviderFactoryInterface::class.java).to(CacheableVersionProviderFactory::class.java)
-    }
-
-    @Provides
-    fun getCacheableVersionProviderFactory(injector: Injector): CacheableVersionProviderFactory {
-        val factory = injector.getInstance(VersionProviderFactory::class.java)
-        return CacheableVersionProviderFactory(factory)
+        this.bind(VersionProviderFactoryInterface::class.java).to(VersionProviderFactory::class.java)
     }
 
     @Provides
