@@ -37,15 +37,19 @@ class ReloadCommand @Inject constructor(
     override fun execute(input: InputInterface, output: OutputInterface): Boolean {
         val style = OutputStyle(output)
 
-        try {
-            this.initializer.terminate()
-            this.initializer.initialize()
-            style.write("reload.success")
-        } catch (e: Exception) {
+        val reloaded = this.reload()
+        if (!reloaded) {
             style.error("reload.error")
+            return true
         }
 
+        style.write("reload.success")
+
         return true
+    }
+
+    private fun reload(): Boolean {
+        return this.initializer.terminate() && this.initializer.initialize()
     }
 
     companion object {
