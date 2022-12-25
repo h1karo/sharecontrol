@@ -53,7 +53,5 @@ class ConfigurationInitializer @Inject constructor(
         }
     }
 
-    override fun terminate(): Boolean = true
-
     override fun getPriority(): Int = 100
 }

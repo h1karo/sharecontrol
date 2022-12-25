@@ -50,7 +50,5 @@ class CompatibilityInitializer @Inject constructor(
         return true
     }
 
-    override fun terminate(): Boolean = true
-
     override fun getPriority(): Int = 200
 }

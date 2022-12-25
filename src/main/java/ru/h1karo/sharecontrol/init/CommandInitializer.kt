@@ -40,6 +40,4 @@ class CommandInitializer @Inject constructor(
 
         return true
     }
-
-    override fun terminate(): Boolean = true
 }

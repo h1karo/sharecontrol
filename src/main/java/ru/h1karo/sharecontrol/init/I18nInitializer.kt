@@ -60,6 +60,4 @@ class I18nInitializer @Inject constructor(
     private fun initLocale(locale: Locale) {
         locale.name = this.translator.trans("name", emptySet(), locale)
     }
-
-    override fun terminate(): Boolean = true
 }
