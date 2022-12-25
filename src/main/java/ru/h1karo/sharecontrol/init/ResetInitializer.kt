@@ -30,10 +30,12 @@ class ResetInitializer @Inject constructor(
     console: BlockStyle,
     private val services: Set<Resettable>
 ) : AbstractInitializer(console) {
-    override fun initialize() {}
+    override fun initialize(): Boolean = true
 
-    override fun terminate() {
+    override fun terminate(): Boolean {
         this.services.forEach { it.clear() }
+
+        return true
     }
 
     override fun getPriority(): Int = 0

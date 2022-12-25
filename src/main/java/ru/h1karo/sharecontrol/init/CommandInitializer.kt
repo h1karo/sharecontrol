@@ -34,10 +34,12 @@ class CommandInitializer @Inject constructor(
     private val executor: CommandExecutor,
     console: BlockStyle
 ) : AbstractInitializer(console) {
-    override fun initialize() {
+    override fun initialize(): Boolean {
         val commandName = this.plugin.name.lowercase()
         this.plugin.getCommand(commandName)?.setExecutor(this.executor)
+
+        return true
     }
 
-    override fun terminate() {}
+    override fun terminate(): Boolean = true
 }

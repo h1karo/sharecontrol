@@ -35,9 +35,9 @@ class CompatibilityInitializer @Inject constructor(
     @Named(PluginModule.VERSION) private val version: String,
     private val validator: CompatibilityValidator
 ) : AbstractInitializer(console) {
-    override fun initialize() {
+    override fun initialize(): Boolean {
         if (validator.validate(version)) {
-            return
+            return true
         }
 
         this.warning("The server version may not be compatible with the plugin.")
@@ -46,9 +46,11 @@ class CompatibilityInitializer @Inject constructor(
         this.warning(" does not provide a guarantee for the plugins to work with")
         this.warning(" your kernel.")
         this.warning("Use the plugin at your own risk.")
+
+        return true
     }
 
-    override fun terminate() {}
+    override fun terminate(): Boolean = true
 
     override fun getPriority(): Int = 200
 }

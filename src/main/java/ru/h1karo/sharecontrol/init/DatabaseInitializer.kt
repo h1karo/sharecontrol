@@ -35,19 +35,23 @@ class DatabaseInitializer @Inject constructor(
     private val typeProvider: Provider<DatabaseType>,
     private val databaseProvider: Provider<Database>
 ) : AbstractInitializer(console) {
-    override fun initialize() {
+    override fun initialize(): Boolean {
         val type = this.typeProvider.get()
         val database = databaseProvider.get()
 
         database.connect()
         this.success("Connected to %s database.".format(type.toString()))
+
+        return true
     }
 
-    override fun terminate() {
+    override fun terminate(): Boolean {
         val type = this.typeProvider.get()
         val database = databaseProvider.get()
 
         database.disconnect()
         this.success("Disconnected from %s database.".format(type.toString()))
+
+        return true
     }
 }

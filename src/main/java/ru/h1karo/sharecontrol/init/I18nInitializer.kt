@@ -39,7 +39,7 @@ class I18nInitializer @Inject constructor(
     private val translator: MutableTranslatorInterface,
     private val localeProvider: Provider<Locale>
 ) : AbstractInitializer(console) {
-    override fun initialize() {
+    override fun initialize(): Boolean {
         this.syncer.sync()
 
         this.finder.find().forEach {
@@ -53,11 +53,13 @@ class I18nInitializer @Inject constructor(
 
         this.info("Locale detected: &7%s&8 (&9%s&8)".format(locale.name, locale.abbr))
         this.success("Internationalization component loaded.")
+
+        return true
     }
 
     private fun initLocale(locale: Locale) {
         locale.name = this.translator.trans("name", emptySet(), locale)
     }
 
-    override fun terminate() {}
+    override fun terminate(): Boolean = true
 }
