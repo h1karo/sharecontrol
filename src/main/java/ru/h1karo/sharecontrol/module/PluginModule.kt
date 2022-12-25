@@ -22,11 +22,8 @@
 
 package ru.h1karo.sharecontrol.module
 
-import com.google.inject.Injector
-import com.google.inject.Key
 import com.google.inject.Provides
 import com.google.inject.name.Named
-import com.google.inject.name.Names
 import org.bukkit.plugin.Plugin
 import org.bukkit.plugin.PluginManager
 import org.bukkit.plugin.java.JavaPlugin
@@ -81,8 +78,7 @@ class PluginModule(private val plugin: ShareControl) : AbstractModule() {
 
     @Provides
     @Named(DATA_DIRECTORY)
-    fun getDataDirectory(injector: Injector): File {
-        val pluginDirectory = injector.getInstance(Key.get(File::class.java, Names.named(DIRECTORY)))
+    fun getDataDirectory(@Named(DIRECTORY) pluginDirectory: File): File {
         val directory = File(pluginDirectory, DATA_DIRECTORY_NAME)
 
         if (!directory.exists()) {

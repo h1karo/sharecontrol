@@ -23,7 +23,6 @@
 package ru.h1karo.sharecontrol.module
 
 import com.google.inject.AbstractModule
-import com.google.inject.Injector
 import com.google.inject.Provides
 import com.google.inject.name.Named
 import ru.h1karo.sharecontrol.configuration.ParameterContainer
@@ -40,22 +39,19 @@ class UpdaterModule : AbstractModule() {
     }
 
     @Provides
-    fun getVersionProvider(injector: Injector): VersionProvider {
-        val factory = injector.getInstance(VersionProviderFactoryInterface::class.java)
+    fun getVersionProvider(factory: VersionProviderFactoryInterface): VersionProvider {
         return factory.build()
     }
 
     @Provides
     @Named(UPDATER_ENABLED)
-    fun isUpdaterEnabled(injector: Injector): Boolean {
-        val parameterContainer = injector.getInstance(ParameterContainer::class.java)
-        return parameterContainer.get(UpdaterEnabled).getValue()
+    fun isUpdaterEnabled(container: ParameterContainer): Boolean {
+        return container.get(UpdaterEnabled).getValue()
     }
 
     @Provides
     @Named(PROVIDER)
-    fun getUpdaterProvider(injector: Injector): Provider {
-        val container = injector.getInstance(ParameterContainer::class.java)
+    fun getUpdaterProvider(container: ParameterContainer): Provider {
         return container.get(UpdaterProvider) as Provider
     }
 
