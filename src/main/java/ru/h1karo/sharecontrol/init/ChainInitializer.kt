@@ -42,7 +42,7 @@ class ChainInitializer @Inject constructor(
             true
         } catch (e: FixableException) {
             this.error("Fix it and reload the plugin with &9{0}&c command.", setOf("/sc reload"))
-            throw e
+            false
         } catch (e: Exception) {
             this.handleException(e)
             false
