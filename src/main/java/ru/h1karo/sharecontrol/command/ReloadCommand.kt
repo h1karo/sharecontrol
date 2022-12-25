@@ -25,7 +25,6 @@ package ru.h1karo.sharecontrol.command
 import com.google.inject.Inject
 import ru.h1karo.sharecontrol.command.input.InputInterface
 import ru.h1karo.sharecontrol.command.output.OutputInterface
-import ru.h1karo.sharecontrol.command.style.OutputStyle
 import ru.h1karo.sharecontrol.init.Initializer
 
 class ReloadCommand @Inject constructor(
@@ -35,15 +34,13 @@ class ReloadCommand @Inject constructor(
     override val name: String = NAME
 
     override fun execute(input: InputInterface, output: OutputInterface): Boolean {
-        val style = OutputStyle(output)
-
         val reloaded = this.reload()
         if (!reloaded) {
-            style.error("\${reload.error}")
+            output.write("reload.error")
             return true
         }
 
-        style.write("reload.success")
+        output.write("reload.success")
 
         return true
     }

@@ -29,7 +29,7 @@ import ru.h1karo.sharecontrol.command.input.InputInterface
 import ru.h1karo.sharecontrol.command.input.argument.Argument
 import ru.h1karo.sharecontrol.command.input.argument.IntegerArgument
 import ru.h1karo.sharecontrol.command.output.OutputInterface
-import ru.h1karo.sharecontrol.command.style.OutputStyle
+import ru.h1karo.sharecontrol.command.pagination.Paginator
 import ru.h1karo.sharecontrol.i18n.TranslatorInterface
 import java.text.MessageFormat
 
@@ -49,13 +49,12 @@ abstract class AbstractListCommand @Inject constructor(
     }
 
     override fun execute(input: InputInterface, output: OutputInterface): Boolean {
-        val style = OutputStyle(output)
         val page = input.getArgument(PAGE_ARGUMENT) as Int
         val commands = this.provideCommands()
         val items = commands.map { this.getListItem(it) }
 
         try {
-            val paginator = style.createPaginator()
+            val paginator = Paginator()
             val pagination = paginator.paginate(items.toList(), page, LIMIT - 1)
 
             output.write("list.header", listOf(page, pagination.getLastPageNumber()))
