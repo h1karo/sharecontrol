@@ -52,7 +52,7 @@
         <junit.version>5.9.2</junit.version>
         <mockito.version>5.1.1</mockito.version>
         <mockito-kotlin.version>2.2.0</mockito-kotlin.version>
-        <surefire.version>3.0.0-M9</surefire.version>
+        <surefire.version>3.0.0</surefire.version>
 
         <maven.compiler.source>17</maven.compiler.source>
         <maven.compiler.target>17</maven.compiler.target>
